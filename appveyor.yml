@@ -1,0 +1,6 @@
+build_script:
+    - dotnet --version
+    - cd MyPiggyBank.Web
+    - dotnet build
+    - dotnet test
+    
