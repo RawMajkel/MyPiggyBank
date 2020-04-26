@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/y3ldnpju1ssp7ljp?svg=true)](https://ci.appveyor.com/project/RawMajkel/mypiggybank)
+
 # MyPiggyBank
 Aplikacja budżetowa na potrzeby przedmiotu "Zespołowe przedsięwzięcie programistyczne"
 
