@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MyPiggyBank.Data.Model {
+    class Operation
+    {
+        public Guid OperationId { get; set; }
+        public Guid ResourceId { get; set; }
+        public Guid OperationCategoryId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool IsIncome { get; set; }
+        public decimal Value { get; set; }
+        public DateTime OccuredAt { get; set; }
+    }
+}
