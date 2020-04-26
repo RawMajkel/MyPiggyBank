@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MyPiggyBank.Data.Model {
-    class Resource
+    public class Resource
     {
         public Guid Id { get; set; }
         public string UserEmail { get; set; }
