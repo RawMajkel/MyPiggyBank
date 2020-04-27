@@ -15,5 +15,6 @@ namespace MyPiggyBank.Data.Model {
         public string Period { get; set; }
         public DateTime NextOccurence { get; set; }
         public virtual Resource Resource { get; set; }
+        public virtual OperationCategory OperationCategory { get; set; }
     }
 }
