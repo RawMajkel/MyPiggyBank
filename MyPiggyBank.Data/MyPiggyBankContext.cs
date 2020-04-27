@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using MyPiggyBank.Data.Configuration;
 using MyPiggyBank.Data.Model;
 
 namespace MyPiggyBank.Data
@@ -22,6 +24,7 @@ namespace MyPiggyBank.Data
             }
 
             base.OnModelCreating(modelbuilder);
+            modelbuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Resource> Resources { get; set; }
