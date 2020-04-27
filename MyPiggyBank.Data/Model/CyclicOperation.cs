@@ -14,5 +14,6 @@ namespace MyPiggyBank.Data.Model {
         public decimal EstimatedValue { get; set; }
         public string Period { get; set; }
         public DateTime NextOccurence { get; set; }
+        public virtual Resource Resource { get; set; }
     }
 }
