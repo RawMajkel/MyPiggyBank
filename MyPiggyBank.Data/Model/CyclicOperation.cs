@@ -5,7 +5,7 @@ using System.Text;
 namespace MyPiggyBank.Data.Model {
     public class CyclicOperation
     {
-        public Guid Id { get; set; }
+        public Guid CyclitOperationId { get; set; }
         public Guid ResourceId { get; set; }
         public Guid OperationCategoryId { get; set; }
         public string Name { get; set; }
