@@ -6,7 +6,7 @@ namespace MyPiggyBank.Data.Model {
     public class Resource
     {
         public Guid Id { get; set; }
-        public string Email { get; set; }
+        public Guid UserId { get; set; }
         public string Name { get; set; }
         public decimal Value { get; set; }
         public string Currency { get; set; }
