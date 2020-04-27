@@ -11,5 +11,6 @@ namespace MyPiggyBank.Data.Model {
         public decimal Value { get; set; }
         public string Currency { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Operation> Operations { get; set }
     }
 }
