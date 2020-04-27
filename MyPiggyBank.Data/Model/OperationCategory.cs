@@ -9,5 +9,6 @@ namespace MyPiggyBank.Data.Model {
         public string Email { get; set; }
         public string Name { get; set; }
         public virtual User User { get; set; }
+        public virtual ICollection<Operation> Operations { get; set; }
     }
 }
