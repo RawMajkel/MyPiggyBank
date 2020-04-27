@@ -14,8 +14,6 @@ namespace MyPiggyBank.Data.Configuration
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Name)
                    .IsRequired();
-            builder.Property(u => u.Period)
-                   .IsRequired();
         }
     }
 }
