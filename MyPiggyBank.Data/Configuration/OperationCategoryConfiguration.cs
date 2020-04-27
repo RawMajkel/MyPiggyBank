@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MyPiggyBank.Data.Configuration
 {
-    class OperationCategoryConfiguration : IEntityTypeConfiguration<OperationCategory>
+    internal class OperationCategoryConfiguration : IEntityTypeConfiguration<OperationCategory>
     {
         public void Configure(EntityTypeBuilder<OperationCategory> builder)
         {

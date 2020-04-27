@@ -7,11 +7,9 @@ using System.Text;
 
 namespace MyPiggyBank.Data.Configuration
 {
-    class ResourceConfiguration
+    internal class ResourceConfiguration : IEntityTypeConfiguration<Resource>
     {
-        public class UserConfiguration : IEntityTypeConfiguration<Resource>
-        {
-            public void Configure(EntityTypeBuilder<Resource> builder)
+        public void Configure(EntityTypeBuilder<Resource> builder)
             {
                 builder.HasKey(u => u.Id);
                 builder.Property(u => u.Value)
@@ -21,6 +19,6 @@ namespace MyPiggyBank.Data.Configuration
                 builder.Property(u => u.Name)
                        .IsRequired();
             }
-        }
+        
     }
 }
