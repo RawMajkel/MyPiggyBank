@@ -13,5 +13,7 @@ namespace MyPiggyBank.Data.Model {
         public bool IsIncome { get; set; }
         public decimal Value { get; set; }
         public DateTime OccuredAt { get; set; }
+        public virtual Resource Resource { get; set; }
+        public virtual OperationCategory OperationCategory { get; set; }
     }
 }
