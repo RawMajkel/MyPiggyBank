@@ -17,5 +17,9 @@
     <ProjectReference Include="..\MyPiggyBank.Data\MyPiggyBank.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>
