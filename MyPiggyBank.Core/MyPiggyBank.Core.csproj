@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Account\Interface\" />
+    <Folder Include="Services\Account\Model\" />
+  </ItemGroup>
+
 </Project>
