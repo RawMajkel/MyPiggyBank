@@ -18,4 +18,23 @@
     <Folder Include="Communication\Account\Validators\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Communication\Account\AccountResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AccountResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Communication\Account\AccountResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
