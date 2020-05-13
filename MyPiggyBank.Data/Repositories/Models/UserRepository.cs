@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,14 @@ namespace MyPiggyBank.Data.Repositories.Models
         {
             await using var transaction = _context.Database.BeginTransaction();
             await _context.AddAsync(user);
-            await _context.SaveChangesAsync();
+            var changedRows = await _context.SaveChangesAsync();
+
+            if (changedRows == 0)
+            {
+                await transaction.RollbackAsync();
+                await transaction.DisposeAsync();
+                throw new DbUpdateException("Something went wrong during saving user.");
+            }
             await transaction.CommitAsync();
         }
 
