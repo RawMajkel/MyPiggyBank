@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repositories.Interfaces;
@@ -18,9 +19,10 @@ namespace MyPiggyBank.Core.Services.Account.Model
             _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
 
-        public Task SaveAccount(string userName, string password)
+
+        public Task SaveAccount(RegisterRequest register)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
