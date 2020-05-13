@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Account\Interface\" />
     <Folder Include="Services\Account\Model\" />
   </ItemGroup>
 
