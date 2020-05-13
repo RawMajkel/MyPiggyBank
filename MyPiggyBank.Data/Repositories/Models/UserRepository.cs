@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyPiggyBank.Data.Model;
@@ -25,5 +27,8 @@ namespace MyPiggyBank.Data.Repositories.Models
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
+
+        public async Task<bool> IsAny(Expression<Func<User, bool>> predicate)
+            => await _context.Users.Where(predicate).AnyAsync();
     }
 }
