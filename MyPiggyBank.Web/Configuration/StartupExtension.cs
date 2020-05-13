@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using MyPiggyBank.Core.Communication.Account.Mappings;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Core.Services.Account.Model;
 using MyPiggyBank.Data;
+using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repositories.Interfaces;
 using MyPiggyBank.Data.Repositories.Models;
 
@@ -26,6 +28,7 @@ namespace MyPiggyBank.Web.Configuration
         private static IServiceCollection RegisterServices(this IServiceCollection service)
         {
             return service.ConfigureRepositories()
+                          .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
                           .AddTransient<IAccountService, AccountService>();
         }
 
