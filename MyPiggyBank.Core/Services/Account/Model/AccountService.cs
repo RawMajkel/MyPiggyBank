@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using MyPiggyBank.Core.Communication.Account;
 using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Data.Model;
@@ -12,17 +14,33 @@ namespace MyPiggyBank.Core.Services.Account.Model
     {
         private readonly IUserRepository _repository;
         private readonly IPasswordHasher<User> _hasher;
+        private readonly IMapper _mapper;
 
-        public AccountService(IUserRepository repository, IPasswordHasher<User> hasher)
+        public AccountService(IUserRepository repository, IPasswordHasher<User> hasher, IMapper mapper)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
 
-        public Task SaveAccount(RegisterRequest register)
+        public async Task SaveAccount(RegisterRequest register)
         {
-            throw new NotImplementedException();
+           await Validate(register);
+
+           var user = _mapper.Map<User>(register);
+           user.PasswordHash = _hasher.HashPassword(user, register.Password);
+
+           await _repository.Add(user);
+        }
+
+        private async Task Validate(RegisterRequest register)
+        {
+            if (await _repository.IsAny(u => u.Email == register.Email))
+                throw new ArgumentException(AccountResources.AccountService_Register_Email_Exists_Error);
+
+            if (await _repository.IsAny(u => u.Username == register.UserName))
+                throw new ArgumentException(AccountResources.AccountService_Register_Username_Exists_Error);
         }
     }
 }
