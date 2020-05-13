@@ -29,6 +29,6 @@ namespace MyPiggyBank.Data.Repositories.Models
         }
 
         public async Task<bool> IsAny(Expression<Func<User, bool>> predicate)
-            => await _context.Users.Where(predicate).AnyAsync();
+            => await _context.Users.AnyAsync(predicate);
     }
 }
