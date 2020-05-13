@@ -15,8 +15,10 @@ namespace MyPiggyBank.Data.Repositories.Models
 
         public async Task Add(User user)
         {
+            await using var transaction = _context.Database.BeginTransaction();
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
         }
 
         public async Task<User> Get(Guid userId)
