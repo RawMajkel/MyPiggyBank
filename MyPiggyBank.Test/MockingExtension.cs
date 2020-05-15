@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
@@ -34,6 +36,18 @@ namespace MyPiggyBank.Test
                 .Callback<T>(e => list.Add(e));
 
             return dbSetMock;
+        }
+
+        public static Mock<DbSet<TEntity>> MockEntitySet<TContext, TEntity>(this Mock<TContext> conteMock,
+            Expression<Func<TContext, DbSet<TEntity>>> entitySet, List<TEntity> list)
+        where TContext : DbContext
+        where TEntity : BaseEntity
+        {
+            var entitySetMock = list.AsDbSetMock();
+            conteMock.SetupGet(entitySet).Returns(entitySetMock.Object);
+            conteMock.Setup(e => e.Set<TEntity>()).Returns(entitySetMock.Object);
+
+            return entitySetMock;
         }
     }
 }
