@@ -29,6 +29,9 @@ namespace MyPiggyBank.Test
                     list.Add(entity);
                 })
                 .ReturnsAsync(new Mock<EntityEntry<T>>().Object);
+            dbSetMock
+                .Setup(e => e.Add(It.IsAny<T>()))
+                .Callback<T>(e => list.Add(e));
 
             return dbSetMock;
         }
