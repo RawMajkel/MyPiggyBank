@@ -11,5 +11,6 @@ namespace MyPiggyBank.Data.Repositories.Interfaces
         public Task Add(User user);
         public Task<User> Get(Guid userId);
         public Task<bool> IsAny(Expression<Func<User, bool>> predicate);
+        public Task<User> GetByEmail(string email);
     }
 }

@@ -36,5 +36,9 @@ namespace MyPiggyBank.Data.Repositories.Models
 
         public async Task<bool> IsAny(Expression<Func<User, bool>> predicate)
             => await _context.Users.AnyAsync(predicate);
+
+        public async Task<User> GetByEmail(string email)
+            => await _context.Users.FirstOrDefaultAsync(u =>
+                string.Equals(u.Email, email, StringComparison.CurrentCultureIgnoreCase));
     }
 }
