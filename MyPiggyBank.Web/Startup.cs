@@ -32,6 +32,13 @@ namespace MyPiggyBank.Web
 
             app.UseHttpsRedirection();
 
+            app.UseCors(c =>
+            {
+                c.AllowAnyOrigin();
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
