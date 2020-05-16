@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPiggyBank.Data", "MyPiggy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPiggyBank.Core", "MyPiggyBank.Core\MyPiggyBank.Core.csproj", "{A0D4BCA7-6AB3-4EA2-9DB5-9AE941B9B47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPiggyBank.Test", "MyPiggyBank.Test\MyPiggyBank.Test.csproj", "{3C689CBF-9BF4-4EBA-9A94-06D0482CE031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPiggyBank.Test", "MyPiggyBank.Test\MyPiggyBank.Test.csproj", "{3C689CBF-9BF4-4EBA-9A94-06D0482CE031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPiggyBank.Integration.Test", "MyPiggyBank.Integration.Test\MyPiggyBank.Integration.Test.csproj", "{C188C5BB-6D99-49B7-B4D0-94589F3E1DDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3C689CBF-9BF4-4EBA-9A94-06D0482CE031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C689CBF-9BF4-4EBA-9A94-06D0482CE031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C689CBF-9BF4-4EBA-9A94-06D0482CE031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C188C5BB-6D99-49B7-B4D0-94589F3E1DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C188C5BB-6D99-49B7-B4D0-94589F3E1DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C188C5BB-6D99-49B7-B4D0-94589F3E1DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C188C5BB-6D99-49B7-B4D0-94589F3E1DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
