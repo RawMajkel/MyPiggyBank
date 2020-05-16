@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyPiggyBank.Core.Communication.Account.DTO;
 using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Data.Model;
 
@@ -14,6 +15,9 @@ namespace MyPiggyBank.Core.Communication.Account.Mappings
                 .ForMember(d => d.PasswordHash, opt => opt.Ignore())
                 .ForMember(d => d.OperationCategories, opt => opt.Ignore())
                 .ForMember(d => d.Resources, opt => opt.Ignore());
+
+            CreateMap<User, AccountInfo>()
+                .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.Username));
         }
     }
 }
