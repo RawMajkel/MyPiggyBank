@@ -22,7 +22,7 @@ namespace MyPiggyBank.Core.Communication.Account {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AccountResources {
+    public class AccountResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyPiggyBank.Core.Communication.Account.AccountResources", typeof(AccountResources).Assembly);
@@ -51,7 +51,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Incorrect password..
         /// </summary>
-        internal static string AccountService_Authenticate_Password_Incorrect {
+        public static string AccountService_Authenticate_Password_Incorrect {
             get {
                 return ResourceManager.GetString("AccountService_Authenticate_Password_Incorrect", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to User not found..
         /// </summary>
-        internal static string AccountService_Authenticate_User_NotFound {
+        public static string AccountService_Authenticate_User_NotFound {
             get {
                 return ResourceManager.GetString("AccountService_Authenticate_User_NotFound", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to This e-mail is already being used..
         /// </summary>
-        internal static string AccountService_Register_Email_Exists_Error {
+        public static string AccountService_Register_Email_Exists_Error {
             get {
                 return ResourceManager.GetString("AccountService_Register_Email_Exists_Error", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to A user with this name already exists..
         /// </summary>
-        internal static string AccountService_Register_Username_Exists_Error {
+        public static string AccountService_Register_Username_Exists_Error {
             get {
                 return ResourceManager.GetString("AccountService_Register_Username_Exists_Error", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to E-mail address is required..
         /// </summary>
-        internal static string RegisterRequestValidator_Email_Empty_Error {
+        public static string RegisterRequestValidator_Email_Empty_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Email_Empty_Error", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to A valid e-mail is required..
         /// </summary>
-        internal static string RegisterRequestValidator_Email_NotValid_Error {
+        public static string RegisterRequestValidator_Email_NotValid_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Email_NotValid_Error", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password must contain at least one digit..
         /// </summary>
-        internal static string RegisterRequestValidator_Password_Digit_Error {
+        public static string RegisterRequestValidator_Password_Digit_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_Digit_Error", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password is required..
         /// </summary>
-        internal static string RegisterRequestValidator_Password_Empty_Error {
+        public static string RegisterRequestValidator_Password_Empty_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_Empty_Error", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password must have at least 8 letters..
         /// </summary>
-        internal static string RegisterRequestValidator_Password_Length_Error {
+        public static string RegisterRequestValidator_Password_Length_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_Length_Error", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password must contain at least one special character..
         /// </summary>
-        internal static string RegisterRequestValidator_Password_SpecialCharacter_Error {
+        public static string RegisterRequestValidator_Password_SpecialCharacter_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_SpecialCharacter_Error", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password must contain at least one upper case letter..
         /// </summary>
-        internal static string RegisterRequestValidator_Password_UpperCaseLetter_Error {
+        public static string RegisterRequestValidator_Password_UpperCaseLetter_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_UpperCaseLetter_Error", resourceCulture);
             }
