@@ -36,7 +36,7 @@ namespace MyPiggyBank.Core.Services.Account.Model
 
         private async Task Validate(RegisterRequest register)
         {
-            if (await _repository.IsAny(u => u.Email == register.Email))
+            if (await _repository.IsAny(u => u.Email.ToLower() == register.Email.ToLower()))
                 throw new ArgumentException(AccountResources.AccountService_Register_Email_Exists_Error);
 
             if (await _repository.IsAny(u => u.Username == register.UserName))
