@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Communication.Account.Mappings;
+using MyPiggyBank.Core.Communication.Account.Validators;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Core.Services.Account.Model;
 using MyPiggyBank.Data;
@@ -27,7 +29,8 @@ namespace MyPiggyBank.Web.Configuration
                     .ConfigureJwtToken(configuration)
                     .RegisterProfiles()
                     .RegisterServices()
-                    .AddControllers();
+                    .AddControllers()
+                    .RegisterValidators();
         }
 
         private static IServiceCollection RegisterServices(this IServiceCollection service)
@@ -74,6 +77,16 @@ namespace MyPiggyBank.Web.Configuration
                 });
 
             return service;
+        }
+
+        private static IMvcBuilder RegisterValidators(this IMvcBuilder builder)
+        { 
+            return builder
+                    .AddFluentValidation(fv =>
+                    {
+                        fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+                        fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
+                    });
         }
     }
 }
