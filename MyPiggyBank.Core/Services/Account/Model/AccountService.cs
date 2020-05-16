@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using MyPiggyBank.Core.Communication.Account;
+using MyPiggyBank.Core.Communication.Account.DTO;
 using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Data.Model;
@@ -33,6 +34,20 @@ namespace MyPiggyBank.Core.Services.Account.Model
 
            await _repository.Add(user);
         }
+
+        public async Task<AccountInfo> Authenticate(LoginRequest loginInput)
+        {
+            var userEntity = await _repository.GetByEmail(loginInput.Email) ??
+                throw new ArgumentException(AccountResources.AccountService_Authenticate_User_NotFound);
+
+            var passResult = _hasher.VerifyHashedPassword(userEntity, userEntity.PasswordHash, loginInput.Password);
+
+            if(passResult != PasswordVerificationResult.Success)
+                throw new ArgumentException(AccountResources.AccountService_Authenticate_Password_Incorrect);
+
+            return _mapper.Map<AccountInfo>(userEntity);
+        }
+
 
         private async Task Validate(RegisterRequest register)
         {

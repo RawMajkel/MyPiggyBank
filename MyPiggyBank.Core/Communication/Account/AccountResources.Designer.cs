@@ -61,6 +61,24 @@ namespace MyPiggyBank.Core.Communication.Account {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incorrect password..
+        /// </summary>
+        internal static string AccountService_Authenticate_Password_Incorrect {
+            get {
+                return ResourceManager.GetString("AccountService_Authenticate_Password_Incorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found..
+        /// </summary>
+        internal static string AccountService_Authenticate_User_NotFound {
+            get {
+                return ResourceManager.GetString("AccountService_Authenticate_User_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This e-mail is already being used..
         /// </summary>
         internal static string AccountService_Register_Email_Exists_Error {
