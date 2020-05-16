@@ -1,8 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Text;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Communication.Account.Mappings;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Core.Services.Account.Model;
@@ -20,6 +24,7 @@ namespace MyPiggyBank.Web.Configuration
             service.AddDbContext<MyPiggyBankContext>(opt =>
                         opt.UseLazyLoadingProxies()
                             .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))))
+                    .ConfigureJwtToken(configuration)
                     .RegisterProfiles()
                     .RegisterServices()
                     .AddControllers();
@@ -44,6 +49,29 @@ namespace MyPiggyBank.Web.Configuration
             IMapper mapper = mappingConf.CreateMapper();
 
             service.AddSingleton(mapper);
+
+            return service;
+        }
+
+        private static IServiceCollection ConfigureJwtToken(this IServiceCollection service, IConfiguration configuration)
+        {
+            var secretKey = configuration["Authorization:SecretKey"];
+
+            if (string.IsNullOrEmpty(secretKey))
+                throw new ArgumentNullException("Jwt secret key is empty.");
+
+            service
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                        ValidateAudience = false,
+                        ValidateLifetime = true
+                    };
+                });
 
             return service;
         }
