@@ -28,6 +28,7 @@ namespace MyPiggyBank.Web.Configuration
         private static IServiceCollection RegisterServices(this IServiceCollection service)
         {
             return service.ConfigureRepositories()
+                          .AddTransient<IJwtService, JwtService>()
                           .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
                           .AddTransient<IAccountService, AccountService>();
         }

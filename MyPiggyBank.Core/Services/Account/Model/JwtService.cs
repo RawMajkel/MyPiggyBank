@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Communication.Account.DTO;
+using MyPiggyBank.Core.Services.Account.Interface;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace MyPiggyBank.Core.Services.Account.Model
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
         private readonly IConfiguration _configuration;
 
