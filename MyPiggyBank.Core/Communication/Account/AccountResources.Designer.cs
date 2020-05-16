@@ -95,5 +95,68 @@ namespace MyPiggyBank.Core.Communication.Account {
                 return ResourceManager.GetString("AccountService_Register_Username_Exists_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mail address is required..
+        /// </summary>
+        internal static string RegisterRequestValidator_Email_Empty_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Email_Empty_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A valid e-mail is required..
+        /// </summary>
+        internal static string RegisterRequestValidator_Email_NotValid_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Email_NotValid_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one digit..
+        /// </summary>
+        internal static string RegisterRequestValidator_Password_Digit_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Password_Digit_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required..
+        /// </summary>
+        internal static string RegisterRequestValidator_Password_Empty_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Password_Empty_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must have at least 8 letters..
+        /// </summary>
+        internal static string RegisterRequestValidator_Password_Length_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Password_Length_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one special character..
+        /// </summary>
+        internal static string RegisterRequestValidator_Password_SpecialCharacter_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Password_SpecialCharacter_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one upper case letter..
+        /// </summary>
+        internal static string RegisterRequestValidator_Password_UpperCaseLetter_Error {
+            get {
+                return ResourceManager.GetString("RegisterRequestValidator_Password_UpperCaseLetter_Error", resourceCulture);
+            }
+        }
     }
 }
