@@ -3,10 +3,13 @@ using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Communication.Account.Mappings;
 using MyPiggyBank.Core.Communication.Account.Validators;
@@ -21,11 +24,40 @@ namespace MyPiggyBank.Web.Configuration
 {
     public static class StartupExtension
     {
+        public static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseCors(c =>
+            {
+                c.AllowAnyOrigin();
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+            });
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+        public static IServiceCollection ConfigureMyPiggyBankContext(this IServiceCollection service, IConfiguration configuration)
+        {
+            return service.AddDbContext<MyPiggyBankContext>(opt =>
+                opt.UseLazyLoadingProxies()
+                    .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))));
+        }
         public static void Configure(this IServiceCollection service, IConfiguration configuration)
         {
-            service.AddDbContext<MyPiggyBankContext>(opt =>
-                        opt.UseLazyLoadingProxies()
-                            .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))))
+            service
                     .ConfigureJwtToken(configuration)
                     .RegisterProfiles()
                     .RegisterServices()
