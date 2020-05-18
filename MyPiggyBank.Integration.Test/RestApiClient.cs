@@ -14,6 +14,7 @@ namespace MyPiggyBank.Integration.Test
     {
         private readonly HttpClient _client;
         private const string _localhost = "http://localhost:5001";
+        private const string JsonHeader = "application/json";
 
         public RestApiClient()
         {
@@ -33,14 +34,14 @@ namespace MyPiggyBank.Integration.Test
 
             _client = server.CreateClient();
             _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonHeader));
         }
 
         public MyPiggyBankContext PiggyBankContext { get; }
 
         public async Task<HttpResponseMessage> PostAsync<T>(string url, T input)
         {
-            var body = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8);
+            var body = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader);
             return await _client.PostAsync(url, body);
         }
 
