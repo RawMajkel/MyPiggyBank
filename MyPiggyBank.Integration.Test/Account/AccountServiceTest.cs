@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using MyPiggyBank.Core.Communication.Account.DTO;
 using MyPiggyBank.Core.Communication.Account.Mappings;
 using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Core.Services.Account.Interface;
@@ -16,6 +17,41 @@ namespace MyPiggyBank.Integration.Test.Account
     public class AccountServiceTest
     {
         private IAccountService _service;
+        private readonly RestApiClient _apiClient;
+        public AccountServiceTest()
+        {
+            _apiClient = new RestApiClient();
+        }
+
+        [Fact]
+        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse()
+        {
+            //arrange
+            var registerInput = new RegisterRequest()
+            {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1",
+                UserName = "TestUser"
+            };
+            var loginInput = new LoginRequest()
+            {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1"
+            };
+            var dateTimeNow = DateTime.Now;
+
+            //act
+            await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
+            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
+            var authToken = response.Deserialize<AuthorizationToken>();
+
+            //assert
+            Assert.NotNull(authToken);
+            Assert.True(authToken.Identifier == loginInput.Email);
+            Assert.True(authToken.Expiration != DateTime.MaxValue && authToken.Expiration != DateTime.MinValue);
+            Assert.True(authToken.Expiration > dateTimeNow && authToken.Expiration < dateTimeNow.AddMinutes(25));
+            Assert.True(!string.IsNullOrEmpty(authToken.Token));
+        }
 
         [Fact]
         public async void SaveAccount_SavingCorrectUser_ShouldAddToDb()
