@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,8 +33,9 @@ namespace MyPiggyBank.Integration.Test
                 };
 
             action.Invoke();
-            services.Configure(Configuration);
-
+            services
+                .Configure(Configuration)
+                .AddApplicationPart(Assembly.Load(new AssemblyName("MyPiggyBank.Web")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

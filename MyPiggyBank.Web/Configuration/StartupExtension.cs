@@ -55,9 +55,9 @@ namespace MyPiggyBank.Web.Configuration
                 opt.UseLazyLoadingProxies()
                     .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))));
         }
-        public static void Configure(this IServiceCollection service, IConfiguration configuration)
+        public static IMvcBuilder Configure(this IServiceCollection service, IConfiguration configuration)
         {
-            service
+            return service
                     .ConfigureJwtToken(configuration)
                     .RegisterProfiles()
                     .RegisterServices()
