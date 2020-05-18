@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using MyPiggyBank.Core.Communication.Account;
 using MyPiggyBank.Core.Communication.Account.DTO;
 using MyPiggyBank.Core.Communication.Account.Mappings;
 using MyPiggyBank.Core.Communication.Account.Requests;
@@ -52,6 +53,27 @@ namespace MyPiggyBank.Integration.Test.Account
             Assert.True(authToken.Expiration > dateTimeNow && authToken.Expiration < dateTimeNow.AddMinutes(25));
             Assert.True(!string.IsNullOrEmpty(authToken.Token));
         }
+
+
+        [Fact]
+        public async void LoginUser_UserNotRegistered_ShouldReturnUserNotFound()
+        {
+            //arrange
+            var loginInput = new LoginRequest()
+            {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1"
+            };
+
+            //act
+            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
+            var message = response.Deserialize<string>();
+
+            //assert
+            Assert.NotEmpty(message);
+            Assert.True(message == AccountResources.AccountService_Authenticate_User_NotFound);
+        }
+
 
         [Fact]
         public async void SaveAccount_SavingCorrectUser_ShouldAddToDb()
