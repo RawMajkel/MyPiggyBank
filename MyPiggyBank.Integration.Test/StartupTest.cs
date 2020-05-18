@@ -29,7 +29,7 @@ namespace MyPiggyBank.Integration.Test
                 : () =>
                 {
                     var dbRuntime = DbHelper.CreateDbInRuntimeMemory();
-                    services.AddTransient<MyPiggyBankContext>(_ => dbRuntime);
+                    services.AddSingleton<MyPiggyBankContext>(_ => dbRuntime);
                 };
 
             action.Invoke();
