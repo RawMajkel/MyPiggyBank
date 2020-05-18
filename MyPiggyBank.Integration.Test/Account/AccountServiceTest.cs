@@ -74,6 +74,32 @@ namespace MyPiggyBank.Integration.Test.Account
             Assert.True(message == AccountResources.AccountService_Authenticate_User_NotFound);
         }
 
+        [Theory]
+        [InlineData("WrongPass", "Incorrect password.")]
+        public async void LoginUser_IncorrectPassword_ShouldReturnValidationMessage(string wrongPassword, string validationMessage)
+        {
+            // arrange
+            var registerInput = new RegisterRequest()
+            {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1",
+                UserName = "TestUser"
+            };
+            var loginInput = new LoginRequest()
+            {
+                Email = "email@gmail.com",
+                Password = wrongPassword
+            };
+
+            //act
+            await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
+            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
+            var message = response.Deserialize<string>();
+
+            //assert
+            Assert.True(!string.IsNullOrEmpty(message));
+            Assert.True(validationMessage == message);
+        }
 
         [Fact]
         public async void SaveAccount_SavingCorrectUser_ShouldAddToDb()
