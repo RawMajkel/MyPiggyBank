@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +13,7 @@ using MyPiggyBank.Core.Services.Account.Model;
 using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repositories.Models;
+using MyPiggyBank.Integration.Test.Responses;
 using Xunit;
 
 namespace MyPiggyBank.Integration.Test.Account
@@ -101,6 +104,27 @@ namespace MyPiggyBank.Integration.Test.Account
             Assert.True(validationMessage == message);
         }
 
+        [Theory, ClassData(typeof(IncorrectPasswordData))]
+        public async void RegisterUser_IncorrectPassword_ShouldReturnValidationMessage(string incorrectPassword,
+            string validationMessage)
+        {
+            //arrange
+            var registerInput = new RegisterRequest()
+            {
+                Email = "test@gmail.com",
+                Password = incorrectPassword,
+                UserName = "testUser"
+            };
+
+            //act
+            var response = await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
+            var validation = response.Deserialize<FluentValidationResponse>();
+
+            //assert
+            Assert.True(validation.Errors.ContainsKey("Password"));
+            Assert.True(validation.Errors["Password"].Any(message => message == validationMessage));
+        }
+
         [Fact]
         public async void SaveAccount_SavingCorrectUser_ShouldAddToDb()
         {
@@ -140,5 +164,21 @@ namespace MyPiggyBank.Integration.Test.Account
                 hasher: new PasswordHasher<User>(),
                 mapper: mapper);
         }
+    }
+
+    public class IncorrectPasswordData : IEnumerable<object[]>
+    {
+        private readonly List<object[]> _passes = new List<object[]>()
+        {
+            new object[] { string.Empty, AccountResources.RegisterRequestValidator_Password_Empty_Error },
+            new object[] { "pas", AccountResources.RegisterRequestValidator_Password_Length_Error },
+            new object[] { "pa$$word1", AccountResources.RegisterRequestValidator_Password_UpperCaseLetter_Error },
+            new object[] { "Pa$$word", AccountResources.RegisterRequestValidator_Password_Digit_Error },
+            new object[] { "Password1", AccountResources.RegisterRequestValidator_Password_SpecialCharacter_Error },
+        };
+
+        public IEnumerator<object[]> GetEnumerator() => _passes.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
