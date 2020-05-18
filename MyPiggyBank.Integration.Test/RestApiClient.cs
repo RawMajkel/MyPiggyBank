@@ -49,9 +49,7 @@ namespace MyPiggyBank.Integration.Test
         {
             var response = await _client.GetAsync(url);
             response.EnsureSuccessStatusCode();
-            var responseAsString = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<TResponse>(responseAsString);
+            return response.Deserialize<TResponse>();
         }
     }
 }
