@@ -19,7 +19,7 @@ namespace MyPiggyBank.Core.Communication.Account.DTO
 
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder()
+            var builder = new StringBuilder()
                 .AppendLine($"Identifier: {Identifier}")
                 .AppendLine($"Token: {Token}")
                 .AppendLine($"Expires at: {Expiration.ToString("dd MMM yyyy HH:mm:ss")}");

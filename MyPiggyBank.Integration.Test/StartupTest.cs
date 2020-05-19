@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +11,7 @@ namespace MyPiggyBank.Integration.Test
     public class StartupTest
     {
         public IConfiguration Configuration { get; }
+
         public StartupTest(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,19 +20,17 @@ namespace MyPiggyBank.Integration.Test
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionStringPiggyTest = Configuration.GetConnectionString(nameof(MyPiggyBankContext));
+            
+            if (!string.IsNullOrEmpty(connectionStringPiggyTest))
+            {
+                services.ConfigureMyPiggyBankContext(Configuration);
+            }
+            else
+            {
+                var dbRuntime = DbHelper.CreateDbInRuntimeMemory();
+                services.AddSingleton<MyPiggyBankContext>(_ => dbRuntime);
+            }
 
-            Action action = !string.IsNullOrEmpty(connectionStringPiggyTest)
-                ? (Action) (() =>
-                {
-                    services.ConfigureMyPiggyBankContext(Configuration);
-                })
-                : () =>
-                {
-                    var dbRuntime = DbHelper.CreateDbInRuntimeMemory();
-                    services.AddSingleton<MyPiggyBankContext>(_ => dbRuntime);
-                };
-
-            action.Invoke();
             services
                 .Configure(Configuration)
                 .AddApplicationPart(Assembly.Load(new AssemblyName("MyPiggyBank.Web")));

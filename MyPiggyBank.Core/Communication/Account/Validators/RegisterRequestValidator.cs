@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
 using MyPiggyBank.Core.Communication.Account.Requests;
 
 namespace MyPiggyBank.Core.Communication.Account.Validators
@@ -15,6 +12,7 @@ namespace MyPiggyBank.Core.Communication.Account.Validators
                 .WithMessage(AccountResources.RegisterRequestValidator_Email_Empty_Error)
                 .EmailAddress()
                 .WithMessage(AccountResources.RegisterRequestValidator_Email_NotValid_Error);
+
             RuleFor(r => r.Password)
                 .NotEmpty()
                 .WithMessage(AccountResources.RegisterRequestValidator_Password_Empty_Error)

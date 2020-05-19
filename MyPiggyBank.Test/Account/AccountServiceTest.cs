@@ -40,7 +40,6 @@ namespace MyPiggyBank.Test.Account
             var mapper = new MapperConfiguration(c => { c.AddProfile<AccountProfile>(); }).CreateMapper();
 
             _accountService = new AccountService(userRepositoryMock.Object, passHasher.Object, mapper);
-
         }
 
         [Fact]
@@ -152,7 +151,6 @@ namespace MyPiggyBank.Test.Account
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
             Assert.True(exception.Message == AccountResources.AccountService_Authenticate_User_NotFound);
         }
-
 
         private Mock<IUserRepository> CreateMockUserRepository()
         {

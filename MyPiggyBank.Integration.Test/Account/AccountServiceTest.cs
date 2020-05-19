@@ -22,6 +22,7 @@ namespace MyPiggyBank.Integration.Test.Account
     {
         private IAccountService _service;
         private readonly RestApiClient _apiClient;
+
         public AccountServiceTest()
         {
             _apiClient = new RestApiClient();
@@ -56,7 +57,6 @@ namespace MyPiggyBank.Integration.Test.Account
             Assert.True(authToken.Expiration > dateTimeNow && authToken.Expiration < dateTimeNow.AddMinutes(25));
             Assert.True(!string.IsNullOrEmpty(authToken.Token));
         }
-
 
         [Fact]
         public async void LoginUser_UserNotRegistered_ShouldReturnUserNotFound()
@@ -143,7 +143,6 @@ namespace MyPiggyBank.Integration.Test.Account
 
             //assert
             var entity = context.Users.FirstOrDefault();
-
 
             Assert.NotNull(entity);
             Assert.NotEqual(Guid.Empty, entity.Id);
