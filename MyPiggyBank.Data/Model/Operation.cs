@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MyPiggyBank.Data.Model.Base;
 
 namespace MyPiggyBank.Data.Model {
-    public class Operation
+    public class Operation : BaseEntity
     {
-        public Guid Id { get; set; }
         public Guid ResourceId { get; set; }
         public Guid OperationCategoryId { get; set; }
         public string Name { get; set; }
