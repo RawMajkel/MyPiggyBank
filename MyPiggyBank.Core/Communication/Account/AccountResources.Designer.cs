@@ -99,6 +99,33 @@ namespace MyPiggyBank.Core.Communication.Account {
         /// <summary>
         ///   Looks up a localized string similar to E-mail address is required..
         /// </summary>
+        public static string LoginRequestValidator_Email_Empty_Error {
+            get {
+                return ResourceManager.GetString("LoginRequestValidator_Email_Empty_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A valid e-mail is required..
+        /// </summary>
+        public static string LoginRequestValidator_Email_NotValid_Error {
+            get {
+                return ResourceManager.GetString("LoginRequestValidator_Email_NotValid_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required..
+        /// </summary>
+        public static string LoginRequestValidator_Password_Empty_Error {
+            get {
+                return ResourceManager.GetString("LoginRequestValidator_Password_Empty_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mail address is required..
+        /// </summary>
         public static string RegisterRequestValidator_Email_Empty_Error {
             get {
                 return ResourceManager.GetString("RegisterRequestValidator_Email_Empty_Error", resourceCulture);

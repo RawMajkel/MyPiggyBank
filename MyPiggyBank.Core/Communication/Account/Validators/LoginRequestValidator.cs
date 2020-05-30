@@ -8,11 +8,11 @@ namespace MyPiggyBank.Core.Communication.Account.Validators
         public LoginRequestValidator()
         {
             RuleFor(l => l.Password)
-                .NotEmpty();
+                .NotEmpty().WithMessage(AccountResources.LoginRequestValidator_Password_Empty_Error);
 
             RuleFor(l => l.Email)
-                .NotEmpty()
-                .EmailAddress();
+                .NotEmpty().WithMessage(AccountResources.LoginRequestValidator_Email_Empty_Error)
+                .EmailAddress().WithMessage(AccountResources.LoginRequestValidator_Email_NotValid_Error);
         }
     }
 }

@@ -129,6 +129,15 @@
   <data name="AccountService_Register_Username_Exists_Error" xml:space="preserve">
     <value>A user with this name already exists.</value>
   </data>
+  <data name="LoginRequestValidator_Email_Empty_Error" xml:space="preserve">
+    <value>E-mail address is required.</value>
+  </data>
+  <data name="LoginRequestValidator_Email_NotValid_Error" xml:space="preserve">
+    <value>A valid e-mail is required.</value>
+  </data>
+  <data name="LoginRequestValidator_Password_Empty_Error" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
   <data name="RegisterRequestValidator_Email_Empty_Error" xml:space="preserve">
     <value>E-mail address is required.</value>
   </data>
