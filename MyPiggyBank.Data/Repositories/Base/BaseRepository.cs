@@ -8,7 +8,7 @@ namespace MyPiggyBank.Data.Repositories.Base
     {
         protected readonly MyPiggyBankContext _context;
 
-        protected BaseRepository(MyPiggyBankContext context)
+        public BaseRepository(MyPiggyBankContext context)
         {
             _context = context;
         }

@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Communication.Account.Mappings;
-using MyPiggyBank.Core.Communication.Account.Validators;
+using MyPiggyBank.Core.Communication.Account.Requests;
 using MyPiggyBank.Core.Services.Account.Interface;
 using MyPiggyBank.Core.Services.Account.Model;
 using MyPiggyBank.Data;

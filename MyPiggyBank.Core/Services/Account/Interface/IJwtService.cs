@@ -7,6 +7,6 @@ namespace MyPiggyBank.Core.Services.Account.Interface
 {
     public interface IJwtService
     {
-        AuthorizationToken GenerateToken(AccountInfo accountInfo);
+        LoginResponse GenerateToken(AuthenticateResult accountInfo);
     }
 }

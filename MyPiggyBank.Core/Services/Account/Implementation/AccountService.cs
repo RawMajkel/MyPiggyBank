@@ -35,7 +35,7 @@ namespace MyPiggyBank.Core.Services.Account.Model
            await _repository.Add(user);
         }
 
-        public async Task<AccountInfo> Authenticate(LoginRequest loginInput)
+        public async Task<AuthenticateResult> Authenticate(LoginRequest loginInput)
         {
             var userEntity = await _repository.GetByEmail(loginInput.Email) ??
                 throw new ArgumentException(AccountResources.AccountService_Authenticate_User_NotFound);
@@ -45,7 +45,7 @@ namespace MyPiggyBank.Core.Services.Account.Model
             if(passResult != PasswordVerificationResult.Success)
                 throw new ArgumentException(AccountResources.AccountService_Authenticate_Password_Incorrect);
 
-            return _mapper.Map<AccountInfo>(userEntity);
+            return _mapper.Map<AuthenticateResult>(userEntity);
         }
 
 

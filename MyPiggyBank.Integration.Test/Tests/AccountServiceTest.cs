@@ -48,7 +48,7 @@ namespace MyPiggyBank.Integration.Test.Account
             //act
             await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
             var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
-            var authToken = response.Deserialize<AuthorizationToken>();
+            var authToken = response.Deserialize<LoginResponse>();
 
             //assert
             Assert.NotNull(authToken);
@@ -122,7 +122,7 @@ namespace MyPiggyBank.Integration.Test.Account
 
             //assert
             Assert.True(validation.Errors.ContainsKey("Password"));
-            Assert.True(validation.Errors["Password"].Any(message => message == validationMessage));
+            Assert.Contains(validationMessage, validation.Errors["Password"]);
         }
 
         [Fact]

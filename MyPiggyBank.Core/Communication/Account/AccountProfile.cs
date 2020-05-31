@@ -16,7 +16,7 @@ namespace MyPiggyBank.Core.Communication.Account.Mappings
                 .ForMember(d => d.OperationCategories, opt => opt.Ignore())
                 .ForMember(d => d.Resources, opt => opt.Ignore());
 
-            CreateMap<User, AccountInfo>()
+            CreateMap<User, AuthenticateResult>()
                 .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.Username));
         }
     }

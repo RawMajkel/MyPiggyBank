@@ -1,12 +1,15 @@
 ﻿using FluentValidation;
-using MyPiggyBank.Core.Communication.Account.Requests;
 
-namespace MyPiggyBank.Core.Communication.Account.Validators
+namespace MyPiggyBank.Core.Communication.Account.Requests
 {
-    public class LoginRequestValidator : AbstractValidator<LoginRequest>
+    public class LoginRequest
     {
-        public LoginRequestValidator()
-        {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class LoginRequestValidator : AbstractValidator<LoginRequest> {
+        public LoginRequestValidator() {
             RuleFor(l => l.Password)
                 .NotEmpty().WithMessage(AccountResources.LoginRequestValidator_Password_Empty_Error);
 

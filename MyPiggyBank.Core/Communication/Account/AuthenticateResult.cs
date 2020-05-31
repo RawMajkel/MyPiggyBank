@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MyPiggyBank.Core.Communication.Account.DTO
 {
-    public class AccountInfo
+    public class AuthenticateResult
     {
         public Guid Id { get; set; }
         public string Email { get; set; }

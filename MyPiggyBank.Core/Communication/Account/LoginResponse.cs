@@ -4,13 +4,13 @@ using System.Text;
 
 namespace MyPiggyBank.Core.Communication.Account.DTO
 {
-    public class AuthorizationToken
+    public class LoginResponse
     {
         public string Identifier { get; set; }
         public string Token { get; set; }
         public DateTime Expiration { get; set; }
 
-        public AuthorizationToken(string identifier, string token, DateTime expiration)
+        public LoginResponse(string identifier, string token, DateTime expiration)
         {
             Identifier = identifier;
             Token = token;

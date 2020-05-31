@@ -7,6 +7,6 @@ namespace MyPiggyBank.Core.Services.Account.Interface
     public interface IAccountService
     {
         Task SaveAccount(RegisterRequest register);
-        Task<AccountInfo> Authenticate(LoginRequest loginInput);
+        Task<AuthenticateResult> Authenticate(LoginRequest loginInput);
     }
 }

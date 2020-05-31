@@ -19,7 +19,7 @@ namespace MyPiggyBank.Core.Services.Account.Model
             _configuration = configuration;
         }
 
-        public AuthorizationToken GenerateToken(AccountInfo accountInfo)
+        public LoginResponse GenerateToken(AuthenticateResult accountInfo)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authorization:SecretKey"]));
             var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -40,7 +40,7 @@ namespace MyPiggyBank.Core.Services.Account.Model
 
             var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new AuthorizationToken(accountInfo.Email, encodeToken, expiration);
+            return new LoginResponse(accountInfo.Email, encodeToken, expiration);
         }
     }
 }

@@ -8,11 +8,8 @@ using MyPiggyBank.Data.Repositories.Interfaces;
 
 namespace MyPiggyBank.Data.Repositories.Models
 {
-    public class UserRepository : BaseRepository, IUserRepository
-    {
-        public UserRepository(MyPiggyBankContext context) : base(context)
-        {
-        }
+    public class UserRepository : BaseRepository, IUserRepository {
+        public UserRepository(MyPiggyBankContext context) : base(context) { }
 
         public async Task Add(User user)
         {
@@ -30,9 +27,7 @@ namespace MyPiggyBank.Data.Repositories.Models
         }
 
         public async Task<User> Get(Guid userId)
-        {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-        }
+            => await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
         public async Task<bool> IsAny(Expression<Func<User, bool>> predicate)
             => await _context.Users.AnyAsync(predicate);
