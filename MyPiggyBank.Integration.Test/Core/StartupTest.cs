@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyPiggyBank.Data;
-using MyPiggyBank.Data.Repository;
-using MyPiggyBank.Web.Configuration;
+using MyPiggyBank.Web;
 
 namespace MyPiggyBank.Integration.Test
 {

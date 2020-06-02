@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using MyPiggyBank.Data;
-using MyPiggyBank.Data.Repository;
 using Newtonsoft.Json;
 
 namespace MyPiggyBank.Integration.Test

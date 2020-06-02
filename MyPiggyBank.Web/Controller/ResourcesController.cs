@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Protocol.Query;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
@@ -11,7 +10,8 @@ namespace MyPiggyBank.Web.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class ResourcesController : ControllerBase {
+    public class ResourcesController : ControllerBase
+    {
         private readonly IResourcesService _resourcesService;
         public ResourcesController(IResourcesService resourcesService)
         {

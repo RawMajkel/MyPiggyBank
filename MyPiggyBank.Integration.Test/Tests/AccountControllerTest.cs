@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Protocol.Account.DTO;
+using MyPiggyBank.Core.Protocol.Account.Mappings;
+using MyPiggyBank.Core.Protocol.Account.Requests;
 using MyPiggyBank.Core.Service;
+using MyPiggyBank.Core.Protocol.Account;
 using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repository;
@@ -25,7 +28,8 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse() {
+        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse()
+        {
             //arrange
             var registerInput = new RegisterRequest()
             {
@@ -43,7 +47,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             //act
             await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
             var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
-            var authToken = response.Deserialize<LoginResponse>();
+            var authToken = response.Deserialize<AuthorizationToken>();
 
             //assert
             Assert.NotNull(authToken);
@@ -69,7 +73,7 @@ namespace MyPiggyBank.Integration.Test.Tests
 
             //assert
             Assert.NotEmpty(message);
-            Assert.True(message == ValidationResources.AccountService_User_NotFound);
+            Assert.True(message == AccountResources.AccountService_Authenticate_User_NotFound);
         }
 
         [Theory]
@@ -148,7 +152,7 @@ namespace MyPiggyBank.Integration.Test.Tests
 
         private IAccountsService CreateAccountService(MyPiggyBankContext context)
         {
-            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountsProfile>(); });
+            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
             IMapper mapper = mappingConf.CreateMapper();
 
             var userRepository = new UsersRepository(context);
@@ -164,11 +168,11 @@ namespace MyPiggyBank.Integration.Test.Tests
     {
         private readonly List<object[]> _passes = new List<object[]>()
         {
-            new object[] { string.Empty, ValidationResources.RegisterRequestValidator_Password_Empty_Error },
-            new object[] { "pas", ValidationResources.RegisterRequestValidator_Password_Length_Error },
-            new object[] { "pa$$word1", ValidationResources.RegisterRequestValidator_Password_UpperCaseLetter_Error },
-            new object[] { "Pa$$word", ValidationResources.RegisterRequestValidator_Password_Digit_Error },
-            new object[] { "Password1", ValidationResources.RegisterRequestValidator_Password_SpecialCharacter_Error },
+            new object[] { string.Empty, AccountResources.RegisterRequestValidator_Password_Empty_Error },
+            new object[] { "pas", AccountResources.RegisterRequestValidator_Password_Length_Error },
+            new object[] { "pa$$word1", AccountResources.RegisterRequestValidator_Password_UpperCaseLetter_Error },
+            new object[] { "Pa$$word", AccountResources.RegisterRequestValidator_Password_Digit_Error },
+            new object[] { "Password1", AccountResources.RegisterRequestValidator_Password_SpecialCharacter_Error },
         };
 
         public IEnumerator<object[]> GetEnumerator() => _passes.GetEnumerator();

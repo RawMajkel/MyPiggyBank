@@ -5,10 +5,8 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MyPiggyBank.Data;
-using MyPiggyBank.Data.Repository;
 
-namespace MyPiggyBank.Integration.Test
-{
+namespace MyPiggyBank.Integration.Test {
     public static class DbHelper
     {
         public static MyPiggyBankContext CreateDbInRuntimeMemory() 

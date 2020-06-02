@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Protocol.Query;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;

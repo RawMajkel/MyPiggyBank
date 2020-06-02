@@ -4,11 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyPiggyBank.Data;
-using MyPiggyBank.Data.Repository;
 
-namespace MyPiggyBank.Data.Migrations
-{
+namespace MyPiggyBank.Data.Migrations {
     [DbContext(typeof(MyPiggyBankContext))]
     partial class MyPiggyBankContextModelSnapshot : ModelSnapshot
     {

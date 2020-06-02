@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Protocol.Account.Requests;
 using MyPiggyBank.Core.Service;
 
 namespace MyPiggyBank.Web.Controllers

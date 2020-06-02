@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using MyPiggyBank.Core.Protocol;
-using MyPiggyBank.Core.Service;
-using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repository;
-using MyPiggyBank.Integration.Test.Responses;
+using MyPiggyBank.Data.Util;
 using Xunit;
 
-namespace MyPiggyBank.Integration.Test.Tests {
-    public class ResourcesControllerTest {
+namespace MyPiggyBank.Integration.Test.Tests
+{
+    public class ResourcesControllerTest
+    {
         private readonly RestApiClient _apiClient;
 
         public ResourcesControllerTest() {
@@ -22,8 +14,10 @@ namespace MyPiggyBank.Integration.Test.Tests {
         }
 
         [Fact]
-        public async void CreateResource_CorrectData_ShouldAddToDb() {
-            var inputResource = new Resource() {
+        public async void CreateResource_CorrectData_ShouldAddToDb()
+        {
+            var inputResource = new Resource()           
+            {
                 Name = "TestResource",
                 Value = 9000.01M,
                 Currency = "USD",

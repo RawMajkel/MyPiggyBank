@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyPiggyBank.Data;
-using MyPiggyBank.Data.Repository;
 
-namespace MyPiggyBank.Data.Migrations
-{
+namespace MyPiggyBank.Data.Migrations {
     [DbContext(typeof(MyPiggyBankContext))]
     [Migration("20200428205207_InitialMigration")]
     partial class InitialMigration
