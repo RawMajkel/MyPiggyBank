@@ -8,10 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyPiggyBank.Core.Communication.Account {
+namespace MyPiggyBank.Data {
     using System;
-    
-    
+    using System.Runtime.Serialization;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,14 +23,14 @@ namespace MyPiggyBank.Core.Communication.Account {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AccountResources {
+    public class ValidationResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AccountResources() {
+        internal ValidationResources() {
         }
         
         /// <summary>
@@ -39,7 +40,7 @@ namespace MyPiggyBank.Core.Communication.Account {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyPiggyBank.Core.Communication.Account.AccountResources", typeof(AccountResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyPiggyBank.Data.ValidationResources", typeof(ValidationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,15 +71,6 @@ namespace MyPiggyBank.Core.Communication.Account {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User not found..
-        /// </summary>
-        public static string AccountService_Authenticate_User_NotFound {
-            get {
-                return ResourceManager.GetString("AccountService_Authenticate_User_NotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This e-mail is already being used..
         /// </summary>
         public static string AccountService_Register_Email_Exists_Error {
@@ -93,6 +85,15 @@ namespace MyPiggyBank.Core.Communication.Account {
         public static string AccountService_Register_Username_Exists_Error {
             get {
                 return ResourceManager.GetString("AccountService_Register_Username_Exists_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found..
+        /// </summary>
+        public static string AccountService_User_NotFound {
+            get {
+                return ResourceManager.GetString("AccountService_User_NotFound", resourceCulture);
             }
         }
         
@@ -185,5 +186,16 @@ namespace MyPiggyBank.Core.Communication.Account {
                 return ResourceManager.GetString("RegisterRequestValidator_Password_UpperCaseLetter_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string s {
+            get {
+                return ResourceManager.GetString("s", resourceCulture);
+            }
+        }
+
+        public static SerializationInfo AccountService_Authenticate_User_NotFound { get; set; }
     }
 }

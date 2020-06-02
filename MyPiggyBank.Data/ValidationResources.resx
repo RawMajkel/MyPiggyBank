@@ -120,14 +120,14 @@
   <data name="AccountService_Authenticate_Password_Incorrect" xml:space="preserve">
     <value>Incorrect password.</value>
   </data>
-  <data name="AccountService_Authenticate_User_NotFound" xml:space="preserve">
-    <value>User not found.</value>
-  </data>
   <data name="AccountService_Register_Email_Exists_Error" xml:space="preserve">
     <value>This e-mail is already being used.</value>
   </data>
   <data name="AccountService_Register_Username_Exists_Error" xml:space="preserve">
     <value>A user with this name already exists.</value>
+  </data>
+  <data name="AccountService_User_NotFound" xml:space="preserve">
+    <value>User not found.</value>
   </data>
   <data name="LoginRequestValidator_Email_Empty_Error" xml:space="preserve">
     <value>E-mail address is required.</value>
@@ -158,5 +158,8 @@
   </data>
   <data name="RegisterRequestValidator_Password_UpperCaseLetter_Error" xml:space="preserve">
     <value>Password must contain at least one upper case letter.</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value />
   </data>
 </root>

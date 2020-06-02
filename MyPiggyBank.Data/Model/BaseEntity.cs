@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyPiggyBank.Data.Model.Base
+namespace MyPiggyBank.Data.Model
 {
     public abstract class BaseEntity
     {

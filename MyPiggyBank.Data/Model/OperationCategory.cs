@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyPiggyBank.Data.Model.Base;
+using MyPiggyBank.Data.Model;
 
 namespace MyPiggyBank.Data.Model {
     public class OperationCategory : BaseEntity

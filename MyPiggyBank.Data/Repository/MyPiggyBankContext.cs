@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MyPiggyBank.Data.Configuration;
 using MyPiggyBank.Data.Model;
 
-namespace MyPiggyBank.Data
+namespace MyPiggyBank.Data.Repository
 {
     public class MyPiggyBankContext : DbContext
     {
