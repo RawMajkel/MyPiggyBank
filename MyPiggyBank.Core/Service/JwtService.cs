@@ -4,11 +4,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MyPiggyBank.Core.Communication.Account.DTO;
-using MyPiggyBank.Core.Services.Account.Interface;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using MyPiggyBank.Core.Protocol;
 
-namespace MyPiggyBank.Core.Services.Account.Model
+namespace MyPiggyBank.Core.Service
 {
     public class JwtService : IJwtService
     {
