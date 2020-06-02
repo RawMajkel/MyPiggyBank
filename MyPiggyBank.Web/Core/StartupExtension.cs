@@ -11,14 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using MyPiggyBank.Core.Communication.Account.Mappings;
-using MyPiggyBank.Core.Communication.Account.Requests;
-using MyPiggyBank.Core.Services.Account.Interface;
-using MyPiggyBank.Core.Services.Account.Model;
-using MyPiggyBank.Data;
+using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Service;
 using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repositories.Interfaces;
-using MyPiggyBank.Data.Repositories.Models;
+using MyPiggyBank.Data.Repository;
 
 namespace MyPiggyBank.Web.Configuration
 {
@@ -70,17 +66,22 @@ namespace MyPiggyBank.Web.Configuration
             return service.ConfigureRepositories()
                           .AddTransient<IJwtService, JwtService>()
                           .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
-                          .AddTransient<IAccountService, AccountService>();
+                          .AddTransient<IAccountsService, AccountsService>()
+                          .AddTransient<IResourcesService, ResourcesService>()
+                          .AddTransient<IOperationsService, OperationsService>();
         }
 
         private static IServiceCollection ConfigureRepositories(this IServiceCollection service)
         {
-            return service.AddTransient<IUserRepository, UserRepository>();
+            return service
+                .AddTransient<IUsersRepository, UsersRepository>()
+                .AddTransient<IResourcesRepository, ResourcesRepository>()
+                .AddTransient<IOperationsRepository, OperationsRepository>();
         }
 
         private static IServiceCollection RegisterProfiles(this IServiceCollection service)
         {
-            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
+            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountsProfile>(); });
             IMapper mapper = mappingConf.CreateMapper();
 
             service.AddSingleton(mapper);
@@ -113,12 +114,13 @@ namespace MyPiggyBank.Web.Configuration
 
         private static IMvcBuilder RegisterValidators(this IMvcBuilder builder)
         { 
-            return builder
-                    .AddFluentValidation(fv =>
-                    {
-                        fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>();
-                        fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
-                    });
+            return builder.AddFluentValidation(fv => {
+                fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>();
+            });
         }
     }
 }

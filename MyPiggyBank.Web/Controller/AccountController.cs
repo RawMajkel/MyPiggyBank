@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Communication.Account.Requests;
-using MyPiggyBank.Core.Services.Account.Interface;
+using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Service;
 
 namespace MyPiggyBank.Web.Controllers
 {
@@ -10,10 +10,10 @@ namespace MyPiggyBank.Web.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountsService _accountService;
         private readonly IJwtService _jwtService;
 
-        public AccountController(IAccountService accountService, IJwtService jwtService)
+        public AccountController(IAccountsService accountService, IJwtService jwtService)
         {
             _accountService = accountService;
             _jwtService = jwtService;
@@ -34,7 +34,7 @@ namespace MyPiggyBank.Web.Controllers
         }
 
         [HttpPost(nameof(Login))]
-        public async Task<ActionResult> Login([FromBody] LoginRequest input)
+        public async Task<IActionResult> Login([FromBody] LoginRequest input)
         {
             try
             {
