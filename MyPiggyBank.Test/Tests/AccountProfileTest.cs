@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyPiggyBank.Core.Communication.Account.Mappings;
+using MyPiggyBank.Core.Protocol;
 using Xunit;
 
 namespace MyPiggyBank.Test.Account
@@ -12,7 +12,7 @@ namespace MyPiggyBank.Test.Account
         {
             _mapperConfiguration = new MapperConfiguration(c =>
             {
-                c.AddProfile<AccountProfile>();
+                c.AddProfile<AccountsProfile>();
             });
         }
 

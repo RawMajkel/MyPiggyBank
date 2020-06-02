@@ -4,39 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using MyPiggyBank.Core.Communication.Account;
-using MyPiggyBank.Core.Communication.Account.DTO;
-using MyPiggyBank.Core.Communication.Account.Mappings;
-using MyPiggyBank.Core.Communication.Account.Requests;
-using MyPiggyBank.Core.Services.Account.Interface;
-using MyPiggyBank.Core.Services.Account.Model;
+using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Core.Service;
 using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repositories.Models;
+using MyPiggyBank.Data.Repository;
 using MyPiggyBank.Integration.Test.Responses;
 using Xunit;
 
-namespace MyPiggyBank.Integration.Test.Account
+namespace MyPiggyBank.Integration.Test.Tests
 {
-    public class AccountServiceTest
+    public class AccountControllerTest
     {
-        private IAccountService _service;
+        private IAccountsService _service;
         private readonly RestApiClient _apiClient;
 
-        public AccountServiceTest()
+        public AccountControllerTest()
         {
             _apiClient = new RestApiClient();
         }
 
         [Fact]
-        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse()
-        {
+        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse() {
             //arrange
             var registerInput = new RegisterRequest()
             {
                 Email = "email@gmail.com",
                 Password = "Pa$$word1",
-                UserName = "TestUser"
+                Username = "TestUser"
             };
             var loginInput = new LoginRequest()
             {
@@ -74,7 +69,7 @@ namespace MyPiggyBank.Integration.Test.Account
 
             //assert
             Assert.NotEmpty(message);
-            Assert.True(message == AccountResources.AccountService_Authenticate_User_NotFound);
+            Assert.True(message == ValidationResources.AccountService_User_NotFound);
         }
 
         [Theory]
@@ -86,7 +81,7 @@ namespace MyPiggyBank.Integration.Test.Account
             {
                 Email = "email@gmail.com",
                 Password = "Pa$$word1",
-                UserName = "TestUser"
+                Username = "TestUser"
             };
             var loginInput = new LoginRequest()
             {
@@ -105,15 +100,15 @@ namespace MyPiggyBank.Integration.Test.Account
         }
 
         [Theory, ClassData(typeof(IncorrectPasswordData))]
-        public async void RegisterUser_IncorrectPassword_ShouldReturnValidationMessage(string incorrectPassword,
-            string validationMessage)
+        public async void RegisterUser_IncorrectPassword_ShouldReturnValidationMessage(
+            string incorrectPassword, string validationMessage)
         {
             //arrange
             var registerInput = new RegisterRequest()
             {
                 Email = "test@gmail.com",
                 Password = incorrectPassword,
-                UserName = "testUser"
+                Username = "testUser"
             };
 
             //act
@@ -135,7 +130,7 @@ namespace MyPiggyBank.Integration.Test.Account
             {
                 Email = "tesMail@gmail.com",
                 Password = "Pass1",
-                UserName = "User1"
+                Username = "User1"
             };
 
             //act
@@ -147,18 +142,18 @@ namespace MyPiggyBank.Integration.Test.Account
             Assert.NotNull(entity);
             Assert.NotEqual(Guid.Empty, entity.Id);
             Assert.True(entity.Email == user.Email);
-            Assert.True(entity.Username == user.UserName);
+            Assert.True(entity.Username == user.Username);
             Assert.NotNull(entity.PasswordHash);
         }
 
-        private IAccountService CreateAccountService(MyPiggyBankContext context)
+        private IAccountsService CreateAccountService(MyPiggyBankContext context)
         {
-            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
+            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountsProfile>(); });
             IMapper mapper = mappingConf.CreateMapper();
 
-            var userRepository = new UserRepository(context);
+            var userRepository = new UsersRepository(context);
 
-            return new AccountService(
+            return new AccountsService(
                 repository: userRepository,
                 hasher: new PasswordHasher<User>(),
                 mapper: mapper);
@@ -169,11 +164,11 @@ namespace MyPiggyBank.Integration.Test.Account
     {
         private readonly List<object[]> _passes = new List<object[]>()
         {
-            new object[] { string.Empty, AccountResources.RegisterRequestValidator_Password_Empty_Error },
-            new object[] { "pas", AccountResources.RegisterRequestValidator_Password_Length_Error },
-            new object[] { "pa$$word1", AccountResources.RegisterRequestValidator_Password_UpperCaseLetter_Error },
-            new object[] { "Pa$$word", AccountResources.RegisterRequestValidator_Password_Digit_Error },
-            new object[] { "Password1", AccountResources.RegisterRequestValidator_Password_SpecialCharacter_Error },
+            new object[] { string.Empty, ValidationResources.RegisterRequestValidator_Password_Empty_Error },
+            new object[] { "pas", ValidationResources.RegisterRequestValidator_Password_Length_Error },
+            new object[] { "pa$$word1", ValidationResources.RegisterRequestValidator_Password_UpperCaseLetter_Error },
+            new object[] { "Pa$$word", ValidationResources.RegisterRequestValidator_Password_Digit_Error },
+            new object[] { "Password1", ValidationResources.RegisterRequestValidator_Password_SpecialCharacter_Error },
         };
 
         public IEnumerator<object[]> GetEnumerator() => _passes.GetEnumerator();

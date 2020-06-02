@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MyPiggyBank.Data;
+using MyPiggyBank.Data.Repository;
 
 namespace MyPiggyBank.Integration.Test
 {

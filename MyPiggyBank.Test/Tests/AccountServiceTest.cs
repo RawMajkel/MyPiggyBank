@@ -6,20 +6,18 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using System.Linq.Expressions;
-using MyPiggyBank.Core.Communication.Account;
-using MyPiggyBank.Core.Communication.Account.Mappings;
-using MyPiggyBank.Core.Communication.Account.Requests;
-using MyPiggyBank.Core.Services.Account.Interface;
-using MyPiggyBank.Core.Services.Account.Model;
-using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repositories.Interfaces;
 using Xunit;
+using MyPiggyBank.Core.Service;
+using MyPiggyBank.Core.Protocol;
+using MyPiggyBank.Data.Model;
+using MyPiggyBank.Data;
+using MyPiggyBank.Data.Repository;
 
 namespace MyPiggyBank.Test.Account
 {
     public class AccountServiceTest
     {
-        private readonly IAccountService _accountService;
+        private readonly IAccountsService _accountService;
         private readonly List<User> _dbUsers;
 
         public AccountServiceTest()
@@ -37,9 +35,9 @@ namespace MyPiggyBank.Test.Account
 
             var passHasher = CreatePassHashMock();
             var userRepositoryMock = CreateMockUserRepository();
-            var mapper = new MapperConfiguration(c => { c.AddProfile<AccountProfile>(); }).CreateMapper();
+            var mapper = new MapperConfiguration(c => { c.AddProfile<AccountsProfile>(); }).CreateMapper();
 
-            _accountService = new AccountService(userRepositoryMock.Object, passHasher.Object, mapper);
+            _accountService = new AccountsService(userRepositoryMock.Object, passHasher.Object, mapper);
         }
 
         [Fact]
@@ -56,7 +54,7 @@ namespace MyPiggyBank.Test.Account
 
             //assert
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
-            Assert.True(exception.Message == AccountResources.AccountService_Register_Email_Exists_Error);
+            Assert.True(exception.Message == ValidationResources.AccountService_Register_Email_Exists_Error);
         }
 
         [Fact]
@@ -66,7 +64,7 @@ namespace MyPiggyBank.Test.Account
             var registerInput = new RegisterRequest()
             {
                 Email = "newTest@mail.com",
-                UserName = "Test"
+                Username = "Test"
             };
 
             //act
@@ -74,7 +72,7 @@ namespace MyPiggyBank.Test.Account
 
             //assert
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
-            Assert.True(exception.Message == AccountResources.AccountService_Register_Username_Exists_Error);
+            Assert.True(exception.Message == ValidationResources.AccountService_Register_Username_Exists_Error);
         }
 
         [Fact]
@@ -94,7 +92,7 @@ namespace MyPiggyBank.Test.Account
             var entity = _dbUsers.FirstOrDefault(u => u.Email.ToLower() == loginInput.Email.ToLower());
             Assert.NotNull(accountInfo);
             Assert.True(accountInfo.Id == entity.Id);
-            Assert.True(accountInfo.UserName == entity.Username);
+            Assert.True(accountInfo.Username == entity.Username);
             Assert.True(accountInfo.Email == entity.Email);
         }
 
@@ -113,7 +111,7 @@ namespace MyPiggyBank.Test.Account
 
             //assert
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
-            Assert.True(exception.Message == AccountResources.AccountService_Authenticate_User_NotFound);
+            Assert.True(exception.Message == ValidationResources.AccountService_User_NotFound);
         }
 
         [Fact]
@@ -131,7 +129,7 @@ namespace MyPiggyBank.Test.Account
 
             //assert
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
-            Assert.True(exception.Message == AccountResources.AccountService_Authenticate_Password_Incorrect);
+            Assert.True(exception.Message == ValidationResources.AccountService_Authenticate_Password_Incorrect);
         }
 
         [Fact]
@@ -149,12 +147,12 @@ namespace MyPiggyBank.Test.Account
 
             //assert
             var exception = await Assert.ThrowsAsync<ArgumentException>(act);
-            Assert.True(exception.Message == AccountResources.AccountService_Authenticate_User_NotFound);
+            Assert.True(exception.Message == ValidationResources.AccountService_User_NotFound);
         }
 
-        private Mock<IUserRepository> CreateMockUserRepository()
+        private Mock<IUsersRepository> CreateMockUserRepository()
         {
-            var userRepositoryMock = new Mock<IUserRepository>();
+            var userRepositoryMock = new Mock<IUsersRepository>();
             userRepositoryMock
                 .Setup(ur => ur.GetByEmail(It.IsAny<string>()))
                 .Returns<string>((email) =>
