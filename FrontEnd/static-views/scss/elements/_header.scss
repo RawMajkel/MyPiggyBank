@@ -1,0 +1,101 @@
+/*
+* _header.scss
+*/
+
+$headerBackgroundColor: #f3f3f3;
+
+$header: '.header';
+#{$header} {
+    background-color: $headerBackgroundColor;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+}
+
+$navigation: '.navigation';
+#{$navigation} {
+    z-index: 100;
+    background-color: $headerBackgroundColor;
+    top: 0;
+    left: 0;
+    padding: 12px 0;
+
+    &__bars {
+        margin-right: 20px;
+        font-size: 22px;
+    }
+
+    &__label {
+        font-size: 18px;
+    }
+
+    &__a {
+        font-size: 18px;
+        color: #333;
+        padding: 2px 0;
+    }
+
+    &__hr {
+        border-color: rgba(0,0,0,.2) !important;
+    }
+
+    &__icon {
+        margin-right: 5px;
+        width: 18px;
+    }
+
+    &__copy {
+        margin-top: 30px;
+    }
+
+    &__copy-label {
+        font-size: 12px;
+    }
+
+    &__name {
+        margin-bottom: 15px;
+        font-size: 16px;
+        color: #444;
+    }
+
+    &__side-menu {
+        height: 100vh;
+        padding: 20px;
+        max-width: 80vw;
+        top: 0;
+        left: -80vw;
+        background-color: #eee;
+        box-shadow: 1px 1px 5px rgba(0,0,0,0.25);
+
+        @include transition(transform 300ms ease-in-out);
+    }
+
+    &__trigger:focus ~ &__side-menu, &__side-menu:hover {
+        @include transform(translateX, 80vw); 
+    }
+}
+
+$indexPanel: '.index-panel';
+#{$indexPanel} {
+    &__row {
+        padding: 20px 10px 30px;
+    }
+
+    &__info {
+        font-size: 14px;
+    }
+
+    &__available &__value {
+        font-size: 26px;
+    }
+
+    &__value--gutter {
+        margin-bottom: 15px;
+    }
+
+    &__circle {
+        max-width: 90px;
+    }
+
+    &__transactions {
+        margin-top: 10px;
+    }
+}
