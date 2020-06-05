@@ -1,0 +1,20 @@
+/*
+* style.scss
+*/
+
+@import 'variables';
+@import 'global/main';
+
+/* elements */
+@import 'elements/header';
+@import 'elements/footer';
+@import 'elements/latest';
+@import 'elements/resources';
+
+/* additional libraries */
+@import 'global/bootstrap-4.5.0/bootstrap';
+
+@import 'global/fontawesome-free-5.13-web/fontawesome';
+@import 'global/fontawesome-free-5.13-web/regular';
+@import 'global/fontawesome-free-5.13-web/solid';
+@import 'global/fontawesome-free-5.13-web/brands';
