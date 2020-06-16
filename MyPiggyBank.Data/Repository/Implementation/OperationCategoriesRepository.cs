@@ -2,8 +2,8 @@
 
 namespace MyPiggyBank.Data.Repository.Implementation
 {
-    class OperationsCategoryRepository : BaseRepository<OperationCategory>, IOperationsCategoryRepository
+    class OperationCategoriesRepository : BaseRepository<OperationCategory>, IOperationCategoriesRepository
     {
-        public OperationsCategoryRepository(MyPiggyBankContext context) : base(context) { }
+        public OperationCategoriesRepository(MyPiggyBankContext context) : base(context) { }
     }
 }
