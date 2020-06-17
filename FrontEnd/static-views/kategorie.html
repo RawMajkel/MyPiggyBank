@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="pl-PL" style="box-sizing:border-box;-ms-overflow-style:scrollbar" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>PiggyBank - static view</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="js/progressbar.min.js"></script>
+    <script src="js//customScripts.js" defer></script>
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+    <script>
+        const html = document.getElementsByTagName('html')[0]; html.className&&(html.className=html.className.replace(/no-js\s?/, '')); html.removeAttribute('class');
+    </script>
+</head>
+<body class="d-flex flex-column" style="min-height:100vh">
+    <div class="header header--index">
+        <nav class="navigation position-fixed w-100">
+            <div class="container">
+                <div class="navigation__row d-flex align-items-center justify-content-start">
+                    <button class="navigation__trigger d-flex align-items-center justify-content-start" style="border:none;background-color:transparent">
+                        <i class="navigation__bars color-second fas fa-bars"></i>
+                    </button>
+                    <aside class="navigation__side-menu w-100 position-absolute">
+                        <div class="navigation__name text-uppercase">Michał Droździk</div>
+                        <hr class="navigation__hr">
+                        <ul class="navigation__ul">
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="profil.html">
+                                    <i class="fas fa-user navigation__icon"></i>
+                                    <span class="navigation__span">Moje konto</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="kategorie.html">
+                                    <i class="fas fa-list-ul navigation__icon"></i>
+                                    <span class="navigation__span">Moje kategorie</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="ocen.html">
+                                    <i class="fas fa-star navigation__icon"></i>
+                                    <span class="navigation__span">Oceń aplikację</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="ustawienia.html">
+                                    <i class="fas fa-cog navigation__icon"></i>
+                                    <span class="navigation__span">Ustawienia</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block">
+                                    <i class="fas fa-sign-out-alt navigation__icon"></i>
+                                    <span class="navigation__span">Wyloguj</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="navigation__copy">
+                            <span class="navigation__copy-label d-block">&copy; 2020 Wszystkie prawa zastrzeżone</span>
+                            <span class="navigation__copy-label d-block">MyPiggyBank v.1.0</span>
+                        </div>
+                    </aside>
+                    <span class="navigation__label d-block">Kategorie</span>
+                </div>
+            </div>
+        </nav>
+    </div> <!-- header end -->
+    <div class="resources section">
+        <div class="container">
+            <span class="resources___heading heading d-block font-weight-600">Lista kategorii:</span>
+            <div class="resources__list">
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Zdrowie</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Jedzenie</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Samochód</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Rozrywka</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Edukacja</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="resources__item d-flex align-items-center justify-content-between">
+                    <div class="resources__content d-flex align-items-center justify-content-start">
+                        <i class="fas fa-bookmark resources__img"></i>
+                        <div class="resources__desc">
+                            <div class="resources__title">Inne</div>
+                        </div>
+                    </div>
+                    <div class="resource__close">
+                        <a class="resources__label d-flex align-items-center justify-content-start color-second" href="#">
+                            Usuń 
+                            <i class="fas fa-times-circle resources__icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a class="button d-inline-flex align-items-center justify-content-start">
+                <i class="fas fa-plus button__icon color-white"></i>
+                <span class="color-white">Dodaj kategorię</span>
+            </a>  
+        </div>
+    </div>
+    <nav class="footernav position-fixed w-100">
+        <div class="container">
+            <ul class="footernav__ul d-flex flex-nowrap align-items-center justify-content-around">
+                <li class="footernav__item">
+                    <a href="index.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-home"></i>
+                        <span class="footernav__label">Pulpit</span>
+                    </a>
+                </li>
+                <li class="footernav__item footernav__item--active">
+                    <a href="rachunki.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-credit-card"></i>
+                        <span class="footernav__label">Rachunki</span>
+                    </a>
+                </li>
+                <li class="footernav__item">
+                    <a href="finanse.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-wallet"></i>
+                        <span class="footernav__label">Finanse</span>
+                    </a>
+                </li>
+                <li class="footernav__item">
+                    <a href="transakcje.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-exchange-alt"></i>
+                        <span class="footernav__label">Transakcje</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav> <!-- nav end -->
+</body>
+</html>
