@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyPiggyBank.Core.Service
 {
-    public class CyclicOperationsService
+    public class CyclicOperationsService : ICyclicOperationsService
     {
         private readonly ICyclicOperationRepository _repository;
         public CyclicOperationsService(ICyclicOperationRepository repository)

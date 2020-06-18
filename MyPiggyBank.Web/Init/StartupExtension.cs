@@ -73,6 +73,7 @@ namespace MyPiggyBank.Web
                           .AddTransient<IAccountsService, AccountsService>()
                           .AddTransient<IOperationCategoriesService, OperationCategoriesService>()
                           .AddTransient<IResourcesService, ResourcesService>()
+                          .AddTransient<ICyclicOperationsService, CyclicOperationsService>()
                           .AddTransient<IOperationsService, OperationsService>();
         }
 
@@ -82,6 +83,7 @@ namespace MyPiggyBank.Web
                 .AddTransient<IUsersRepository, UsersRepository>()
                 .AddTransient<IResourcesRepository, ResourcesRepository>()
                 .AddTransient<IOperationCategoriesRepository, OperationCategoriesRepository>()
+                .AddTransient<ICyclicOperationRepository, CyclicOperationsRepository>()
                 .AddTransient<IOperationsRepository, OperationsRepository>();
         }
 
