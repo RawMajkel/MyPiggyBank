@@ -128,6 +128,8 @@ namespace MyPiggyBank.Web
                 fv.RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator>();
                 fv.RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>();
                 fv.RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>();
             });
         }
     }
