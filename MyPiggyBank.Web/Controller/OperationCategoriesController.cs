@@ -34,7 +34,18 @@ namespace MyPiggyBank.Web.Controller
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await _operationCategoriesService.Get(id));
+        {
+            try
+            {
+                await _operationCategoriesService.Get(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpPut("{id:guid}")]
         public void Put(Guid id, [FromBody] OperationCategory opc)
