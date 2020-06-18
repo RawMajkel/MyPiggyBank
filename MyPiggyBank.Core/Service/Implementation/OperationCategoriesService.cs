@@ -1,6 +1,6 @@
 ﻿using MyPiggyBank.Core.Protocol.Query;
 using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repository.Implementation;
+using MyPiggyBank.Data.Repository;
 using MyPiggyBank.Data.Util;
 using System;
 using System.Collections.Generic;

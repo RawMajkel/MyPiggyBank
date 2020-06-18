@@ -15,6 +15,7 @@ using MyPiggyBank.Core.Protocol.Account.Mappings;
 using MyPiggyBank.Core.Protocol.Account.Validators;
 using MyPiggyBank.Core.Protocol.Query.Validators;
 using MyPiggyBank.Core.Service;
+using MyPiggyBank.Core.Service.Implementation;
 using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repository;
@@ -70,6 +71,7 @@ namespace MyPiggyBank.Web
                           .AddTransient<IJwtService, JwtService>()
                           .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
                           .AddTransient<IAccountsService, AccountsService>()
+                          .AddTransient<IOperationCategoriesService, OperationCategoriesService>()
                           .AddTransient<IResourcesService, ResourcesService>()
                           .AddTransient<IOperationsService, OperationsService>();
         }
@@ -79,6 +81,7 @@ namespace MyPiggyBank.Web
             return service
                 .AddTransient<IUsersRepository, UsersRepository>()
                 .AddTransient<IResourcesRepository, ResourcesRepository>()
+                .AddTransient<IOperationCategoriesRepository, OperationCategoriesRepository>()
                 .AddTransient<IOperationsRepository, OperationsRepository>();
         }
 

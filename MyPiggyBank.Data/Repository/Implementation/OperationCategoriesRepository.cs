@@ -1,8 +1,8 @@
 ﻿using MyPiggyBank.Data.Model;
 
-namespace MyPiggyBank.Data.Repository.Implementation
+namespace MyPiggyBank.Data.Repository
 {
-    class OperationCategoriesRepository : BaseRepository<OperationCategory>, IOperationCategoriesRepository
+    public class OperationCategoriesRepository : BaseRepository<OperationCategory>, IOperationCategoriesRepository
     {
         public OperationCategoriesRepository(MyPiggyBankContext context) : base(context) { }
     }
