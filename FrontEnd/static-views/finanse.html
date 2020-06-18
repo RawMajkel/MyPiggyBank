@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html lang="pl-PL" style="box-sizing:border-box;-ms-overflow-style:scrollbar" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <title>PiggyBank - static view</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/progressbar.min.js"></script>
+    <script src="js//customScripts.js" defer></script>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+
+    <script>
+        const html = document.getElementsByTagName('html')[0]; html.className&&(html.className=html.className.replace(/no-js\s?/, '')); html.removeAttribute('class');
+    </script>
+</head>
+<body class="d-flex flex-column" style="min-height:100vh">
+    <div class="header header--index">
+        <nav class="navigation position-fixed w-100">
+            <div class="container">
+                <div class="navigation__row d-flex align-items-center justify-content-start">
+                    <button class="navigation__trigger d-flex align-items-center justify-content-start" style="border:none;background-color:transparent">
+                        <i class="navigation__bars color-second fas fa-bars"></i>
+                    </button>
+                    <aside class="navigation__side-menu w-100 position-absolute">
+                        <div class="navigation__name text-uppercase">Michał Droździk</div>
+                        <hr class="navigation__hr">
+                        <ul class="navigation__ul">
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="profil.html">
+                                    <i class="fas fa-user navigation__icon"></i>
+                                    <span class="navigation__span">Moje konto</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="kategorie.html">
+                                    <i class="fas fa-list-ul navigation__icon"></i>
+                                    <span class="navigation__span">Moje kategorie</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="ocen.html">
+                                    <i class="fas fa-star navigation__icon"></i>
+                                    <span class="navigation__span">Oceń aplikację</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block" href="ustawienia.html">
+                                    <i class="fas fa-cog navigation__icon"></i>
+                                    <span class="navigation__span">Ustawienia</span>
+                                </a>
+                            </li>
+                            <li class="navigation__li">
+                                <a class="navigation__a line-2 d-block">
+                                    <i class="fas fa-sign-out-alt navigation__icon"></i>
+                                    <span class="navigation__span">Wyloguj</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="navigation__copy">
+                            <span class="navigation__copy-label d-block">&copy; 2020 Wszystkie prawa zastrzeżone</span>
+                            <span class="navigation__copy-label d-block">MyPiggyBank v.1.0</span>
+                        </div>
+                    </aside>
+                    <span class="navigation__label d-block">Finanse</span>
+                </div>
+            </div>
+        </nav>
+    </div> <!-- header end -->
+
+    <div class="latest section">
+        <div class="container">
+            <span class="latest__heading heading d-block font-weight-600">Operacje cykliczne:</span>
+            <div class="latest-group">
+                <div class="latest-group__date position-relative w-100 d-flex align-items-center justify-content-start">
+                    <span class="latest-group__datelabel w-100 text-uppercase font-weight-600">Coroczne</span>
+                </div>
+                <div class="latest-group__list">
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-reply color-red"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Samochód OC</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right">1300,00 zł</span>
+                        </div>
+                    </div>
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-reply color-red"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Ubezpieczenie</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right">800,99 zł</span>
+                        </div>
+                    </div>
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-reply color-red"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Hostingi</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right">179,00 zł</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="latest-group">
+                <div class="latest-group__date position-relative w-100 d-flex align-items-center justify-content-start">
+                    <span class="latest-group__datelabel w-100 text-uppercase font-weight-600">Comiesięczne</span>
+                </div>
+                <div class="latest-group__list">
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-share color-green"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Wypłata</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right color-green">12,000 zł</span>
+                        </div>
+                    </div>
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-share color-green"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Wynajem</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right color-green">15,000 zł</span>
+                        </div>
+                    </div>
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-reply color-red"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Spotify</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right">19,99 zł</span>
+                        </div>
+                    </div>
+                    <div class="latest-item d-flex align-items-center flex-nowrap justify-content-start">
+                        <i class="latest-item__icon fas fa-reply color-red"></i>
+                        <div class="latest-item__desc d-flex w-100 justify-content-between align-items-center">
+                            <div class="latest-item__title line-1 text-uppercase">Siłownia</div>
+                            <span class="latest-item__value font-weight-500 w-100 text-right">79,99 zł</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="footernav position-fixed w-100">
+        <div class="container">
+            <ul class="footernav__ul d-flex flex-nowrap align-items-center justify-content-around">
+                <li class="footernav__item">
+                    <a href="index.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-home"></i>
+                        <span class="footernav__label">Pulpit</span>
+                    </a>
+                </li>
+                <li class="footernav__item">
+                    <a href="rachunki.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-credit-card"></i>
+                        <span class="footernav__label">Rachunki</span>
+                    </a>
+                </li>
+                <li class="footernav__item footernav__item--active">
+                    <a href="finanse.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-wallet"></i>
+                        <span class="footernav__label">Finanse</span>
+                    </a>
+                </li>
+                <li class="footernav__item">
+                    <a href="transakcje.html" class="footernav__a d-flex flex-column align-items-center">
+                        <i class="footernav__icon fas fa-exchange-alt"></i>
+                        <span class="footernav__label">Transakcje</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav> <!-- nav end -->
+</body>
+</html>

@@ -1,0 +1,278 @@
+/*
+* main.css
+*/
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 60px;
+    margin-bottom: 61px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+a:any-link {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+}
+
+li.bottom-navigation__item a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+
+span.bottom-navigation__label {
+    font-size: 10px;
+}
+
+svg.bottom-navigation__icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+li.bottom-navigation__item.bottom-navigation__item--active svg.bottom-navigation__icon {
+    font-weight: 700;
+}
+
+li.bottom-navigation__item.bottom-navigation__item--active span.bottom-navigation__label {
+    font-weight: 700;
+}
+
+.hamburger {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 30px;
+    position: relative;
+    z-index: 99999;
+}
+
+.logo {
+    line-height: 1.2;
+    font-size: 20px;
+}
+
+.header {
+    padding: 15px 0;
+    background-color: #eee;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+    position: fixed;
+    width: 100%;
+    top:0;
+    left:0;
+}
+
+.content {
+    padding: 25px 0;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+.bottom-navigation {
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #eee;
+    border-top: 1px solid #ccc;
+}
+
+.bottom-navigation ul {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.list {
+    margin-top: 20px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 0;
+}
+
+.list-item:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+.list-item__img {
+    margin-right: 10px;
+}
+
+.list--item__desc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.list--item__title {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.list--item__amount {
+    font-size: 10px;
+}
+
+.nav-show {
+    opacity: 0;
+    visibility: hidden; 
+    width: 0;
+    
+    position: fixed;
+    transition: all 300ms ease;
+    right: 0;
+    top: -8px;
+    height: 100vh;
+    background-color: #ddd;
+    padding: 17px 20px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+}
+
+.nav-show ul {
+    list-style: disc;
+    list-style-position: inside;
+    margin-top: 70px;
+}
+
+.nav-show li {
+    line-height: 2.4;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: inherit;
+}
+
+.person__name {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.content-inner {
+    margin-top: 15px;
+}
+
+.content-inner > p {
+    line-height: 1.7;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+.content-inner hr {
+    display: block;
+    width: 100%;
+    margin: 16px auto;
+    height: 1px;
+    outline: 0;
+    border: 0;
+    background-color: rgba(0,0,0,.2);
+}
+
+.content-inner h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+
+span.latest-group__date {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.latest p {
+    margin:0;
+    padding:0;
+}
+
+.latest-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin: 12px 0;
+}
+
+.latest-item__desc {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.latest-item__icon {
+    font-size: 26px;
+    margin-right: 10px;
+    color: blue;
+}
+
+.latest-group:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+p.latest-item__title {
+    font-size: 12px;
+    line-height: 1.1;
+    margin-right: 35px;
+}
+
+span.latest-item__amount {
+    font-size: 10px;
+    font-weight: 700;
+    width: 100%;
+    max-width: 57px;
+    text-align: right;
+}
+
+span.latest-item__cat {
+    font-style: italic;
+    text-decoration: underline;
+}
+
+.latest-item__amount--cost {
+    color: red;
+}
+
+.latest-item__amount--gain {
+    color: green;
+}
+
+a.btn {
+    font-size: 12px;
+    padding: 0.175rem 0.35rem;
+}
+
+label {
+    margin-top: 1rem;
+}
+
+.delete-icon {
+    font-size: 16px !important;
+}

@@ -1,0 +1,38 @@
+/*
+* _resources.scss
+*/
+
+$resources: '.resources';
+#{$resources} {
+    &__item:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+    }
+
+    &__item {
+        padding: 12px 0;
+    }
+
+    &__title {
+        font-size: 14px;
+    }
+
+    &__value {
+        font-size: 12px;
+    }
+
+    &__img {
+        margin-right: 6px;
+        font-size: 30px;
+        width: 40px;
+        color: #589F69;
+    }
+
+    &__label {
+        font-size: 12px;
+    }
+
+    &__icon {
+        font-size: 22px;
+        margin-left: 5px;
+    }
+}
