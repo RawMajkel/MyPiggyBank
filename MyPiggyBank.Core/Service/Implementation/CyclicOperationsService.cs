@@ -15,9 +15,9 @@ namespace MyPiggyBank.Core.Service
           => _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         public PagedList<CyclicOperation> GetCyclicOperations(CyclicOperationsQuery query)
             => PagedList<CyclicOperation>.ToPagedList(_repository.GetAll()
-               .Where(o => query.User == Guid.Empty || o.OperationCategory.UserId == query.User)
-               .Where(o => query.Resource == Guid.Empty || o.ResourceId == query.Resource)
-               .Where(o => query.OperationCategory == Guid.Empty || o.OperationCategoryId == query.OperationCategory)
+               .Where(o => o.OperationCategory.UserId == query.User)
+               .Where(o => o.ResourceId == query.Resource)
+               .Where(o => o.OperationCategoryId == query.OperationCategory)
                .Where(o => o.IsIncome == (query.IsIncome ?? o.IsIncome))
                .Where(o => o.Name == (query.Name ?? o.Name))
                .Where(o => o.EstimatedValue >= (query.MinEstimatedValue ?? o.EstimatedValue))
