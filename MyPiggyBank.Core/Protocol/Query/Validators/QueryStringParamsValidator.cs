@@ -2,7 +2,7 @@
 
 namespace MyPiggyBank.Core.Protocol.Query.Validators
 {
-    public class QueryStringParamsValidator : AbstractValidator<QueryStringParams>
+    public class QueryStringParamsValidator<T> : AbstractValidator<T> where T : QueryStringParams
     {
         public QueryStringParamsValidator()
         {

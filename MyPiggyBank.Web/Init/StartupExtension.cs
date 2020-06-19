@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Protocol.Account.Mappings;
 using MyPiggyBank.Core.Protocol.Account.Validators;
+using MyPiggyBank.Core.Protocol.Query;
 using MyPiggyBank.Core.Protocol.Query.Validators;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Core.Service.Implementation;
@@ -125,7 +126,7 @@ namespace MyPiggyBank.Web
             return builder.AddFluentValidation(fv => {
                 fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>();
                 fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator>();
+                fv.RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator<QueryStringParams>>();
                 fv.RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>();
                 fv.RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>();
                 fv.RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>();

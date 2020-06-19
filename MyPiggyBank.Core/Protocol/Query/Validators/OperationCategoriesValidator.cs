@@ -2,7 +2,7 @@
 
 namespace MyPiggyBank.Core.Protocol.Query.Validators
 {
-    public class OperationCategoriesValidator : AbstractValidator<OperationCategoriesQuery>
+    public class OperationCategoriesValidator : QueryStringParamsValidator<OperationCategoriesQuery>
     {
         public OperationCategoriesValidator()
         {
