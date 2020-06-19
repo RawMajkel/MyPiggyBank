@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using MyPiggyBank.Core.Protocol.Base;
 using MyPiggyBank.Data.Model;
 using System;
 
-namespace MyPiggyBank.Core.Protocol.Query {
+namespace MyPiggyBank.Core.Protocol.Operation
+{
     public class OperationsQuery : QueryStringParams
     {
         public string Name { get; set; }
