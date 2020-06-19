@@ -6,7 +6,14 @@ namespace MyPiggyBank.Core.Protocol.Query.Validators
     {
         public ResourcesQueryValidator()
         {
-            // TODO validation rules
+            RuleFor(q => q.Name)
+                .NotEmpty()
+                .Length(1, 50)
+                .WithMessage("Length of Resource name should be between 1 and 50.");
+
+            RuleFor(q => q)
+                .Must(res => ((res.MinValue == null || res.MaxValue == null) || res.MinValue <= res.MaxValue))
+                .WithMessage("Min value can't be higher than max value");
         }
     }
 }
