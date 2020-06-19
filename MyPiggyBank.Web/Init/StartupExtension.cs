@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,75 +18,65 @@ using MyPiggyBank.Core.Service.Implementation;
 using MyPiggyBank.Data;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repository;
+using System;
+using System.Text;
 
-namespace MyPiggyBank.Web
-{
+namespace MyPiggyBank.Web {
     public static class StartupExtension
     {
         public static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
-            app.UseHttpsRedirection();
-
-            app.UseCors(c =>
-            {
-                c.AllowAnyOrigin();
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-            });
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-        public static IServiceCollection ConfigureMyPiggyBankContext(this IServiceCollection service, IConfiguration configuration)
-        {
-            return service.AddDbContext<MyPiggyBankContext>(opt =>
-                opt.UseLazyLoadingProxies()
-                    .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))));
-        }
-        public static IMvcBuilder Configure(this IServiceCollection service, IConfiguration configuration)
-        {
-            return service
-                    .ConfigureJwtToken(configuration)
-                    .RegisterProfiles()
-                    .RegisterServices()
-                    .AddControllers()
-                    .RegisterValidators();
+            app.UseHttpsRedirection()
+               .UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
+               .UseRouting()
+               .UseAuthorization()
+               .UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
-        private static IServiceCollection RegisterServices(this IServiceCollection service)
-        {
-            return service.ConfigureRepositories()
-                          .AddTransient<IJwtService, JwtService>()
-                          .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
-                          .AddTransient<IAccountsService, AccountsService>()
-                          .AddTransient<IOperationCategoriesService, OperationCategoriesService>()
-                          .AddTransient<IResourcesService, ResourcesService>()
-                          .AddTransient<ICyclicOperationsService, CyclicOperationsService>()
-                          .AddTransient<IOperationsService, OperationsService>();
-        }
+        public static IServiceCollection ConfigureMyPiggyBankContext(this IServiceCollection service, IConfiguration configuration) => service
+            .AddDbContext<MyPiggyBankContext>(opt => opt
+            .UseLazyLoadingProxies()
+            .UseSqlServer(configuration.GetConnectionString(nameof(MyPiggyBankContext))));
+        
+        public static IMvcBuilder Configure(this IServiceCollection service, IConfiguration configuration) => service
+            .ConfigureJwtToken(configuration)
+            .RegisterProfiles()
+            .RegisterServices()
+            .AddControllers()
+            .RegisterValidators();
 
-        private static IServiceCollection ConfigureRepositories(this IServiceCollection service)
-        {
-            return service
-                .AddTransient<IUsersRepository, UsersRepository>()
-                .AddTransient<IResourcesRepository, ResourcesRepository>()
-                .AddTransient<IOperationCategoriesRepository, OperationCategoriesRepository>()
-                .AddTransient<ICyclicOperationRepository, CyclicOperationsRepository>()
-                .AddTransient<IOperationsRepository, OperationsRepository>();
-        }
+        private static IServiceCollection ConfigureRepositories(this IServiceCollection service) => service
+            .AddTransient<IUsersRepository, UsersRepository>()
+            .AddTransient<IResourcesRepository, ResourcesRepository>()
+            .AddTransient<IOperationCategoriesRepository, OperationCategoriesRepository>()
+            .AddTransient<ICyclicOperationRepository, CyclicOperationsRepository>()
+            .AddTransient<IOperationsRepository, OperationsRepository>();
 
-        private static IServiceCollection RegisterProfiles(this IServiceCollection service)
+        private static IServiceCollection RegisterServices(this IServiceCollection service) => service
+            .ConfigureRepositories()
+            .AddTransient<IJwtService, JwtService>()
+            .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
+            .AddTransient<IAccountsService, AccountsService>()
+            .AddTransient<IOperationCategoriesService, OperationCategoriesService>()
+            .AddTransient<IResourcesService, ResourcesService>()
+            .AddTransient<ICyclicOperationsService, CyclicOperationsService>()
+            .AddTransient<IOperationsService, OperationsService>();
+        
+
+
+        private static IMvcBuilder RegisterValidators(this IMvcBuilder builder) => builder.AddFluentValidation(fv => fv
+            .RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>()
+            .RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()
+            .RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator<QueryStringParams>>()
+            .RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>()
+            .RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>()
+            .RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>()
+            .RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>());
+
+    private static IServiceCollection RegisterProfiles(this IServiceCollection service)
         {
             var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
             IMapper mapper = mappingConf.CreateMapper();
@@ -119,19 +107,6 @@ namespace MyPiggyBank.Web
                 });
 
             return service;
-        }
-
-        private static IMvcBuilder RegisterValidators(this IMvcBuilder builder)
-        { 
-            return builder.AddFluentValidation(fv => {
-                fv.RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator<QueryStringParams>>();
-                fv.RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>();
-                fv.RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>();
-            });
         }
     }
 }

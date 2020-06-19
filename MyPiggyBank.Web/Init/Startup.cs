@@ -3,28 +3,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MyPiggyBank.Web
-{
-    public class Startup
-    {
+namespace MyPiggyBank.Web {
+    public class Startup {
         public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.ConfigureMyPiggyBankContext(Configuration);
-            services.Configure(Configuration);
-        }
+            => services.ConfigureMyPiggyBankContext(Configuration).Configure(Configuration);
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            StartupExtension.ConfigureApp(app, env);
-        }
+            => StartupExtension.ConfigureApp(app, env);
     }
 }
