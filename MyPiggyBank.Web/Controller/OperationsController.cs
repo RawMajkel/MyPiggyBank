@@ -19,7 +19,8 @@ namespace MyPiggyBank.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] OperationsQuery query) {
+        public IActionResult Get([FromQuery] OperationsQuery query)
+        {
             var resources = _operationsService.GetOperations(query);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
             return Ok(resources);
@@ -31,7 +32,17 @@ namespace MyPiggyBank.Web.Controllers
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await _operationsService.Get(id));
+        {
+            try
+            {
+                await _operationsService.Get(id);
+                return Ok();
+            } catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpPut("{id:guid}")]
         public void Put(Guid id, [FromBody] Operation op)
@@ -40,6 +51,5 @@ namespace MyPiggyBank.Web.Controllers
         [HttpDelete("{id:guid}")]
         public void Delete(Guid id)
             => _operationsService.DeleteOperation(id);
-
     }
 }
