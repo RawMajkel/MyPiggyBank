@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol.Query;
+using MyPiggyBank.Core.Protocol.Resource;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
 
-namespace MyPiggyBank.Web.Controllers
-{
+namespace MyPiggyBank.Web.Controllers {
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ResourcesController : ControllerBase

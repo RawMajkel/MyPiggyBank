@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using MyPiggyBank.Data.Model;
-using System;
-using System.Text;
+﻿using MyPiggyBank.Core.Protocol.Base;
 
-namespace MyPiggyBank.Core.Protocol.Query
+namespace MyPiggyBank.Core.Protocol.Resource
 {
 
-    public class ResourcesQuery : QueryStringParams {
+    public class ResourcesQuery : QueryStringParams
+    {
         public string Name { get; set; }
         public decimal? MinValue { get; set; }
         public decimal? MaxValue { get; set; }
