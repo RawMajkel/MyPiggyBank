@@ -11,8 +11,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Protocol.Account.Mappings;
 using MyPiggyBank.Core.Protocol.Account.Validators;
-using MyPiggyBank.Core.Protocol.Query;
-using MyPiggyBank.Core.Protocol.Query.Validators;
+using MyPiggyBank.Core.Protocol.Base;
+using MyPiggyBank.Core.Protocol.CyclicOperation;
+using MyPiggyBank.Core.Protocol.Operation;
+using MyPiggyBank.Core.Protocol.OperationCategories;
+using MyPiggyBank.Core.Protocol.Resource;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Core.Service.Implementation;
 using MyPiggyBank.Data;
@@ -64,9 +67,6 @@ namespace MyPiggyBank.Web {
             .AddTransient<IResourcesService, ResourcesService>()
             .AddTransient<ICyclicOperationsService, CyclicOperationsService>()
             .AddTransient<IOperationsService, OperationsService>();
-        
-
-
         private static IMvcBuilder RegisterValidators(this IMvcBuilder builder) => builder.AddFluentValidation(fv => fv
             .RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>()
             .RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()
@@ -76,15 +76,12 @@ namespace MyPiggyBank.Web {
             .RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>()
             .RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>());
 
-        private static IServiceCollection RegisterProfiles(this IServiceCollection service)
-        {
-            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
-            IMapper mapper = mappingConf.CreateMapper();
-
-            service.AddSingleton(mapper);
-
-            return service;
-        }
+        private static IServiceCollection RegisterProfiles(this IServiceCollection service) => service
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<AccountProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationCategoryProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<ResourceProfile>()).CreateMapper());
 
         private static IServiceCollection ConfigureJwtToken(this IServiceCollection service, IConfiguration configuration)
         {

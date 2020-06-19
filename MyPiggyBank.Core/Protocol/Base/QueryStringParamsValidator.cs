@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace MyPiggyBank.Core.Protocol.Query.Validators
+namespace MyPiggyBank.Core.Protocol.Base
 {
     public class QueryStringParamsValidator<T> : AbstractValidator<T> where T : QueryStringParams
     {
