@@ -32,7 +32,17 @@ namespace MyPiggyBank.Web.Controllers
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
-            => Ok(await _resourcesService.Get(id));
+        {
+            try
+            {
+                await _resourcesService.Get(id);
+                return Ok();
+            } catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpPut("{id:guid}")]
         public void Put(Guid id, [FromBody] Resource res)
@@ -42,6 +52,5 @@ namespace MyPiggyBank.Web.Controllers
         [HttpDelete("{id:guid}")]
         public void Delete(Guid id)
             => _resourcesService.DeleteResource(id);
-
     }
 }
