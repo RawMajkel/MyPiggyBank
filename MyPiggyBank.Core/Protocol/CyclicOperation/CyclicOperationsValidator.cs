@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using MyPiggyBank.Core.Protocol.Base;
 
-namespace MyPiggyBank.Core.Protocol.Query.Validators
+namespace MyPiggyBank.Core.Protocol.CyclicOperation
 {
     public class CyclicOperationsValidator : QueryStringParamsValidator<CyclicOperationsQuery>
     {
@@ -20,15 +21,15 @@ namespace MyPiggyBank.Core.Protocol.Query.Validators
                 .WithMessage("Resource of Cyclic operation has to be provided");
 
             RuleFor(q => q)
-                .Must(res => ((res.MinEstimatedValue == null || res.MaxEstimatedValue == null) || res.MinEstimatedValue <= res.MaxEstimatedValue))
+                .Must(res => res.MinEstimatedValue == null || res.MaxEstimatedValue == null || res.MinEstimatedValue <= res.MaxEstimatedValue)
                 .WithMessage("Min estimated value can't be higher than max estimated value");
 
             RuleFor(q => q)
-                .Must(res => ((res.MinPeriod == null || res.MaxPeriod == null) || res.MinPeriod <= res.MaxPeriod))
+                .Must(res => res.MinPeriod == null || res.MaxPeriod == null || res.MinPeriod <= res.MaxPeriod)
                 .WithMessage("Min period can't be higher than max period.");
 
             RuleFor(q => q)
-                .Must(res => ((res.MinNextOccurence == null || res.MaxNextOccurence == null) || res.MinNextOccurence <= res.MaxNextOccurence))
+                .Must(res => res.MinNextOccurence == null || res.MaxNextOccurence == null || res.MinNextOccurence <= res.MaxNextOccurence)
                 .WithMessage("Earliest date of the next occurence can't be later than latest date of the next occurence.");
         }
     }

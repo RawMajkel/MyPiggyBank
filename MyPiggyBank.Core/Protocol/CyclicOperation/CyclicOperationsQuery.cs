@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MyPiggyBank.Core.Protocol.Base;
+using System;
 
-
-namespace MyPiggyBank.Core.Protocol.Query
+namespace MyPiggyBank.Core.Protocol.CyclicOperation
 {
-    public class CyclicOperationsQuery : QueryStringParams
+    public class CyclicOperationsQuery : QueryStringParams 
     {
         public string Name { get; set; }
         public decimal? MinEstimatedValue { get; set; }
@@ -15,8 +15,7 @@ namespace MyPiggyBank.Core.Protocol.Query
         public int? MaxPeriod { get; set; }
         public DateTime? MinNextOccurence { get; set; }
         public DateTime? MaxNextOccurence { get; set; }
-        
-    }
 
+    }
 }
 
