@@ -76,7 +76,7 @@ namespace MyPiggyBank.Web {
             .RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>()
             .RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>());
 
-    private static IServiceCollection RegisterProfiles(this IServiceCollection service)
+        private static IServiceCollection RegisterProfiles(this IServiceCollection service)
         {
             var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
             IMapper mapper = mappingConf.CreateMapper();
