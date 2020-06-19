@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol.Query;
+using MyPiggyBank.Core.Protocol.OperationCategories;
 using MyPiggyBank.Core.Service.Implementation;
 using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
@@ -8,8 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyPiggyBank.Web.Controller
-{
+namespace MyPiggyBank.Web.Controller {
     [Route("api/v1/[controller]")]
     [ApiController]
     public class OperationCategoriesController : ControllerBase
