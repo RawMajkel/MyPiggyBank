@@ -1,5 +1,5 @@
 ﻿using System;
-using MyPiggyBank.Data.Model.Base;
+using MyPiggyBank.Data.Model;
 
 namespace MyPiggyBank.Data.Model {
     public class Operation : BaseEntity
