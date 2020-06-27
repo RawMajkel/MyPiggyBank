@@ -10,9 +10,16 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Mapping
     {
         public CyclicOperationResponseProfile()
         {
-            CreateMap<CyclicOperationResponse, Data.Model.CyclicOperation>()
-                .ForMember(d => d.OperationCategory, opt => opt.Ignore())
-                .ForMember(d => d.Resource, opt => opt.Ignore())
+            CreateMap<Data.Model.CyclicOperation, CyclicOperationResponse>()
+                .ForMember(d => d.MinEstimatedValue, opt => opt.Ignore())
+                .ForMember(d => d.MaxEstimatedValue, opt => opt.Ignore())
+                .ForMember(d => d.MinPeriod, opt => opt.Ignore())
+                .ForMember(d => d.MaxPeriod, opt => opt.Ignore())
+                .ForMember(d => d.MinNextOccurence, opt => opt.Ignore())
+                .ForMember(d => d.MaxNextOccurence, opt => opt.Ignore())
+                .ForMember(d => d.Limit, opt => opt.Ignore())
+                .ForMember(d => d.Page, opt => opt.Ignore())
+                .ForMember(d => d.User, opt => opt.Ignore())
                 .ReverseMap();
         }
     }
