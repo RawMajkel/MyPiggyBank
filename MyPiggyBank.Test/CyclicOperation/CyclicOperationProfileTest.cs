@@ -6,11 +6,11 @@ using Xunit;
 
 namespace MyPiggyBank.Test.CycliclOperations
 {
-    public class CyclickOperationProfleTest
+    public class CyclicOperationProfileTest
     {
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public CyclickOperationProfleTest()
+        public CyclicOperationProfileTest()
         {
             _mapperConfiguration = new MapperConfiguration(c =>
             {
