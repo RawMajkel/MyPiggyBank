@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol.CyclicOperation;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Requests;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Responses;
 using MyPiggyBank.Core.Service;
-using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyPiggyBank.Web.Controller {
+namespace MyPiggyBank.Web.Controller
+{
     [Route("api/v1/[controller]")]
     [ApiController]
     public class CyclicOperationsController : ControllerBase
@@ -20,7 +19,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] CyclicOperationsQuery query)
+        public IActionResult Get([FromBody] CyclicOperationResponse query)
         {
             var resources = _cyclicOperationsService.GetCyclicOperations(query);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
@@ -28,7 +27,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpPost]
-        public void Post([FromBody] CyclicOperation cop)
+        public void Post([FromBody] CyclicOperationRequest cop)
             => _cyclicOperationsService.SaveCyclicOperation(cop);
 
         [HttpGet("{id:guid}")]
@@ -47,7 +46,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpPut("{id:guid}")]
-        public void Put(Guid id, [FromBody] CyclicOperation cop)
+        public void Put(Guid id, [FromBody] CyclicOperationRequest cop)
             => _cyclicOperationsService.SaveCyclicOperation(cop);
 
         [HttpDelete("{id:guid}")]
