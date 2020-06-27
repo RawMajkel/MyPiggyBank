@@ -39,6 +39,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AccountResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Protocol\CyclicOperation\CyclicOperationResources.Designer.cs">
+      <DependentUpon>CyclicOperationResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +51,10 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\CyclicOperation\CyclicOperationResources.resx">
+      <LastGenOutput>CyclicOperationResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
