@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using MyPiggyBank.Core.Protocol.CyclicOperation;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Requests;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Responses;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repository;
 using MyPiggyBank.Data.Util;
@@ -7,7 +8,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyPiggyBank.Core.Service {
+namespace MyPiggyBank.Core.Service
+{
     public class CyclicOperationsService : ICyclicOperationsService
     {
         private readonly ICyclicOperationRepository _repository;
@@ -19,28 +21,32 @@ namespace MyPiggyBank.Core.Service {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public PagedList<CyclicOperationInfo> GetCyclicOperations(CyclicOperationsQuery query)
-            => PagedList<CyclicOperationInfo>.ToPagedList(_repository.GetAll()
-               .Where(o => o.OperationCategory.UserId == query.User)
-               .Where(o => o.ResourceId == query.Resource)
-               .Where(o => o.OperationCategoryId == query.OperationCategory)
-               .Where(o => o.IsIncome == (query.IsIncome ?? o.IsIncome))
-               .Where(o => o.Name == (query.Name ?? o.Name))
-               .Where(o => o.EstimatedValue >= (query.MinEstimatedValue ?? o.EstimatedValue))
-               .Where(o => o.EstimatedValue <= (query.MaxEstimatedValue ?? o.EstimatedValue))
-               .Where(o => o.Period >= (query.MinPeriod ?? o.Period))
-               .Where(o => o.Period <= (query.MaxPeriod ?? o.Period))
-               .Where(o => o.NextOccurence >= (query.MinNextOccurence ?? o.NextOccurence))
-               .Where(o => o.NextOccurence <= (query.MaxNextOccurence ?? o.NextOccurence))
+        public PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationResponse response)
+            => PagedList<CyclicOperationResponse>.ToPagedList(_repository.GetAll()
+               .Where(o => o.Id == (response.Id ?? o.Id))
+               .Where(o => o.OperationCategory.UserId == response.User)
+               .Where(o => o.ResourceId == response.ResourceId)
+               .Where(o => o.OperationCategoryId == response.OperationCategoryId)
+               .Where(o => o.IsIncome == (response.IsIncome ?? o.IsIncome))
+               .Where(o => o.Name == (response.Name ?? o.Name))
+               .Where(o => o.EstimatedValue >= (response.MinEstimatedValue ?? o.EstimatedValue))
+               .Where(o => o.EstimatedValue <= (response.MaxEstimatedValue ?? o.EstimatedValue))
+               .Where(o => o.Period >= (response.MinPeriod ?? o.Period))
+               .Where(o => o.Period <= (response.MaxPeriod ?? o.Period))
+               .Where(o => o.NextOccurence >= (response.MinNextOccurence ?? o.NextOccurence))
+               .Where(o => o.NextOccurence <= (response.MaxNextOccurence ?? o.NextOccurence))
                .OrderByDescending(o => o.NextOccurence)
-               .Select(r => _mapper.Map<CyclicOperationInfo>(r)),
-               query.Page, query.Limit);
+               .Select(r => _mapper.Map<CyclicOperationResponse>(r)),
+              response.Page, response.Limit);
 
-        public async Task<CyclicOperationInfo> Get(Guid id)
-            => _mapper.Map<CyclicOperationInfo>(await _repository.Get(id)) ?? throw new ArgumentException("Cyclic operation not found");
+        public async Task<CyclicOperationResponse> Get(Guid id)
+            => _mapper.Map<CyclicOperationResponse>(await _repository.Get(id)) ?? throw new ArgumentException("Cyclic operation not found");
 
-        public async Task SaveCyclicOperation(CyclicOperation source)
-            => await _repository.Add(source);
+        public async Task SaveCyclicOperation(CyclicOperationRequest source)
+        {
+            var entity = _mapper.Map<CyclicOperation>(source);
+            await _repository.Add(entity);
+        }
         public async Task DeleteCyclicOperation(Guid cyclicOperationId)
             => await _repository.Delete(await _repository.Get(cyclicOperationId) ?? throw new ArgumentException("Cyclic operation not found"));
     }
