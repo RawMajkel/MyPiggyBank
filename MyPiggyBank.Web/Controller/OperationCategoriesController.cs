@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol.OperationCategories;
+using MyPiggyBank.Core.Protocol.OperationCategories.Requests;
 using MyPiggyBank.Core.Service.Implementation;
-using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyPiggyBank.Web.Controller {
+namespace MyPiggyBank.Web.Controller
+{
     [Route("api/v1/[controller]")]
     [ApiController]
     public class OperationCategoriesController : ControllerBase
@@ -20,7 +18,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] OperationCategoriesQuery query)
+        public IActionResult Get([FromBody] OperationCategoriesGetRequest query)
         {
             var resources = _operationCategoriesService.GetOperationCategories(query);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
@@ -28,7 +26,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpPost]
-        public void Post([FromBody] OperationCategory opc)
+        public void Post([FromBody] OperationCategoriesSaveRequest opc)
             => _operationCategoriesService.SaveOperationCategory(opc);
 
         [HttpGet("{id:guid}")]
@@ -47,7 +45,7 @@ namespace MyPiggyBank.Web.Controller {
         }
 
         [HttpPut("{id:guid}")]
-        public void Put(Guid id, [FromBody] OperationCategory opc)
+        public void Put(Guid id, [FromBody] OperationCategoriesSaveRequest opc)
             => _operationCategoriesService.SaveOperationCategory(opc);
 
         [HttpDelete("{id:guid}")]
