@@ -12,7 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using MyPiggyBank.Core.Protocol.Account.Mappings;
 using MyPiggyBank.Core.Protocol.Account.Validators;
 using MyPiggyBank.Core.Protocol.Base;
-using MyPiggyBank.Core.Protocol.CyclicOperation;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Mapping;
+using MyPiggyBank.Core.Protocol.CyclicOperation.Validators;
 using MyPiggyBank.Core.Protocol.Operation;
 using MyPiggyBank.Core.Protocol.OperationCategories;
 using MyPiggyBank.Core.Protocol.Resource;
@@ -24,7 +25,8 @@ using MyPiggyBank.Data.Repository;
 using System;
 using System.Text;
 
-namespace MyPiggyBank.Web {
+namespace MyPiggyBank.Web
+{
     public static class StartupExtension
     {
         public static void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
@@ -73,13 +75,15 @@ namespace MyPiggyBank.Web {
             .RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator<QueryStringParams>>()
             .RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>()
             .RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>()
-            .RegisterValidatorsFromAssemblyContaining<CyclicOperationsValidator>()
+            .RegisterValidatorsFromAssemblyContaining<CyclicOperationRequestValidator>()
+            .RegisterValidatorsFromAssemblyContaining<CyclicOperationResponseValidator>()
             .RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>());
 
         private static IServiceCollection RegisterProfiles(this IServiceCollection service) => service
             .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<AccountProfile>()).CreateMapper())
             .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationRequestProfile>()).CreateMapper())
+            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationResponseProfile>()).CreateMapper())
             .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationCategoryProfile>()).CreateMapper())
             .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<ResourceProfile>()).CreateMapper());
 
