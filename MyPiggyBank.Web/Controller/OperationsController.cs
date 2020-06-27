@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyPiggyBank.Core.Protocol.Operation;
+using MyPiggyBank.Core.Protocol.Operation.Requests;
+using MyPiggyBank.Core.Protocol.Operation.Responses;
 using MyPiggyBank.Core.Service;
-using MyPiggyBank.Data.Model;
 using Newtonsoft.Json;
 
-namespace MyPiggyBank.Web.Controllers {
+namespace MyPiggyBank.Web.Controllers
+{
     [Route("api/v1/[controller]")]
     [ApiController]
     public class OperationsController : ControllerBase
@@ -18,7 +19,7 @@ namespace MyPiggyBank.Web.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] OperationsQuery query)
+        public IActionResult Get([FromBody] OperationGetRequest query)
         {
             var resources = _operationsService.GetOperations(query);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
@@ -26,7 +27,7 @@ namespace MyPiggyBank.Web.Controllers {
         }
 
         [HttpPost]
-        public void Post([FromBody] Operation op)
+        public void Post([FromBody] OperationSaveRequest op)
             => _operationsService.SaveOperation(op);
 
         [HttpGet("{id:guid}")]
@@ -44,7 +45,7 @@ namespace MyPiggyBank.Web.Controllers {
         }
 
         [HttpPut("{id:guid}")]
-        public void Put(Guid id, [FromBody] Operation op)
+        public void Put([FromBody] OperationSaveRequest op)
             => _operationsService.SaveOperation(op);
 
         [HttpDelete("{id:guid}")]
