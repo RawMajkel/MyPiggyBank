@@ -14,9 +14,12 @@ using MyPiggyBank.Core.Protocol.Account.Validators;
 using MyPiggyBank.Core.Protocol.Base;
 using MyPiggyBank.Core.Protocol.CyclicOperation.Mapping;
 using MyPiggyBank.Core.Protocol.CyclicOperation.Validators;
-using MyPiggyBank.Core.Protocol.Operation;
-using MyPiggyBank.Core.Protocol.OperationCategories;
-using MyPiggyBank.Core.Protocol.Resource;
+using MyPiggyBank.Core.Protocol.Operation.Mapping;
+using MyPiggyBank.Core.Protocol.Operation.Validators;
+using MyPiggyBank.Core.Protocol.OperationCategories.Mapping;
+using MyPiggyBank.Core.Protocol.OperationCategories.Validators;
+using MyPiggyBank.Core.Protocol.Resource.Mapping;
+using MyPiggyBank.Core.Protocol.Resource.Validators;
 using MyPiggyBank.Core.Service;
 using MyPiggyBank.Core.Service.Implementation;
 using MyPiggyBank.Data;
@@ -73,19 +76,26 @@ namespace MyPiggyBank.Web
             .RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>()
             .RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()
             .RegisterValidatorsFromAssemblyContaining<QueryStringParamsValidator<QueryStringParams>>()
-            .RegisterValidatorsFromAssemblyContaining<ResourcesQueryValidator>()
-            .RegisterValidatorsFromAssemblyContaining<OperationsQueryValidator>()
+            .RegisterValidatorsFromAssemblyContaining<ResourceSaveRequestValidator>()
+            .RegisterValidatorsFromAssemblyContaining<OperationRequestValidator>()
             .RegisterValidatorsFromAssemblyContaining<CyclicOperationRequestValidator>()
-            .RegisterValidatorsFromAssemblyContaining<CyclicOperationResponseValidator>()
-            .RegisterValidatorsFromAssemblyContaining<OperationCategoriesValidator>());
+            .RegisterValidatorsFromAssemblyContaining<OperationCategoriesRequestValidator>());
 
         private static IServiceCollection RegisterProfiles(this IServiceCollection service) => service
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<AccountProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationRequestProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationResponseProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationCategoryProfile>()).CreateMapper())
-            .AddSingleton(new MapperConfiguration(mc => mc.AddProfile<ResourceProfile>()).CreateMapper());
+            .AddSingleton(
+                new MapperConfiguration(mc => {
+                    mc.AddProfile<AccountProfile>();
+                    mc.AddProfile<OperationProfile>();
+                    mc.AddProfile<CyclicOperationProfile>();
+                    mc.AddProfile<OperationCategoriesProfile>();
+                    mc.AddProfile<ResourceProfile>();
+                }).CreateMapper());
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<AccountProfile>()).CreateMapper())
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationProfile>()).CreateMapper())
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationRequestProfile>()).CreateMapper())
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationResponseProfile>()).CreateMapper())
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationCategoryProfile>()).CreateMapper())
+            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<ResourceProfile>()).CreateMapper());
 
         private static IServiceCollection ConfigureJwtToken(this IServiceCollection service, IConfiguration configuration)
         {
