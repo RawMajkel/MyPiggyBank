@@ -21,10 +21,9 @@ namespace MyPiggyBank.Core.Service
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationResponse response)
+        public PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationGetRequest response)
             => PagedList<CyclicOperationResponse>.ToPagedList(_repository.GetAll()
-               .Where(o => o.Id == (response.Id ?? o.Id))
-               .Where(o => o.OperationCategory.UserId == response.User)
+               .Where(o => o.OperationCategory.UserId == response.UserId)
                .Where(o => o.ResourceId == response.ResourceId)
                .Where(o => o.OperationCategoryId == response.OperationCategoryId)
                .Where(o => o.IsIncome == (response.IsIncome ?? o.IsIncome))
@@ -42,7 +41,7 @@ namespace MyPiggyBank.Core.Service
         public async Task<CyclicOperationResponse> Get(Guid id)
             => _mapper.Map<CyclicOperationResponse>(await _repository.Get(id)) ?? throw new ArgumentException("Cyclic operation not found");
 
-        public async Task SaveCyclicOperation(CyclicOperationRequest source)
+        public async Task SaveCyclicOperation(CyclicOperationSaveRequest source)
         {
             var entity = _mapper.Map<CyclicOperation>(source);
             await _repository.Add(entity);

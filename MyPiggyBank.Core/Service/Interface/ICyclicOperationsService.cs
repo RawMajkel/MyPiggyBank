@@ -10,7 +10,7 @@ namespace MyPiggyBank.Core.Service
     {
         Task DeleteCyclicOperation(Guid cyclicOperationId);
         Task<CyclicOperationResponse> Get(Guid id);
-        PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationResponse response);
-        Task SaveCyclicOperation(CyclicOperationRequest source);
+        PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationGetRequest response);
+        Task SaveCyclicOperation(CyclicOperationSaveRequest source);
     }
 }
