@@ -19,7 +19,7 @@ namespace MyPiggyBank.Web.Controller
         }
 
         [HttpGet]
-        public IActionResult Get([FromBody] CyclicOperationResponse query)
+        public IActionResult Get([FromBody] CyclicOperationGetRequest query)
         {
             var resources = _cyclicOperationsService.GetCyclicOperations(query);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
@@ -27,7 +27,7 @@ namespace MyPiggyBank.Web.Controller
         }
 
         [HttpPost]
-        public void Post([FromBody] CyclicOperationRequest cop)
+        public void Post([FromBody] CyclicOperationSaveRequest cop)
             => _cyclicOperationsService.SaveCyclicOperation(cop);
 
         [HttpGet("{id:guid}")]
@@ -46,7 +46,7 @@ namespace MyPiggyBank.Web.Controller
         }
 
         [HttpPut("{id:guid}")]
-        public void Put(Guid id, [FromBody] CyclicOperationRequest cop)
+        public void Put([FromBody] CyclicOperationSaveRequest cop)
             => _cyclicOperationsService.SaveCyclicOperation(cop);
 
         [HttpDelete("{id:guid}")]
