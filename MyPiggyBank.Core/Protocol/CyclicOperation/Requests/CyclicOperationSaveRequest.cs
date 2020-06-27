@@ -2,7 +2,7 @@
 
 namespace MyPiggyBank.Core.Protocol.CyclicOperation.Requests
 {
-    public class CyclicOperationRequest
+    public class CyclicOperationSaveRequest
     {
         public Guid Id { get; set; }
         public Guid ResourceId { get; set; }
