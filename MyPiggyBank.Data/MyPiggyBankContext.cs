@@ -11,21 +11,17 @@ namespace MyPiggyBank.Data
 {
     public class MyPiggyBankContext : DbContext
     {
-        public MyPiggyBankContext(DbContextOptions options)
-            : base(options)
-        {
-        }
+        public MyPiggyBankContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
 
             base.OnModelCreating(modelbuilder);
             modelbuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<Operation> Operations { get; set; }

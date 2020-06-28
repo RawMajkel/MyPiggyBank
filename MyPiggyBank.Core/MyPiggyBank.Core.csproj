@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Protocol\Resource\ResourceInfo.cs" />
+    <Compile Remove="Protocol\Resource\ResourceProfile.cs" />
+    <Compile Remove="Protocol\Resource\ResourcesQuery.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Protocol\Resource\NewFile1.txt" />
+    <None Remove="Protocol\Resource\NewFile2.txt" />
+    <None Remove="Protocol\Resource\Validators\NewFile2.txt" />
+    <None Remove="Protocol\Resource\Validators\NewFile3.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MyPiggyBank.Data\MyPiggyBank.Data.csproj" />
   </ItemGroup>
 
@@ -16,24 +29,72 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="coverlet.collector" Version="1.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.6.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.6.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Communication\Account\AccountResources.Designer.cs">
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Protocol\Account\AccountResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AccountResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Protocol\CyclicOperation\CyclicOperationResources.Designer.cs">
+      <DependentUpon>CyclicOperationResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Protocol\OperationCategories\OperationCategoriesResources.Designer.cs">
+      <DependentUpon>OperationCategoriesResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Protocol\Operation\OperationResources.Designer.cs">
+      <DependentUpon>OperationResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Protocol\Resource\ResourceResources.Designer.cs">
+      <DependentUpon>ResourceResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Communication\Account\AccountResources.resx">
+    <EmbeddedResource Update="Protocol\Account\AccountResources.resx">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\CyclicOperation\CyclicOperationResources.resx">
+      <LastGenOutput>CyclicOperationResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\OperationCategories\OperationCategoriesResources.resx">
+      <LastGenOutput>OperationCategoriesResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\Operation\OperationResources.resx">
+      <LastGenOutput>OperationResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\Resource\ResourceResources.resx">
+      <LastGenOutput>ResourceResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
