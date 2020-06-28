@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 
-namespace MyPiggyBank.Core.Protocol.Resource {
-    public class ResourceInfo
+namespace MyPiggyBank.Core.Protocol.Resource.Requests
+{
+    public class ResourceSaveRequest
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }

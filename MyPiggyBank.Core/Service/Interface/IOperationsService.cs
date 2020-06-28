@@ -1,14 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using MyPiggyBank.Core.Protocol.Operation;
-using MyPiggyBank.Data.Model;
+﻿using MyPiggyBank.Core.Protocol.Operation.Requests;
+using MyPiggyBank.Core.Protocol.Operation.Responses;
 using MyPiggyBank.Data.Util;
+using System;
+using System.Threading.Tasks;
 
-namespace MyPiggyBank.Core.Service {
-    public interface IOperationsService {
-        Task SaveOperation(Operation source);
-        Task DeleteOperation(Guid resourceId);
-        Task<OperationInfo> Get(Guid id);
-        PagedList<OperationInfo> GetOperations(OperationsQuery query);
+namespace MyPiggyBank.Core.Service
+{
+    public interface IOperationsService
+    {
+        Task DeleteOperation(Guid operationId);
+        Task<OperationResponse> Get(Guid id);
+        PagedList<OperationResponse> GetOperations(OperationGetRequest response);
+        Task SaveOperation(OperationSaveRequest source);
     }
 }

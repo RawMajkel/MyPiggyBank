@@ -1,17 +1,15 @@
-﻿using AutoMapper;
-using MyPiggyBank.Core.Protocol.Base;
-using MyPiggyBank.Data.Model;
+﻿using MyPiggyBank.Core.Protocol.Base;
 using System;
 
-namespace MyPiggyBank.Core.Protocol.Operation
+namespace MyPiggyBank.Core.Protocol.Operation.Requests
 {
-    public class OperationsQuery : QueryStringParams
+    public class OperationGetRequest : QueryStringParams
     {
         public string Name { get; set; }
         public decimal? MinValue { get; set; }
         public decimal? MaxValue { get; set; }
-        public Guid Resource { get; set; }
-        public Guid OperationCategory { get; set; }
+        public Guid ResourceId { get; set; }
+        public Guid OperationCategoryId { get; set; }
         public bool? IsIncome { get; set; }
         public DateTime? MinOccuredAt { get; set; }
         public DateTime? MaxOccuredAt { get; set; }

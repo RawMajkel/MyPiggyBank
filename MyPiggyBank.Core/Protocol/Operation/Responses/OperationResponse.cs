@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MyPiggyBank.Core.Protocol.Operation
+namespace MyPiggyBank.Core.Protocol.Operation.Responses
 {
-    public class OperationInfo
+    public class OperationResponse
     {
+        public Guid Id { get; set; }
         public Guid ResourceId { get; set; }
         public Guid OperationCategoryId { get; set; }
         public string Name { get; set; }

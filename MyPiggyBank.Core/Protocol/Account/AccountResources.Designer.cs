@@ -70,7 +70,7 @@ namespace MyPiggyBank.Core.Protocol.Account {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User not found..
+        ///   Looks up a localized string similar to UserId not found..
         /// </summary>
         public static string AccountService_Authenticate_User_NotFound {
             get {

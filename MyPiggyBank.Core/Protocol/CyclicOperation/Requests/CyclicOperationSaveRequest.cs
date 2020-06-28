@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MyPiggyBank.Core.Protocol.CyclicOperation
+namespace MyPiggyBank.Core.Protocol.CyclicOperation.Requests
 {
-    public class CyclicOperationInfo 
+    public class CyclicOperationSaveRequest
     {
+        public Guid Id { get; set; }
         public Guid ResourceId { get; set; }
         public Guid OperationCategoryId { get; set; }
         public string Name { get; set; }

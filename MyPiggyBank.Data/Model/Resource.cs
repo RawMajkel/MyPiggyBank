@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using MyPiggyBank.Data.Model;
 
-namespace MyPiggyBank.Data.Model {
+namespace MyPiggyBank.Data.Model 
+{
     public class Resource : BaseEntity
     {
         public Guid UserId { get; set; }
