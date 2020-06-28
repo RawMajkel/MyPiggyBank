@@ -63,7 +63,7 @@ a:any-link {
 
 @each $name, $value in $color {
     .color-#{$name} {
-        color: $value;
+        color: $value !important;
     }
 }
 
