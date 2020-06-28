@@ -7,7 +7,7 @@ const footerElements = [
   { name: 'Transakcje', url: '/transactions', icon: 'fa-exchange-alt' }
 ];
 
-function Footer({pathName}) {
+function Footer() {
   return (
     <nav className="footernav position-fixed w-100">
         <div className="container">
@@ -15,7 +15,7 @@ function Footer({pathName}) {
               {
                 footerElements.map(function(element, index) {
                   return <li className="footernav__item" key={index}>
-                    <a href={ element.url } className={ 'footernav__a d-flex flex-column align-items-center' + (element.url == pathName ? ' footernav__a--active' : '') }>
+                    <a href={ element.url } className={ 'footernav__a d-flex flex-column align-items-center' + (element.url == window.location.pathname ? ' footernav__a--active' : '') }>
                       <i className={ 'footernav__icon fas ' + element.icon }></i>
                       <span className="footernav__label">{ element.name }</span>
                     </a>

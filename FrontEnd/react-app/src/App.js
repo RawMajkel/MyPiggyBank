@@ -35,7 +35,7 @@ function App() {
     <div className="App">
     <Header label={titleLabel} userName={`${firstName} ${lastName}`} />
       {routeResult}
-      <Footer pathName={window.location.pathname} />
+      <Footer />
     </div>
   );
 }
