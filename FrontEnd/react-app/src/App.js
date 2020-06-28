@@ -5,9 +5,14 @@ import Footer from './modules/Global/Footer';
 import Header from './modules/Global/Header';
 import Resources from './modules/Resources/Resources';
 
+/* input data + variables */
+const firstName = 'Michał';
+const lastName = 'Droździk';
+let titleLabel;
+
 const routes = {
-  '/': () => <Home />,
-  '/resources': () => <Resources />
+  '/': () => { titleLabel = firstName != null ? 'Witaj, ' + firstName : "Strona główna"; return <Home /> },
+  '/resources': () => { titleLabel = 'Rachunki'; return <Resources /> },
   // '/finances': () => ,
   // '/transactions': () => ,
   // '/account': () => ,
@@ -22,7 +27,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+    <Header label={titleLabel} userName={`${firstName} ${lastName}`} />
       {routeResult}
       <Footer pathName={window.location.pathname} />
     </div>
