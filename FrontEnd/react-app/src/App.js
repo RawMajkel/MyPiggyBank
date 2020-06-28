@@ -4,6 +4,12 @@ import Home from './modules/Home/Home';
 import Footer from './modules/Global/Footer';
 import Header from './modules/Global/Header';
 import Resources from './modules/Resources/Resources';
+import Finances from './modules/Finances/Finances';
+import Transactions from './modules/Transactions/Transactions';
+import Account from './modules/Account/Account';
+import Categories from './modules/Categories/Categories';
+import Rate from './modules/Rate/Rate';
+import Settings from './modules/Settings/Settings';
 
 /* input data + variables */
 const firstName = 'Michał';
