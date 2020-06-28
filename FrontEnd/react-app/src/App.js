@@ -10,11 +10,12 @@ import Account from './modules/Account/Account';
 import Categories from './modules/Categories/Categories';
 import Rate from './modules/Rate/Rate';
 import Settings from './modules/Settings/Settings';
+import NotFound from './modules/Error/NotFound';
 
 /* input data + variables */
 const firstName = 'Michał';
 const lastName = 'Droździk';
-let titleLabel;
+let titleLabel = 'Error';
 
 const routes = {
   '/': () => { titleLabel = firstName != null ? 'Witaj, ' + firstName : "Strona główna"; return <Home /> },
@@ -34,7 +35,7 @@ function App() {
   return (
     <div className="App">
     <Header label={titleLabel} userName={`${firstName} ${lastName}`} />
-      {routeResult}
+      { routeResult || <NotFound status={404} /> }
       <Footer />
     </div>
   );
