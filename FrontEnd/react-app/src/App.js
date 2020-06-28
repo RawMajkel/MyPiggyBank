@@ -13,7 +13,7 @@ let titleLabel;
 const routes = {
   '/': () => { titleLabel = firstName != null ? 'Witaj, ' + firstName : "Strona główna"; return <Home /> },
   '/resources': () => { titleLabel = 'Rachunki'; return <Resources /> },
-  // '/finances': () => ,
+  '/finances': () => { titleLabel = 'Finanse'; return <Finances /> },
   // '/transactions': () => ,
   // '/account': () => ,
   // '/categories': () => ,
