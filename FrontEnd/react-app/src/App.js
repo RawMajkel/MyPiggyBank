@@ -16,8 +16,8 @@ const routes = {
   '/finances': () => { titleLabel = 'Finanse'; return <Finances /> },
   '/transactions': () => { titleLabel = 'Transakcje'; return <Transactions /> },
   '/account': () => { titleLabel = 'Moje konto'; return <Account /> },
-  '/categories': () => { titleLabel = 'Kategorie'; return <Categories /> }
-  // '/rate': () => ,
+  '/categories': () => { titleLabel = 'Kategorie'; return <Categories /> },
+  '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> }
   // '/settings': () =>
 };
 
