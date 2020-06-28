@@ -3,10 +3,11 @@ import {useRoutes} from 'hookrouter';
 import Home from './modules/Home/Home';
 import Footer from './modules/Global/Footer';
 import Header from './modules/Global/Header';
+import Resources from './modules/Resources/Resources';
 
 const routes = {
-  '/': () => <Home />
-  // '/resources': () => ,
+  '/': () => <Home />,
+  '/resources': () => <Resources />
   // '/finances': () => ,
   // '/transactions': () => ,
   // '/account': () => ,
