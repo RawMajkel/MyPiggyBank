@@ -17,8 +17,8 @@ const routes = {
   '/transactions': () => { titleLabel = 'Transakcje'; return <Transactions /> },
   '/account': () => { titleLabel = 'Moje konto'; return <Account /> },
   '/categories': () => { titleLabel = 'Kategorie'; return <Categories /> },
-  '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> }
-  // '/settings': () =>
+  '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> },
+  '/settings': () => { titleLabel = 'Ustawienia'; return <Settings /> }
 };
 
 function App() {
