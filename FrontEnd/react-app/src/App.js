@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <Header />
       {routeResult}
-      <Footer />
+      <Footer pathName={window.location.pathname} />
     </div>
   );
 }

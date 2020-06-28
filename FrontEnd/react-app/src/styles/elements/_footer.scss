@@ -28,11 +28,11 @@ $footerNav: '.footernav';
         color: #888;
     }
 
-    &__item--active &__icon {
+    &__a--active &__icon {
         color: $mainColor;
     }
 
-    &__item--active &__label {
+    &__a--active &__label {
         font-weight: 600;
         color: #333;
     }
