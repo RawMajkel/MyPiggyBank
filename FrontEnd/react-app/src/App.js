@@ -14,7 +14,7 @@ const routes = {
   '/': () => { titleLabel = firstName != null ? 'Witaj, ' + firstName : "Strona główna"; return <Home /> },
   '/resources': () => { titleLabel = 'Rachunki'; return <Resources /> },
   '/finances': () => { titleLabel = 'Finanse'; return <Finances /> },
-  // '/transactions': () => ,
+  '/transactions': () => { titleLabel = 'Transakcje'; return <Transactions /> },
   // '/account': () => ,
   // '/categories': () => ,
   // '/rate': () => ,
