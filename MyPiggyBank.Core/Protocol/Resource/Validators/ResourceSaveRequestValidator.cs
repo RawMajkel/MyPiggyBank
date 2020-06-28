@@ -9,15 +9,17 @@ namespace MyPiggyBank.Core.Protocol.Resource.Validators
         {
             RuleFor(r => r.UserId)
                 .NotEmpty()
-                .WithMessage("error message");
+                .WithMessage(ResourceResources.ResourceRequestValidator_UserId_Empty_Error);
 
             RuleFor(r => r.Name)
                 .NotEmpty()
-                .WithMessage("error message");
+                .WithMessage(ResourceResources.ResourceRequestValidator_Name_Empty_Error)
+                .MinimumLength(4)
+                .WithMessage(ResourceResources.ResourceRequestValidator_Name_Length_Error);
 
             RuleFor(r => r.Currency)
                 .NotEmpty()
-                .WithMessage("error message");
+                .WithMessage(ResourceResources.ResourceRequestValidator_Currency_Empty_Error);
         }
     }
 }

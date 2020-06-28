@@ -67,6 +67,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Protocol\Resource\ResourceResources.Designer.cs">
+      <DependentUpon>ResourceResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -85,6 +90,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Protocol\Operation\OperationResources.resx">
       <LastGenOutput>OperationResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Protocol\Resource\ResourceResources.resx">
+      <LastGenOutput>ResourceResources.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
