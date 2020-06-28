@@ -90,12 +90,6 @@ namespace MyPiggyBank.Web
                     mc.AddProfile<OperationCategoriesProfile>();
                     mc.AddProfile<ResourceProfile>();
                 }).CreateMapper());
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<AccountProfile>()).CreateMapper())
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationProfile>()).CreateMapper())
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationRequestProfile>()).CreateMapper())
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<CyclicOperationResponseProfile>()).CreateMapper())
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<OperationCategoryProfile>()).CreateMapper())
-            //.AddSingleton(new MapperConfiguration(mc => mc.AddProfile<ResourceProfile>()).CreateMapper());
 
         private static IServiceCollection ConfigureJwtToken(this IServiceCollection service, IConfiguration configuration)
         {
