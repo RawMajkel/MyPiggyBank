@@ -37,10 +37,10 @@ namespace MyPiggyBank.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            app.UseHttpsRedirection()
-               .UseCors(c => c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
-               .UseRouting()
+            app.UseRouting()
+               .UseAuthentication()
                .UseAuthorization()
+               .UseHttpsRedirection()
                .UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
@@ -107,7 +107,8 @@ namespace MyPiggyBank.Web
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                         ValidateAudience = false,
-                        ValidateLifetime = true
+                        ValidateLifetime = true,
+                        ValidIssuer = configuration["Authorization:Issuer"]
                     };
                 });
 

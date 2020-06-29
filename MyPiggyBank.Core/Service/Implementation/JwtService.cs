@@ -32,6 +32,7 @@ namespace MyPiggyBank.Core.Service
             var expiration = DateTime.Now.AddMinutes(20);
 
             var token = new JwtSecurityToken(
+                issuer: _configuration["Authorization:Issuer"],
                 signingCredentials: credentials,
                 claims: claims,
                 expires: expiration);
