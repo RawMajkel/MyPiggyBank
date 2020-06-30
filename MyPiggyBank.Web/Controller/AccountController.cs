@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyPiggyBank.Core.Protocol.Account.Requests;
 using MyPiggyBank.Core.Service;
+using MyPiggyBank.Web.Controller;
 
 namespace MyPiggyBank.Web.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IAccountsService _accountService;
         private readonly IJwtService _jwtService;
@@ -20,33 +21,15 @@ namespace MyPiggyBank.Web.Controllers
         }
 
         [HttpPost(nameof(Register))]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest input)
-        {
-            try
-            {
-                await _accountService.SaveAccount(input);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        public async Task<IActionResult> Register([FromBody] RegisterRequest input) 
+            => await ReturnBadRequestIfThrowError(async() => await _accountService.SaveAccount(input));
 
         [HttpPost(nameof(Login))]
         public async Task<IActionResult> Login([FromBody] LoginRequest input)
-        {
-            try
+            => await ReturnBadRequestIfThrowError(async () =>
             {
                 var accInfo = await _accountService.Authenticate(input);
-                var token = _jwtService.GenerateToken(accInfo);
-
-                return Ok(token);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+                return _jwtService.GenerateToken(accInfo);;
+            });
     }
 }
