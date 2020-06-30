@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPiggyBank.Core.Protocol.Operation.Requests;
 using MyPiggyBank.Core.Protocol.Operation.Responses;
@@ -18,7 +19,8 @@ namespace MyPiggyBank.Web.Controllers
             _operationsService = operationsService;
         }
 
-        [HttpGet]
+        [Authorize]
+        [HttpGet("Get")]
         public IActionResult Get([FromBody] OperationGetRequest query)
         {
             var resources = _operationsService.GetOperations(query);
