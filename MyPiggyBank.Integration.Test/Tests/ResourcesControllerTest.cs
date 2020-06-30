@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MyPiggyBank.Core.Protocol.Resource;
+using MyPiggyBank.Core.Protocol.Resource.Responses;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Util;
 using Xunit;
@@ -33,7 +34,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             var resp = await _apiClient.PostAsync("/api/v1/Resources", inputResource);
             Assert.True(resp.IsSuccessStatusCode);
 
-            var resources = await _apiClient.GetAsync<IList<ResourceInfo>>("/api/v1/Resources?Name=TestResource");
+            var resources = await _apiClient.GetAsync<IList<ResourceResponse>>("/api/v1/Resources?Name=TestResource");
             Assert.True(resources.Count == 1);
             Assert.True(resources[0].Id != Guid.Empty);
             Assert.True(resources[0].Value > 9000);
