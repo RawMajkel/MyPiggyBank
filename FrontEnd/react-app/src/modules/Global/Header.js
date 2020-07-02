@@ -1,6 +1,15 @@
 import React from 'react';
 
 function Header({label, userName}) {
+
+    const sidebarData = [
+        { name: 'Moje konto', url: '/account', icon: 'fa-user' },
+        { name: 'Moje kategorie', url: '/categories', icon: 'fa-list-ul' },
+        { name: 'Oceń aplikację', url: '/rate', icon: 'fa-star' },
+        { name: 'Ustawienia', url: '/settings', icon: 'fa-cog' },
+        { name: 'Wyloguj', url: '/logout', icon: 'fa-sign-out-alt' }
+    ];
+
   return (
     <div className="header header--index">
         <nav className="navigation position-fixed w-100">
@@ -13,36 +22,16 @@ function Header({label, userName}) {
                         <div className="navigation__name text-uppercase">{ userName }</div>
                         <hr className="navigation__hr" />
                         <ul className="navigation__ul">
-                            <li className="navigation__li">
-                                <a className="navigation__a line-2 d-block" href="/account">
-                                    <i className="fas fa-user navigation__icon"></i>
-                                    <span className="navigation__span">Moje konto</span>
-                                </a>
-                            </li>
-                            <li className="navigation__li">
-                                <a className="navigation__a line-2 d-block" href="/categories">
-                                    <i className="fas fa-list-ul navigation__icon"></i>
-                                    <span className="navigation__span">Moje kategorie</span>
-                                </a>
-                            </li>
-                            <li className="navigation__li">
-                                <a className="navigation__a line-2 d-block" href="/rate">
-                                    <i className="fas fa-star navigation__icon"></i>
-                                    <span className="navigation__span">Oceń aplikację</span>
-                                </a>
-                            </li>
-                            <li className="navigation__li">
-                                <a className="navigation__a line-2 d-block" href="/settings">
-                                    <i className="fas fa-cog navigation__icon"></i>
-                                    <span className="navigation__span">Ustawienia</span>
-                                </a>
-                            </li>
-                            <li className="navigation__li">
-                                <a className="navigation__a line-2 d-block" href="/logout">
-                                    <i className="fas fa-sign-out-alt navigation__icon"></i>
-                                    <span className="navigation__span">Wyloguj</span>
-                                </a>
-                            </li>
+                            {
+                                sidebarData.map(function(element, index) {
+                                return <li className="navigation__li" key={index}>
+                                    <a href={ element.url } className="navigation__a line-2 d-block">
+                                    <i className={ 'navigation__icon fas ' + element.icon }></i>
+                                    <span className="navigation__span">{ element.name }</span>
+                                    </a>
+                                </li>
+                                })
+                            }
                         </ul>
                         <div className="navigation__copy">
                             <span className="navigation__copy-label d-block">&copy; 2020 Wszystkie prawa zastrzeżone</span>
