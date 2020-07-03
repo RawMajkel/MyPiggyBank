@@ -1,15 +1,6 @@
 import React from 'react';
 
-function Header({label, userName}) {
-
-    const sidebarData = [
-        { name: 'Moje konto', url: '/account', icon: 'fa-user' },
-        { name: 'Moje kategorie', url: '/categories', icon: 'fa-list-ul' },
-        { name: 'Oceń aplikację', url: '/rate', icon: 'fa-star' },
-        { name: 'Ustawienia', url: '/settings', icon: 'fa-cog' },
-        { name: 'Wyloguj', url: '/logout', icon: 'fa-sign-out-alt' }
-    ];
-
+function Header({label, identifier, data}) {
   return (
     <div className="header header--index">
         <nav className="navigation position-fixed w-100">
@@ -19,11 +10,11 @@ function Header({label, userName}) {
                         <i className="navigation__bars color-second fas fa-bars"></i>
                     </button>
                     <aside className="navigation__side-menu w-100 position-absolute">
-                        <div className="navigation__name text-uppercase">{ userName }</div>
+                        <div className="navigation__name text-uppercase">{ identifier }</div>
                         <hr className="navigation__hr" />
                         <ul className="navigation__ul">
                             {
-                                sidebarData.map(function(element, index) {
+                                data.map(function(element, index) {
                                 return <li className="navigation__li" key={index}>
                                     <a href={ element.url } className="navigation__a line-2 d-block">
                                     <i className={ 'navigation__icon fas ' + element.icon }></i>
