@@ -1,4 +1,5 @@
 ﻿{
+  "profiles": {
     "MyPiggyBank": {
       "commandName": "Project",
       "launchBrowser": false,
