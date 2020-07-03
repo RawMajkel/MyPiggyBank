@@ -14,7 +14,7 @@ function Authenticate({email, password}) {
                 if(response.status) {
 
                     let expires = "";
-                    let days = 7;
+                    let days = 1;
                     
                     if (days) {
                         var date = new Date();
