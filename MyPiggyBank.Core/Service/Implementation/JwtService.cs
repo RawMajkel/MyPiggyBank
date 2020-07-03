@@ -29,16 +29,13 @@ namespace MyPiggyBank.Core.Service
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var expiration = DateTime.Now.AddMinutes(20);
-
             var token = new JwtSecurityToken(
                 signingCredentials: credentials,
-                claims: claims,
-                expires: expiration);
+                claims: claims);
 
             var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return new AuthorizationToken(accountInfo.Email, encodeToken, expiration);
+            return new AuthorizationToken(accountInfo.Email, encodeToken);
         }
     }
 }
