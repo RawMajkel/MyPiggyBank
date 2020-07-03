@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function Authenticate({email, password}) {
 
-    const [isFinished = false, setIsFinished] = useState([]);
     const [hasErrors = false, setHasErrors] = useState([]);
     
     useEffect(() => {
@@ -13,7 +12,6 @@ function Authenticate({email, password}) {
 
             await axios.post('https://localhost:5001/api/v1/account/login', bodyParameters, config).then(response => {
                 if(response.status) {
-                    setIsFinished(true);
 
                     let expires = "";
                     let days = 7;
