@@ -40,6 +40,11 @@ namespace MyPiggyBank.Web
             app.UseRouting()
                .UseAuthentication()
                .UseAuthorization()
+                .UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                )
                .UseHttpsRedirection()
                .UseEndpoints(endpoints => endpoints.MapControllers());
         }
@@ -53,6 +58,10 @@ namespace MyPiggyBank.Web
             .ConfigureJwtToken(configuration)
             .RegisterProfiles()
             .RegisterServices()
+            .AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:5001").AllowAnyMethod().AllowAnyHeader();
+            }))
             .AddControllers()
             .RegisterValidators();
 
