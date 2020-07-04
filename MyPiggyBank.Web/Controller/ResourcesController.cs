@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPiggyBank.Core.Service;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using MyPiggyBank.Web.Controller;
 
 namespace MyPiggyBank.Web.Controllers 
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ResourcesController : BaseController
@@ -18,7 +20,7 @@ namespace MyPiggyBank.Web.Controllers
             _resourcesService = resourcesService;
         }
 
-        [HttpGet]
+        [HttpGet("List")]
         public IActionResult Get([FromQuery] ResourceGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
@@ -27,7 +29,7 @@ namespace MyPiggyBank.Web.Controllers
                 return resources;
             });
 
-        [HttpPost]
+        [HttpPost("Save")]
         public async Task<IActionResult> Post([FromBody] ResourceSaveRequest res)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
@@ -35,8 +37,8 @@ namespace MyPiggyBank.Web.Controllers
         public async Task<IActionResult> Get(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.Get(id));
 
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] ResourceSaveRequest res)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Put([FromBody] ResourceSaveRequest res)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
 
