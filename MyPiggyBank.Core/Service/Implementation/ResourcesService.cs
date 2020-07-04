@@ -21,9 +21,9 @@ namespace MyPiggyBank.Core.Service {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public PagedList<ResourceResponse> GetResources(ResourceGetRequest query)
+        public PagedList<ResourceResponse> GetResources(ResourceGetRequest query, Guid userId)
              => PagedList<ResourceResponse>.ToPagedList(_repository.GetAll()
-                .Where(r => query.UserId == Guid.Empty || r.UserId == query.UserId)
+                .Where(r => r.UserId == userId)
                 .Where(r => r.Name == (query.Name ?? r.Name))
                 .Where(r => r.Currency == (query.Currency ?? r.Currency))
                 .Where(r => r.Value >= (query.MinValue ?? r.Value))
@@ -35,9 +35,10 @@ namespace MyPiggyBank.Core.Service {
         public async Task<ResourceResponse> Get(Guid id)
             => _mapper.Map<ResourceResponse>(await _repository.Get(id)) ?? throw new ArgumentException("Resource not found");
 
-        public async Task SaveResource(ResourceSaveRequest source)
+        public async Task SaveResource(ResourceSaveRequest source, Guid userId)
         {
             var entity = _mapper.Map<Resource>(source);
+            entity.UserId = userId;
             await _repository.Add(entity);
         }
 

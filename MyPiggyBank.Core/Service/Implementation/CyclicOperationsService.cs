@@ -21,9 +21,9 @@ namespace MyPiggyBank.Core.Service
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationGetRequest response)
+        public PagedList<CyclicOperationResponse> GetCyclicOperations(CyclicOperationGetRequest response, Guid userId)
             => PagedList<CyclicOperationResponse>.ToPagedList(_repository.GetAll()
-               .Where(o => o.OperationCategory.UserId == response.UserId)
+               .Where(o => o.OperationCategory.UserId == userId)
                .Where(o => o.ResourceId == response.ResourceId)
                .Where(o => o.OperationCategoryId == response.OperationCategoryId)
                .Where(o => o.IsIncome == (response.IsIncome ?? o.IsIncome))

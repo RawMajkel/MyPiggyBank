@@ -22,9 +22,9 @@ namespace MyPiggyBank.Core.Service {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public PagedList<OperationResponse> GetOperations(OperationGetRequest response)
+        public PagedList<OperationResponse> GetOperations(OperationGetRequest response, Guid userId)
              => PagedList<OperationResponse>.ToPagedList(_repository.GetAll()
-               .Where(o => o.OperationCategory.UserId == response.UserId)
+               .Where(o => o.OperationCategory.UserId == userId)
                .Where(o => o.ResourceId == response.ResourceId)
                .Where(o => o.OperationCategoryId == response.OperationCategoryId)
                 .Where(o => o.IsIncome == (response.IsIncome ?? o.IsIncome))
