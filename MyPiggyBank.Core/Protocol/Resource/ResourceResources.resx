@@ -126,7 +126,4 @@
   <data name="ResourceRequestValidator_Name_Length_Error" xml:space="preserve">
     <value>Name must have at least 4 characters.</value>
   </data>
-  <data name="ResourceRequestValidator_UserId_Empty_Error" xml:space="preserve">
-    <value>UserId is required.</value>
-  </data>
 </root>

@@ -7,10 +7,6 @@ namespace MyPiggyBank.Core.Protocol.Resource.Validators
     {
         public ResourceSaveRequestValidator()
         {
-            RuleFor(r => r.UserId)
-                .NotEmpty()
-                .WithMessage(ResourceResources.ResourceRequestValidator_UserId_Empty_Error);
-
             RuleFor(r => r.Name)
                 .NotEmpty()
                 .WithMessage(ResourceResources.ResourceRequestValidator_Name_Empty_Error)

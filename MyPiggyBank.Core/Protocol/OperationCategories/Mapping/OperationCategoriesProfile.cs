@@ -13,6 +13,7 @@ namespace MyPiggyBank.Core.Protocol.OperationCategories.Mapping
             CreateMap<OperationCategoriesSaveRequest, Data.Model.OperationCategory>()
                    .ForMember(dst => dst.Id, opt => opt.Condition(src => src.Id != Guid.Empty))
                    .ForMember(d => d.User, opt => opt.Ignore())
+                   .ForMember(d => d.UserId, opt => opt.Ignore())
                    .ForMember(d => d.Operations, opt => opt.Ignore())
                    .ForMember(d => d.CyclicOperations, opt => opt.Ignore());
             CreateMap<Data.Model.OperationCategory, OperationCategoriesSaveRequest>();

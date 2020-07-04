@@ -77,14 +77,5 @@ namespace MyPiggyBank.Core.Protocol.OperationCategories {
                 return ResourceManager.GetString("OperationCategoriesRequestValidator_Name_Length_Error", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UserId is required..
-        /// </summary>
-        public static string OperationCategoriesRequestValidator_UserId_Empty_Error {
-            get {
-                return ResourceManager.GetString("OperationCategoriesRequestValidator_UserId_Empty_Error", resourceCulture);
-            }
-        }
     }
 }

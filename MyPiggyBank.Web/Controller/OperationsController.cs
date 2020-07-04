@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyPiggyBank.Core.Protocol.Operation.Requests;
 using MyPiggyBank.Core.Service;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace MyPiggyBank.Web.Controllers
 {
+    [Authorize]
     [Route("api/v1/[controller]")]
     [ApiController]
     public class OperationsController : BaseController
@@ -18,16 +20,16 @@ namespace MyPiggyBank.Web.Controllers
             _operationsService = operationsService;
         }
 
-        [HttpGet]
+        [HttpGet("List")]
         public IActionResult Get([FromBody] OperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
-                var resources = _operationsService.GetOperations(query);
+                var resources = _operationsService.GetOperations(query, UserId);
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
                 return resources;
             });
 
-        [HttpPost]
+        [HttpPost("Save")]
         public async Task<IActionResult> Post([FromBody] OperationSaveRequest op)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.SaveOperation(op));
 
@@ -35,7 +37,7 @@ namespace MyPiggyBank.Web.Controllers
         public async Task<IActionResult> Get(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.Get(id));
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Put([FromBody] OperationSaveRequest op)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.SaveOperation(op));
 

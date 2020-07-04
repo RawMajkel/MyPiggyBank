@@ -86,14 +86,5 @@ namespace MyPiggyBank.Core.Protocol.Resource {
                 return ResourceManager.GetString("ResourceRequestValidator_Name_Length_Error", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UserId is required..
-        /// </summary>
-        public static string ResourceRequestValidator_UserId_Empty_Error {
-            get {
-                return ResourceManager.GetString("ResourceRequestValidator_UserId_Empty_Error", resourceCulture);
-            }
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace MyPiggyBank.Core.Service.Implementation
     {
         Task DeleteOperationCategory(Guid operationCategoryId);
         Task<OperationCategoriesResponse> Get(Guid id);
-        PagedList<OperationCategoriesResponse> GetOperationCategories(OperationCategoriesGetRequest query);
-        Task SaveOperationCategory(OperationCategoriesSaveRequest source);
+        PagedList<OperationCategoriesResponse> GetOperationCategories(OperationCategoriesGetRequest query, Guid userId);
+        Task SaveOperationCategory(OperationCategoriesSaveRequest source, Guid userId);
     }
 }

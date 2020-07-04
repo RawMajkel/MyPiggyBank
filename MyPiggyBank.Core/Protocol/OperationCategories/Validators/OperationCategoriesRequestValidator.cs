@@ -10,10 +10,6 @@ namespace MyPiggyBank.Core.Protocol.OperationCategories.Validators
     {
         public OperationCategoriesRequestValidator()
         {
-            RuleFor(r => r.UserId)
-                   .NotEmpty()
-                   .WithMessage(OperationCategoriesResources.OperationCategoriesRequestValidator_UserId_Empty_Error);
-
             RuleFor(r => r.Name)
                 .NotEmpty()
                 .WithMessage(OperationCategoriesResources.OperationCategoriesRequestValidator_Name_Empty_Error)
