@@ -4,12 +4,18 @@ import Home from './modules/Home/Home';
 import Footer from './modules/Global/Footer';
 import Header from './modules/Global/Header';
 import Resources from './modules/Resources/Resources';
-import Finances from './modules/Finances/Finances';
-import Transactions from './modules/Transactions/Transactions';
+import AddResource from './modules/Resources/AddResource';
+import CyclicOperations from './modules/CyclicOperations/CyclicOperations';
+import AddCyclicOperation from './modules/CyclicOperations/AddCyclicOperation';
+import DeleteCyclicOperation from './modules/CyclicOperations/DeleteCyclicOperation';
+import OperationList from './modules/Operations/OperationList';
+import AddOperation from './modules/Operations/AddOperation';
 import Account from './modules/Account/Account';
 import Login from './modules/Account/Login';
 import Register from './modules/Account/Register';
 import Categories from './modules/Categories/Categories';
+import AddCategory from './modules/Categories/AddCategory';
+import DeleteCategory from './modules/Categories/DeleteCategory';
 import Rate from './modules/Rate/Rate';
 import Settings from './modules/Settings/Settings';
 import NotFound from './modules/Error/NotFound';
@@ -42,12 +48,18 @@ function App() {
   let titleLabel = loggedIn ? 'Error' : 'Wymagane zalogowanie';
 
   const routes = loggedIn ? {
-    '/': () => { titleLabel = 'Pulpit'; return <Home /> },
-    '/resources': () => { titleLabel = 'Rachunki'; return <Resources /> },
-    '/finances': () => { titleLabel = 'Finanse'; return <Finances /> },
-    '/transactions': () => { titleLabel = 'Transakcje'; return <Transactions /> },
+    '/': () => { titleLabel = 'Pulpit'; return <Home token={token} /> },
+    '/resources': () => { titleLabel = 'Rachunki'; return <Resources token={token} /> },
+    '/resources/add': () => { titleLabel = 'Rachunki'; return <AddResource token={token} /> },
+    '/cyclic': () => { titleLabel = 'Operacje cykliczne'; return <CyclicOperations token={token} /> },
+    '/cyclic/add': () => { titleLabel = 'Operacje cykliczne'; return <AddCyclicOperation token={token} /> },
+    '/cyclic/delete/:id': ({id}) => { titleLabel = 'Operacje cykliczne'; return <DeleteCyclicOperation id={id} token={token} /> },
+    '/operations': () => { titleLabel = 'Transakcje'; return <OperationList token={token} /> },
+    '/operations/add': () => { titleLabel = 'Transakcje'; return <AddOperation token={token} /> },
     '/account': () => { titleLabel = 'Moje konto'; return <Account /> },
-    '/categories': () => { titleLabel = 'Kategorie'; return <Categories /> },
+    '/categories': () => { titleLabel = 'Kategorie'; return <Categories token={token} /> },
+    '/categories/add': () => { titleLabel = 'Kategorie'; return <AddCategory token={token} /> },
+    '/categories/delete/:id': ({id}) => { titleLabel = 'Kategorie'; return <DeleteCategory id={id} token={token} /> },
     '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> },
     '/settings': () => { titleLabel = 'Ustawienia'; return <Settings /> },
     '/logout': () => { eraseCookie("PiggyBank.UserToken"); eraseCookie("PiggyBank.Identifier"); window.location.href = "/login"; }
