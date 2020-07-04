@@ -3,8 +3,8 @@ import React from 'react';
 const footerElements = [
   { name: 'Pulpit', url: '/', icon: 'fa-home' },
   { name: 'Rachunki', url: '/resources', icon: 'fa-credit-card' },
-  { name: 'Finanse', url: '/finances', icon: 'fa-wallet' },
-  { name: 'Transakcje', url: '/transactions', icon: 'fa-exchange-alt' }
+  { name: 'Cykliczne', url: '/cyclic', icon: 'fa-undo-alt' },
+  { name: 'Operacje', url: '/operations', icon: 'fa-exchange-alt' }
 ];
 
 function Footer() {
