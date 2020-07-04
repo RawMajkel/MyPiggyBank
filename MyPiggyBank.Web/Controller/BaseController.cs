@@ -24,7 +24,6 @@ namespace MyPiggyBank.Web.Controller
         {
             try
             {
-                var expr = Expression.Lambda<Func<Task<TResult>>>(Expression.Call(innerFunc.Method));
                 var result = await innerFunc.Invoke();
                 return Ok(result);
             }
