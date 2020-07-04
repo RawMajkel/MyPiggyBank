@@ -58,8 +58,6 @@ function Register() {
         const config = { headers: { "Content-Type": "application/json" } };
         const bodyParameters = { "Username": userName, "Email": email, "Password": password };
 
-        var error = [];
-
         axios.post('https://localhost:5001/api/v1/account/register', bodyParameters, config).then(response => {
             if(response.status) {
                 setIsFinished(true);
