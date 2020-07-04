@@ -56,12 +56,12 @@ function App() {
     '/cyclic/delete/:id': ({id}) => { titleLabel = 'Operacje cykliczne'; return <DeleteCyclicOperation id={id} token={token} /> },
     '/operations': () => { titleLabel = 'Transakcje'; return <OperationList token={token} /> },
     '/operations/add': () => { titleLabel = 'Transakcje'; return <AddOperation token={token} /> },
-    '/account': () => { titleLabel = 'Moje konto'; return <Account /> },
     '/categories': () => { titleLabel = 'Kategorie'; return <Categories token={token} /> },
     '/categories/add': () => { titleLabel = 'Kategorie'; return <AddCategory token={token} /> },
     '/categories/delete/:id': ({id}) => { titleLabel = 'Kategorie'; return <DeleteCategory id={id} token={token} /> },
-    '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> },
-    '/settings': () => { titleLabel = 'Ustawienia'; return <Settings /> },
+    // '/account': () => { titleLabel = 'Moje konto'; return <Account /> },
+    // '/rate': () => { titleLabel = 'Oceń aplikację'; return <Rate /> },
+    // '/settings': () => { titleLabel = 'Ustawienia'; return <Settings /> },
     '/logout': () => { eraseCookie("PiggyBank.UserToken"); eraseCookie("PiggyBank.Identifier"); window.location.href = "/login"; }
   } : {
     '/login': () => { titleLabel = 'Zaloguj się'; return <Login /> },
@@ -71,10 +71,10 @@ function App() {
   const routeResult = useRoutes(routes);
   
   const headerData = loggedIn ? [
-    { name: 'Moje konto', url: '/account', icon: 'fa-user' },
+    // { name: 'Moje konto', url: '/account', icon: 'fa-user' },
     { name: 'Moje kategorie', url: '/categories', icon: 'fa-list-ul' },
-    { name: 'Oceń aplikację', url: '/rate', icon: 'fa-star' },
-    { name: 'Ustawienia', url: '/settings', icon: 'fa-cog' },
+    // { name: 'Oceń aplikację', url: '/rate', icon: 'fa-star' },
+    // { name: 'Ustawienia', url: '/settings', icon: 'fa-cog' },
     { name: 'Wyloguj', url: '/logout', icon: 'fa-sign-out-alt' }
   ] : [
     { name: 'Zaloguj', url: '/login', icon: 'fa-user' },
