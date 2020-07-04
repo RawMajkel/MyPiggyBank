@@ -21,7 +21,7 @@ namespace MyPiggyBank.Web.Controller
         public IActionResult Get([FromBody] CyclicOperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
-                var resources = _cyclicOperationsService.GetCyclicOperations(query);
+                var resources = _cyclicOperationsService.GetCyclicOperations(query, UserId);
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
                 return resources;
             });

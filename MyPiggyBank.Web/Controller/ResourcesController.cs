@@ -22,14 +22,14 @@ namespace MyPiggyBank.Web.Controllers
         public IActionResult Get([FromQuery] ResourceGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
-                var resources = _resourcesService.GetResources(query);
+                var resources = _resourcesService.GetResources(query, UserId);
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
                 return resources;
             });
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceSaveRequest res)
-            => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res));
+            => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
@@ -37,7 +37,7 @@ namespace MyPiggyBank.Web.Controllers
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] ResourceSaveRequest res)
-            => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res));
+            => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
 
         [HttpDelete("{id:guid}")]

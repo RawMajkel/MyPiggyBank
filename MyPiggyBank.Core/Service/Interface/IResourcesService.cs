@@ -10,7 +10,7 @@ namespace MyPiggyBank.Core.Service
     {
         Task DeleteResource(Guid resourceId);
         Task<ResourceResponse> Get(Guid id);
-        PagedList<ResourceResponse> GetResources(ResourceGetRequest query);
-        Task SaveResource(ResourceSaveRequest source);
+        PagedList<ResourceResponse> GetResources(ResourceGetRequest query, Guid userId);
+        Task SaveResource(ResourceSaveRequest source, Guid userId);
     }
 }

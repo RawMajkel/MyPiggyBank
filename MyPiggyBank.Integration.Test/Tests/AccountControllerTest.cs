@@ -52,8 +52,6 @@ namespace MyPiggyBank.Integration.Test.Tests
             //assert
             Assert.NotNull(authToken);
             Assert.True(authToken.Identifier == loginInput.Email);
-            Assert.True(authToken.Expiration != DateTime.MaxValue && authToken.Expiration != DateTime.MinValue);
-            Assert.True(authToken.Expiration > dateTimeNow && authToken.Expiration < dateTimeNow.AddMinutes(25));
             Assert.True(!string.IsNullOrEmpty(authToken.Token));
         }
 

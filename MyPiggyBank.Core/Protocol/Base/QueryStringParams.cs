@@ -6,6 +6,5 @@ namespace MyPiggyBank.Core.Protocol.Base
     {
         public int Limit { get; set; } = 50;
         public int Page { get; set; } = 1;
-        public Guid UserId { get; set; }
     }
 }

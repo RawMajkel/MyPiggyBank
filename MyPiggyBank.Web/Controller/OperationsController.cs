@@ -22,7 +22,7 @@ namespace MyPiggyBank.Web.Controllers
         public IActionResult Get([FromBody] OperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
-                var resources = _operationsService.GetOperations(query);
+                var resources = _operationsService.GetOperations(query, UserId);
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(resources.PagingData()));
                 return resources;
             });
