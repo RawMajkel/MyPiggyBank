@@ -61,12 +61,12 @@ namespace MyPiggyBank.Web.Controller
             return ReturnBadRequestIfThrowError(execution).Result;
         }
 
-        private string GetClaim(string registeredClaims)
+        private string GetClaim(string registeredClaim)
         {
             if (HttpContext.User.Identity is ClaimsIdentity identity)
             {
                 return identity.Claims
-                               .FirstOrDefault(c => c.Properties.Any(p => p.Value == registeredClaims))
+                               .FirstOrDefault(c => c.Properties.Any(p => p.Value == registeredClaim))
                                ?.Value;
             }
 
