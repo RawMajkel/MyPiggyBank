@@ -1,0 +1,75 @@
+/*
+* _main.scss
+*/
+
+html body {
+    font-size: 14px;
+    margin-bottom: 59px;
+}
+
+.section {
+    padding: 25px 0;
+}
+
+.heading {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.input-group {
+    margin-bottom: 12px;
+}
+
+.input-group .form-control:focus {
+    border-color: $mainColor;
+    box-shadow: 0 0 0 0.2rem rgba(47, 145, 38, .255)
+}
+
+.section .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: $mainColor;
+    background-color: $mainColor;
+}
+
+input[type="submit"] {
+    border: none;
+}
+
+.button {
+    font-size: 14px;
+    background-color: $secondColor;
+    padding: 8px 12px;
+    border-radius: 3px;
+    margin-top: 25px;
+    text-decoration: none !important;
+
+    &__icon {
+        margin-right: 5px;
+    }
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+a:any-link {
+    text-decoration: none;
+}
+
+@each $name, $value in $line-height {
+    .line-#{$name} {
+        line-height: $value;
+    }
+}
+
+@each $name, $value in $color {
+    .color-#{$name} {
+        color: $value !important;
+    }
+}
+
+@each $name, $value in $font-weight {
+    .font-weight-#{$name} {
+        font-weight: $value;
+    }
+}
