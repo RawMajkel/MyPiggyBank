@@ -31,12 +31,8 @@ function Login() {
 
     let errors = [];
 
-    if(password.length <= 7 || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password))) {
-        errors.push("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę, jedną liczbę oraz jeden znak specjalny");
-    }
-
-    if(!validateEmail(email)) {
-        errors.push("Podaj poprawny adres e-mail");
+    if((password.length <= 7) || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) || !validateEmail(email)) {
+        errors.push("B");
     }
 
     setErrors(errors);

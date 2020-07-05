@@ -34,7 +34,7 @@ function Authenticate({email, password}) {
     }, []);
 
     if(hasErrors == true) {
-        return <div style={{marginTop : '10px', color : 'red'}}>Bład logowania</div>;
+        return <div style={{marginTop : '10px', color : 'red'}}>Błąd logowania</div>;
     }
     return <div style={{marginTop : '10px'}}>Autoryzacja - proszę czekać</div>;
 }
