@@ -36,10 +36,6 @@ namespace MyPiggyBank.Web.Controller
         public async Task<IActionResult> Get(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _cyclicOperationsService.Get(id));
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> Put([FromBody] CyclicOperationSaveRequest cop)
-            => await ReturnBadRequestIfThrowError(async () => await _cyclicOperationsService.SaveCyclicOperation(cop));
-
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _cyclicOperationsService.DeleteCyclicOperation(id));

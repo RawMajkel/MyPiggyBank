@@ -27,9 +27,6 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Validators
             RuleFor(r => r.Period)
                 .NotEmpty()
                 .WithMessage(CyclicOperationResources.CyclicOperationRequestValidator_Period_Empty_Error);
-            RuleFor(r => r.NextOccurence)
-                .NotEmpty()
-                .WithMessage(CyclicOperationResources.CyclicOperationRequestValidator_NextOccurence_Empty_Error);
         }
     }
 }

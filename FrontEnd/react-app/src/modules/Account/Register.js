@@ -35,7 +35,7 @@ function Register() {
         event.preventDefault();
         let errors = [];
 
-        if(password.length <= 7 || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || (/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g.test(password))) {
+        if(password.length <= 7 || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || !(/^[!@#\$%\^\&*\)\(+=._-]+$/g.test(password))) {
             errors.push("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę, jedną liczbę oraz jeden znak specjalny");
         }
 

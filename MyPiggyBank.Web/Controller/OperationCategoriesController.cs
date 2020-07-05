@@ -36,10 +36,6 @@ namespace MyPiggyBank.Web.Controller
         public async Task<IActionResult> Get(Guid id)
          => await ReturnBadRequestIfThrowError(async() => await _operationCategoriesService.Get(id));
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> Put([FromBody] OperationCategoriesSaveRequest opc)
-            => await ReturnBadRequestIfThrowError(async() => await _operationCategoriesService.SaveOperationCategory(opc, UserId));
-
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
             => await ReturnBadRequestIfThrowError(async() => await _operationCategoriesService.DeleteOperationCategory(id));
