@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using MyPiggyBank.Core.Protocol.OperationCategories.Requests;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using MyPiggyBank.Core.Protocol.OperationCategories.Responses;
 
 namespace MyPiggyBank.Core.Protocol.OperationCategories.Mapping
 {
@@ -16,7 +15,7 @@ namespace MyPiggyBank.Core.Protocol.OperationCategories.Mapping
                    .ForMember(d => d.UserId, opt => opt.Ignore())
                    .ForMember(d => d.Operations, opt => opt.Ignore())
                    .ForMember(d => d.CyclicOperations, opt => opt.Ignore());
-            CreateMap<Data.Model.OperationCategory, OperationCategoriesSaveRequest>();
+            CreateMap<Data.Model.OperationCategory, OperationCategoriesResponse>();
         }
     }
 }
