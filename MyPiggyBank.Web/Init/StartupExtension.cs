@@ -66,21 +66,21 @@ namespace MyPiggyBank.Web
             .RegisterValidators();
 
         private static IServiceCollection ConfigureRepositories(this IServiceCollection service) => service
-            .AddScoped<IUsersRepository, UsersRepository>()
-            .AddScoped<IResourcesRepository, ResourcesRepository>()
-            .AddScoped<IOperationCategoriesRepository, OperationCategoriesRepository>()
-            .AddScoped<ICyclicOperationRepository, CyclicOperationsRepository>()
-            .AddScoped<IOperationsRepository, OperationsRepository>();
+            .AddTransient<IUsersRepository, UsersRepository>()
+            .AddTransient<IResourcesRepository, ResourcesRepository>()
+            .AddTransient<IOperationCategoriesRepository, OperationCategoriesRepository>()
+            .AddTransient<ICyclicOperationRepository, CyclicOperationsRepository>()
+            .AddTransient<IOperationsRepository, OperationsRepository>();
 
         private static IServiceCollection RegisterServices(this IServiceCollection service) => service
             .ConfigureRepositories()
-            .AddScoped<IJwtService, JwtService>()
-            .AddScoped<IPasswordHasher<User>, PasswordHasher<User>>()
-            .AddScoped<IAccountsService, AccountsService>()
-            .AddScoped<IOperationCategoriesService, OperationCategoriesService>()
-            .AddScoped<IResourcesService, ResourcesService>()
-            .AddScoped<ICyclicOperationsService, CyclicOperationsService>()
-            .AddScoped<IOperationsService, OperationsService>();
+            .AddTransient<IJwtService, JwtService>()
+            .AddTransient<IPasswordHasher<User>, PasswordHasher<User>>()
+            .AddTransient<IAccountsService, AccountsService>()
+            .AddTransient<IOperationCategoriesService, OperationCategoriesService>()
+            .AddTransient<IResourcesService, ResourcesService>()
+            .AddTransient<ICyclicOperationsService, CyclicOperationsService>()
+            .AddTransient<IOperationsService, OperationsService>();
         private static IMvcBuilder RegisterValidators(this IMvcBuilder builder) => builder.AddFluentValidation(fv => fv
             .RegisterValidatorsFromAssemblyContaining<RegisterRequestValidator>()
             .RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>()
