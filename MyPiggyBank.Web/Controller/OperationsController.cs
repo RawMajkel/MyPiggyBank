@@ -20,8 +20,8 @@ namespace MyPiggyBank.Web.Controllers
             _operationsService = operationsService;
         }
 
-        [HttpGet("List")]
-        public IActionResult Get([FromBody] OperationGetRequest query)
+        [HttpPost("List")]
+        public IActionResult FilteredList([FromBody] OperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
                 var resources = _operationsService.GetOperations(query, UserId);

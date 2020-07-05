@@ -19,8 +19,8 @@ namespace MyPiggyBank.Web.Controller
             _cyclicOperationsService = cyclicOperationsService;
         }
 
-        [HttpGet("List")]
-        public IActionResult Get([FromBody] CyclicOperationGetRequest query)
+        [HttpPost("List")]
+        public IActionResult FilteredList([FromBody] CyclicOperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
                 var resources = _cyclicOperationsService.GetCyclicOperations(query, UserId);
