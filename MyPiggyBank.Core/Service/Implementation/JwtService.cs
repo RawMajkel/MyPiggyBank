@@ -30,9 +30,10 @@ namespace MyPiggyBank.Core.Service
             };
 
             var expiration = DateTime.Now.AddDays(1);
+            var confIssuer = _configuration["Authorization:Issuer"];
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Authorization:Issuer"],
+                issuer: confIssuer,
                 signingCredentials: credentials,
                 claims: claims,
                 expires: expiration);
