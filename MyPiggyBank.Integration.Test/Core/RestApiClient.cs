@@ -61,12 +61,18 @@ namespace MyPiggyBank.Integration.Test
             return registerResp.IsSuccessStatusCode && loginResp.IsSuccessStatusCode;
         }
 
-
         public async Task<HttpResponseMessage> PostAsync<T>(string url, T input)
         {
             var body = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader);
             return await _client.PostAsync(url, body);
         }
+
+        public async Task<HttpResponseMessage> DeleteAsync(string url) {
+            var resp = await _client.DeleteAsync(url);
+            resp.EnsureSuccessStatusCode();
+            return resp;
+        }
+
 
         public async Task<TResponse> GetAsync<TResponse>(string url)
         {
