@@ -1,10 +1,13 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using MyPiggyBank.Core.Protocol.Account.DTO;
+using MyPiggyBank.Core.Protocol.Account.Requests;
 using MyPiggyBank.Data;
 using Newtonsoft.Json;
 
@@ -38,6 +41,26 @@ namespace MyPiggyBank.Integration.Test
         }
 
         public MyPiggyBankContext PiggyBankContext { get; }
+
+        public async Task<bool> TestUserAuth()
+        {
+            var registerResp = await PostAsync("/api/v1/Account/Register", new RegisterRequest() {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1",
+                Username = "TestUser"
+            });
+
+            var loginResp = await PostAsync("/api/v1/Account/Login", new LoginRequest() {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1"
+            });
+
+            var token = loginResp.Deserialize<AuthorizationToken>();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+
+            return registerResp.IsSuccessStatusCode && loginResp.IsSuccessStatusCode;
+        }
+
 
         public async Task<HttpResponseMessage> PostAsync<T>(string url, T input)
         {
