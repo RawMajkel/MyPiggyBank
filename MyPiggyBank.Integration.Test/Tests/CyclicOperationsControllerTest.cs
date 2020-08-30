@@ -102,7 +102,17 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetCyclicOperation_ShouldRetrieveMultiplePresentCyclicOperationsOnUnconditionalGet()
         {
+            var res = _apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation());
+            Assert.True(res.IsSuccessStatusCode);
 
+            var secondRes = SampleCyclicOperation();
+            secondRes.Name = "AnotherCyclicOperation";
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", secondRes).IsSuccessStatusCode);
+
+            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         [Fact]
