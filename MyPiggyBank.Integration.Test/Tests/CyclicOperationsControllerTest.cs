@@ -78,7 +78,25 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void DeleteCyclicOperation_ShouldDeleteOnlyOne()
         {
-        
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
+
+            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+
+            Assert.Equal(2, ops.Count);
+            var guidToDelete = ops[0].Id;
+
+            var deleteResp = _apiClient.Delete("/api/v1/CyclicOperations/Delete/" + guidToDelete.ToString());
+            Assert.True(deleteResp.IsSuccessStatusCode);
+
+            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            ops =  getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+
+            Assert.Equal(1, ops.Count);
+            Assert.True(ops[0].Id != guidToDelete);           
         }
 
         [Fact]
