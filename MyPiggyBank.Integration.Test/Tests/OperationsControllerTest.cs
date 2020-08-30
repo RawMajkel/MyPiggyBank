@@ -31,19 +31,31 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateOperation_ShouldSuccessfullyPost()
         {
-
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
         }
 
         [Fact]
         public void CreateOperation_ShouldSuccessfullyPostMultipleTimes()
         {
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
+            var secondRes = SampleOperation();
+            secondRes.Name = "AnotherOperation";
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", secondRes).IsSuccessStatusCode);
         }
 
         [Fact]
         public void CreateOperation_ShouldPostCorrectData()
         {
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
+            var getOperationResp = _apiClient.Get("/api/v1/Operations/List?Name=TestOperation");
+            Assert.True(getOperationResp.IsSuccessStatusCode);
+
+            var ops = getOperationResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(1, ops.Count);
+            Assert.NotEqual(Guid.Empty, ops[0].Id);
+            Assert.True(ops[0].Value > 9000);
         }
 
         [Fact]
