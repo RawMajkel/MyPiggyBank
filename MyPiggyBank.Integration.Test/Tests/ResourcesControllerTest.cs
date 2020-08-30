@@ -65,7 +65,25 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void DeleteResource_ShouldDeleteOnlyOne()
         {
-     
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
+
+            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+
+            Assert.Equal(2, resources.Count);
+            var guidToDelete = resources[0].Id;
+
+            var deleteResp = _apiClient.Delete("/api/v1/Resources/Delete/" + guidToDelete.ToString());
+            Assert.True(deleteResp.IsSuccessStatusCode);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+
+            Assert.Equal(1, resources.Count);
+            Assert.True(resources[0].Id != guidToDelete);           
         }
 
         [Fact]
