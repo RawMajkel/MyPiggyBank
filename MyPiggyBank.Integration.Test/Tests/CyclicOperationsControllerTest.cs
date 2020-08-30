@@ -35,7 +35,11 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateCyclicOperation_ShouldSuccessfullyPostMultipleTimes()
         {
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
+            var secondRes = SampleCyclicOperation();
+            secondRes.Name = "AnotherCyclicOperation";
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", secondRes).IsSuccessStatusCode);
         }
 
         [Fact]
