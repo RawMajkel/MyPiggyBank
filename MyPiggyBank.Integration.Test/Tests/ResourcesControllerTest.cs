@@ -104,7 +104,17 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetResource_ShouldFilterByName()
         {
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
+            var otherRes = SampleResource();
+            otherRes.Name = "AnotherResource";
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", otherRes).IsSuccessStatusCode);
+
+            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Name=TestResource");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(2, resources.Count);
         }
 
         [Fact]
