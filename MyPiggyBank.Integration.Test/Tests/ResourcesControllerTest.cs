@@ -32,7 +32,15 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateResource_ShouldPostCorrectData()
         {
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
+            var getResourceResp = _apiClient.Get("/api/v1/Resources/List?Name=TestResource");
+            Assert.True(getResourceResp.IsSuccessStatusCode);
+
+            var resources = getResourceResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(1, resources.Count);
+            Assert.NotEqual(Guid.Empty, resources[0].Id);
+            Assert.True(resources[0].Value > 9000);
         }
 
         [Fact]
