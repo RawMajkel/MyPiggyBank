@@ -45,7 +45,15 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateCyclicOperation_ShouldPostCorrectData()
         {
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
+            var getCyclicOperationResp = _apiClient.Get("/api/v1/CyclicOperations/List?Name=TestCyclicOperation");
+            Assert.True(getCyclicOperationResp.IsSuccessStatusCode);
+
+            var ops = getCyclicOperationResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(1, ops.Count);
+            Assert.NotEqual(Guid.Empty, ops[0].Id);
+            Assert.True(ops[0].EstimatedValue > 9000);
         }
 
         [Fact]
