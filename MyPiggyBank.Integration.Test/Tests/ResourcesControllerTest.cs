@@ -14,7 +14,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             _apiClient = new RestApiClient();
             _apiClient.TestUserAuth();
         }
-
+        
         [Fact]
         public void CreateResource_ShouldSuccessfullyPost()
             => Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);        
@@ -22,7 +22,11 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateResource_ShouldSuccessfullyPostMultipleTimes()
         {
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
+            var secondRes = SampleResource();
+            secondRes.Name = "AnotherResource";
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", secondRes).IsSuccessStatusCode);
         }
 
         [Fact]
