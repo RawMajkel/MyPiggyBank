@@ -91,13 +91,33 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetCyclicOperation_ShouldRetrieveMultiplePresentOperationCategoriesOnUnconditionalGet()
         {
+            var op = _apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory());
+            Assert.True(op.IsSuccessStatusCode);
 
+            var secondOp = SampleOperationCategory();
+            secondOp.Name = "AnotherCategory";
+            Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", secondOp).IsSuccessStatusCode);
+
+            var getOperationCategoriesResp = _apiClient.Get("/api/v1/OperationCategories/List");
+            Assert.True(getOperationCategoriesResp.IsSuccessStatusCode);
+            var ops = getOperationCategoriesResp.Deserialize<IList<OperationCategoriesResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         [Fact]
         public void GetCyclicOperation_ShouldFilterByName()
         {
+            Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
 
+            var otherOp = SampleOperationCategory();
+            otherOp.Name = "AnotherCategory";
+            Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", otherOp).IsSuccessStatusCode);
+
+            var getOperationCategoriesResp = _apiClient.Get("/api/v1/OperationCategories/List?Name=TestOpCategory");
+            Assert.True(getOperationCategoriesResp.IsSuccessStatusCode);
+            var ops = getOperationCategoriesResp.Deserialize<IList<OperationCategoriesResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         private OperationCategoriesSaveRequest SampleOperationCategory() => new OperationCategoriesSaveRequest() {
