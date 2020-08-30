@@ -118,7 +118,17 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetCyclicOperation_ShouldFilterByName()
         {
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
+            var otherRes = SampleCyclicOperation();
+            otherRes.Name = "AnotherCyclicOperation";
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", otherRes).IsSuccessStatusCode);
+
+            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?Name=TestCyclicOperation");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         [Fact]
