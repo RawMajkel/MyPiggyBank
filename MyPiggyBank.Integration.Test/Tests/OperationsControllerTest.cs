@@ -61,13 +61,44 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void DeleteOperation_ShouldDeleteFromDB()
         {
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(1, ops.Count);
+
+            var deleteResp = _apiClient.Delete("/api/v1/Operations/Delete/" + ops[0].Id.ToString());
+            Assert.True(deleteResp.IsSuccessStatusCode);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops =  getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(0, ops.Count);
         }
 
         [Fact]
         public void DeleteOperation_ShouldDeleteOnlyOne()
         {
-          
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
+
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+
+            Assert.Equal(2, ops.Count);
+            var guidToDelete = ops[0].Id;
+
+            var deleteResp = _apiClient.Delete("/api/v1/Operations/Delete/" + guidToDelete.ToString());
+            Assert.True(deleteResp.IsSuccessStatusCode);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops =  getOperationsResp.Deserialize<IList<OperationResponse>>();
+
+            Assert.Equal(1, ops.Count);
+            Assert.True(ops[0].Id != guidToDelete);           
         }
 
         [Fact]
