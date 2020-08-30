@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using MyPiggyBank.Core.Protocol.Account.DTO;
-using MyPiggyBank.Core.Protocol.Account.Mappings;
 using MyPiggyBank.Core.Protocol.Account.Requests;
-using MyPiggyBank.Core.Service;
 using MyPiggyBank.Core.Protocol.Account;
-using MyPiggyBank.Data;
-using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Repository;
 using MyPiggyBank.Integration.Test.Responses;
 using Xunit;
 
@@ -19,146 +11,95 @@ namespace MyPiggyBank.Integration.Test.Tests
 {
     public class AccountControllerTest
     {
-        private IAccountsService _service;
         private readonly RestApiClient _apiClient;
-
         public AccountControllerTest()
         {
             _apiClient = new RestApiClient();
         }
 
         [Fact]
-        public async void LoginUser_CorrectCredentials_ShouldCorrectResponse()
+        public void LoginUser_CorrectCredentials_ShouldCorrectResponse()
         {
-            //arrange
-            var registerInput = new RegisterRequest()
-            {
-                Email = "email@gmail.com",
+            var registerResp = _apiClient.Post("/api/v1/Account/Register", new RegisterRequest() {
+                Email = "someEmail@gmail.com",
                 Password = "Pa$$word1",
-                Username = "TestUser"
-            };
-            var loginInput = new LoginRequest()
-            {
-                Email = "email@gmail.com",
+                Username = "TestUsername"
+            });
+            Assert.True(registerResp.IsSuccessStatusCode);
+
+            var loginResp = _apiClient.Post("/api/v1/Account/Login", new LoginRequest() {
+                Email = "someEmail@gmail.com",
                 Password = "Pa$$word1"
-            };
-            var dateTimeNow = DateTime.Now;
+            });
+            Assert.True(loginResp.IsSuccessStatusCode);
 
-            //act
-            await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
-            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
-            var authToken = response.Deserialize<AuthorizationToken>();
-
-            //assert
-            Assert.NotNull(authToken);
-            Assert.True(authToken.Identifier == loginInput.Email);
-            Assert.True(!string.IsNullOrEmpty(authToken.Token));
+            var authData = loginResp.Deserialize<AuthorizationToken>();
+            Assert.Equal("TestUsername", authData.Username);
+            Assert.NotEmpty(authData.Token);
         }
 
         [Fact]
-        public async void LoginUser_UserNotRegistered_ShouldReturnUserNotFound()
+        public void LoginUser_UserNotRegistered_ShouldReturnUserNotFound()
         {
-            //arrange
-            var loginInput = new LoginRequest()
-            {
-                Email = "email@gmail.com",
+            var loginResp = _apiClient.Post("/api/v1/Account/Login", new LoginRequest() {
+                Email = "_definifively_not_registered_@gmail.com",
                 Password = "Pa$$word1"
-            };
-
-            //act
-            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
-            var message = response.Deserialize<string>();
-
-            //assert
-            Assert.NotEmpty(message);
-            Assert.True(message == AccountResources.AccountService_Authenticate_User_NotFound);
+            });
+            Assert.False(loginResp.IsSuccessStatusCode);
+            Assert.Equal(AccountResources.AccountService_Authenticate_User_NotFound, loginResp.Deserialize<string>());
         }
 
         [Theory]
-        [InlineData("WrongPass", "Incorrect password.")]
-        public async void LoginUser_IncorrectPassword_ShouldReturnValidationMessage(string wrongPassword, string validationMessage)
+        [InlineData("WrongPass")]
+        public void LoginUser_IncorrectPassword_ShouldReturnValidationMessage(string wrongPassword)
         {
-            // arrange
-            var registerInput = new RegisterRequest()
-            {
+            var registerResp = _apiClient.Post("/api/v1/Account/Register", new RegisterRequest() {
                 Email = "email@gmail.com",
                 Password = "Pa$$word1",
                 Username = "TestUser"
-            };
-            var loginInput = new LoginRequest()
-            {
+            });
+
+            var loginResp = _apiClient.Post("/api/v1/Account/Login", new LoginRequest() {
                 Email = "email@gmail.com",
                 Password = wrongPassword
-            };
+            });
+            Assert.False(loginResp.IsSuccessStatusCode);
+            Assert.Equal(AccountResources.AccountService_Authenticate_Password_Incorrect, loginResp.Deserialize<String>());
+        }
 
-            //act
-            await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
-            var response = await _apiClient.PostAsync("/api/v1/Account/Login", loginInput);
-            var message = response.Deserialize<string>();
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void LoginUser_MalformedPassword_ShouldReturnValidationMessage(string malformedPassword) {
+            _apiClient.Post("/api/v1/Account/Register", new RegisterRequest() {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1",
+                Username = "TestUser"
+            });
 
-            //assert
-            Assert.True(!string.IsNullOrEmpty(message));
-            Assert.True(validationMessage == message);
+            var loginResp = _apiClient.Post("/api/v1/Account/Login", new LoginRequest() {
+                Email = "email@gmail.com",
+                Password = malformedPassword
+            });
+            Assert.False(loginResp.IsSuccessStatusCode);
+
+            var validation = loginResp.Deserialize<FluentValidationResponse>();
+            Assert.True(validation.Errors.ContainsKey("Password"));
         }
 
         [Theory, ClassData(typeof(IncorrectPasswordData))]
-        public async void RegisterUser_IncorrectPassword_ShouldReturnValidationMessage(
-            string incorrectPassword, string validationMessage)
+        public void RegisterUser_IncorrectPassword_ShouldReturnValidationMessage(string incorrectPassword, string validationMessage)
         {
-            //arrange
-            var registerInput = new RegisterRequest()
-            {
+            var response = _apiClient.Post("/api/v1/Account/Register", new RegisterRequest() {
                 Email = "test@gmail.com",
                 Password = incorrectPassword,
                 Username = "testUser"
-            };
-
-            //act
-            var response = await _apiClient.PostAsync("/api/v1/Account/Register", registerInput);
+            });
+            Assert.False(response.IsSuccessStatusCode);
+            
             var validation = response.Deserialize<FluentValidationResponse>();
-
-            //assert
             Assert.True(validation.Errors.ContainsKey("Password"));
             Assert.Contains(validationMessage, validation.Errors["Password"]);
-        }
-
-        [Fact]
-        public async void SaveAccount_SavingCorrectUser_ShouldAddToDb()
-        {
-            //arrange
-            using var context = DbHelper.CreateDbInRuntimeMemory();
-            _service = CreateAccountService(context);
-            var user = new RegisterRequest()
-            {
-                Email = "tesMail@gmail.com",
-                Password = "Pass1",
-                Username = "User1"
-            };
-
-            //act
-            await _service.SaveAccount(user);
-
-            //assert
-            var entity = context.Users.FirstOrDefault();
-
-            Assert.NotNull(entity);
-            Assert.NotEqual(Guid.Empty, entity.Id);
-            Assert.True(entity.Email == user.Email);
-            Assert.True(entity.Username == user.Username);
-            Assert.NotNull(entity.PasswordHash);
-        }
-
-        private IAccountsService CreateAccountService(MyPiggyBankContext context)
-        {
-            var mappingConf = new MapperConfiguration(mc => { mc.AddProfile<AccountProfile>(); });
-            IMapper mapper = mappingConf.CreateMapper();
-
-            var userRepository = new UsersRepository(context);
-
-            return new AccountsService(
-                repository: userRepository,
-                hasher: new PasswordHasher<User>(),
-                mapper: mapper);
         }
     }
 
