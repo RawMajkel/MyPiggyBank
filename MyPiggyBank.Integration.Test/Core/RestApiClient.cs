@@ -1,8 +1,6 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -15,9 +13,7 @@ namespace MyPiggyBank.Integration.Test
 {
     public class RestApiClient
     {
-        private readonly HttpClient _client;
-        private const string _localhost = "http://localhost:5001";
-        private const string JsonHeader = "application/json";
+        public MyPiggyBankContext PiggyBankContext { get; }
 
         public RestApiClient()
         {
@@ -40,45 +36,36 @@ namespace MyPiggyBank.Integration.Test
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonHeader));
         }
 
-        public MyPiggyBankContext PiggyBankContext { get; }
+        public HttpResponseMessage Get(string url)
+            => _client.GetAsync(url).Result;
 
-        public async Task<bool> TestUserAuth()
+        public HttpResponseMessage Post<T>(string url, T input)
+            => _client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader)).Result;
+
+        public HttpResponseMessage Delete(string url)
+            => _client.DeleteAsync(url).Result;
+
+        public bool TestUserAuth()
         {
-            var registerResp = await PostAsync("/api/v1/Account/Register", new RegisterRequest() {
+            Post("/api/v1/Account/Register", new RegisterRequest() {
                 Email = "email@gmail.com",
                 Password = "Pa$$word1",
                 Username = "TestUser"
             });
 
-            var loginResp = await PostAsync("/api/v1/Account/Login", new LoginRequest() {
+            var loginResp = Post("/api/v1/Account/Login", new LoginRequest() {
                 Email = "email@gmail.com",
                 Password = "Pa$$word1"
             });
 
-            var token = loginResp.Deserialize<AuthorizationToken>();
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+            var authData = loginResp.Deserialize<AuthorizationToken>();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authData.Token);
 
-            return registerResp.IsSuccessStatusCode && loginResp.IsSuccessStatusCode;
+            return authData.Token.Length != 0;
         }
 
-        public async Task<HttpResponseMessage> PostAsync<T>(string url, T input)
-        {
-            var body = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader);
-            return await _client.PostAsync(url, body);
-        }
-
-        public async Task<HttpResponseMessage> DeleteAsync(string url) {
-            var resp = await _client.DeleteAsync(url);
-            resp.EnsureSuccessStatusCode();
-            return resp;
-        }
-
-
-        public async Task<TResponse> GetAsync<TResponse>(string url)
-        {
-            var response = await _client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            return response.Deserialize<TResponse>();
-        }
+        private readonly HttpClient _client;
+        private const string _localhost = "http://localhost:5001";
+        private const string JsonHeader = "application/json";
     }
 }
