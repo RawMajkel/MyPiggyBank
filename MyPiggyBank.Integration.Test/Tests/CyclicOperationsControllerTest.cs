@@ -156,7 +156,33 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetCyclicOperation_ShouldFilterByEstimatedValueInequality()
         {
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
+            var otherRes = SampleCyclicOperation();
+            otherRes.EstimatedValue = 42;
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", otherRes).IsSuccessStatusCode);
+
+
+            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MinEstimatedValue=9000");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(2, ops.Count);
+
+            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MinEstimatedValue=10000");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(0, ops.Count);
+
+            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MaxEstimatedValue=50");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(1, ops.Count);
+
+            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MaxEstimatedValue=10");
+            Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
+            ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
+            Assert.Equal(0, ops.Count);
         }
 
         private CyclicOperationSaveRequest SampleCyclicOperation() => new CyclicOperationSaveRequest()
