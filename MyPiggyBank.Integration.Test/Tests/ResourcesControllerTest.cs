@@ -1,43 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using MyPiggyBank.Core.Protocol.Resource;
+using MyPiggyBank.Core.Protocol.Resource.Requests;
 using MyPiggyBank.Core.Protocol.Resource.Responses;
-using MyPiggyBank.Data.Model;
-using MyPiggyBank.Data.Util;
 using Xunit;
 
 namespace MyPiggyBank.Integration.Test.Tests
 {
-    public class ResourcesControllerTest
-    {
-        private readonly RestApiClient _apiClient;
+    public class ResourcesControllerTest {
+        private RestApiClient _apiClient;
 
-        public ResourcesControllerTest() {
+        public ResourcesControllerTest()
+        {
             _apiClient = new RestApiClient();
+            _apiClient.TestUserAuth();
         }
 
         [Fact]
-        public async void CreateResource_CorrectData_ShouldAddToDb()
+        public void CreateResource_ShouldSuccessfullyPost()
+            => Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);        
+
+        [Fact]
+        public void CreateResource_ShouldSuccessfullyPostMultipleTimes()
         {
-            var inputResource = new Resource()           
-            {
-                Name = "TestResource",
-                Value = 9000.01M,
-                Currency = "USD",
-                User = new User() {
-                    Email = "someemail@domain.tld",
-                    Username = "lUser",
-                    PasswordHash = "hahahasz"
-                }
-            };
 
-            var resp = await _apiClient.PostAsync("/api/v1/Resources", inputResource);
-            Assert.True(resp.IsSuccessStatusCode);
-
-            var resources = await _apiClient.GetAsync<IList<ResourceResponse>>("/api/v1/Resources?Name=TestResource");
-            Assert.True(resources.Count == 1);
-            Assert.True(resources[0].Id != Guid.Empty);
-            Assert.True(resources[0].Value > 9000);
         }
+
+        [Fact]
+        public void CreateResource_ShouldPostCorrectData()
+        {
+
+        }
+
+        [Fact]
+        public void DeleteResource_ShouldDeleteFromDB()
+        {
+
+        }
+
+        [Fact]
+        public void DeleteResource_ShouldDeleteOnlyOne()
+        {
+     
+        }
+
+        [Fact]
+        public void GetResource_ShouldRetrieveMultiplePresentResourcesOnUnconditionalGet()
+        {
+
+        }
+
+        [Fact]
+        public void GetResource_ShouldFilterByName()
+        {
+
+        }
+
+        [Fact]
+        public void GetResource_ShouldFilterByCurrency()
+        {
+
+        }
+
+        [Fact]
+        public void GetResource_ShouldFilterByValueInequality()
+        {
+
+        }
+
+        private ResourceSaveRequest SampleResource() => new ResourceSaveRequest()
+        {
+            Name = "TestResource",
+            Value = 9000.01M,
+            Currency = "USD"
+        };
     }
 }
