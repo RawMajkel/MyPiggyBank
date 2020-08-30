@@ -120,7 +120,27 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetResource_ShouldFilterByCurrency()
         {
+            var inputResource = SampleResource();
+            inputResource.Currency = "USD";
+            Assert.True((_apiClient.Post("/api/v1/Resources/Save", inputResource)).IsSuccessStatusCode);
 
+            inputResource.Currency = "PL";
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", inputResource).IsSuccessStatusCode);
+
+            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=PL");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(1, resources.Count);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=EUR");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(0, resources.Count);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=USD");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(1, resources.Count);
         }
 
         [Fact]
