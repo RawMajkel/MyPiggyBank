@@ -89,7 +89,16 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetResource_ShouldRetrieveMultiplePresentResourcesOnUnconditionalGet()
         {
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
+            var secondRes = SampleResource();
+            secondRes.Name = "AnotherResource";
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", secondRes).IsSuccessStatusCode);
+
+            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(2, resources.Count);
         }
 
         [Fact]
