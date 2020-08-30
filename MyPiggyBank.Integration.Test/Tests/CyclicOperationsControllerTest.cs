@@ -29,7 +29,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void CreateCyclicOperation_ShouldSuccessfullyPost()
         {
-
+            Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
         }
 
         [Fact]
