@@ -146,7 +146,33 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetResource_ShouldFilterByValueInequality()
         {
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
+            var otherRes = SampleResource();
+            otherRes.Value = 42;
+            Assert.True(_apiClient.Post("/api/v1/Resources/Save", otherRes).IsSuccessStatusCode);
+
+
+            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MinValue=9000");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(2, resources.Count);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MinValue=10000");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(0, resources.Count);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MaxValue=50");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(1, resources.Count);
+
+            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MaxValue=10");
+            Assert.True(getResourcesResp.IsSuccessStatusCode);
+            resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
+            Assert.Equal(0, resources.Count);
         }
 
         private ResourceSaveRequest SampleResource() => new ResourceSaveRequest()
