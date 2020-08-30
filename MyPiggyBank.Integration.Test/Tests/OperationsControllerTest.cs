@@ -104,25 +104,86 @@ namespace MyPiggyBank.Integration.Test.Tests
         [Fact]
         public void GetOperation_ShouldRetrieveMultiplePresentOperationsOnUnconditionalGet()
         {
+            var res = _apiClient.Post("/api/v1/Operations/Save", SampleOperation());
+            Assert.True(res.IsSuccessStatusCode);
 
+            var secondRes = SampleOperation();
+            secondRes.Name = "AnotherOperation";
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", secondRes).IsSuccessStatusCode);
+
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         [Fact]
         public void GetOperation_ShouldFilterByName()
         {
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
+            var otherRes = SampleOperation();
+            otherRes.Name = "AnotherOperation";
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", otherRes).IsSuccessStatusCode);
+
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List?Name=TestOperation");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(2, ops.Count);
         }
 
         [Fact]
         public void GetOperation_ShouldFilterByWhetherItIsIncome()
         {
+            var inputOperation = SampleOperation();
+            inputOperation.IsIncome = true;
+            Assert.True((_apiClient.Post("/api/v1/Operations/Save", inputOperation)).IsSuccessStatusCode);
+            Assert.True((_apiClient.Post("/api/v1/Operations/Save", inputOperation)).IsSuccessStatusCode);
 
+            inputOperation.IsIncome = false;
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", inputOperation).IsSuccessStatusCode);
+
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List?IsIncome=true");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(2, ops.Count);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?IsIncome=false");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(1, ops.Count);
         }
 
         [Fact]
         public void GetOperation_ShouldFilterByValueInequality()
         {
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
+            var otherRes = SampleOperation();
+            otherRes.Value = 42;
+            Assert.True(_apiClient.Post("/api/v1/Operations/Save", otherRes).IsSuccessStatusCode);
+
+            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MinValue=9000");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(2, ops.Count);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MinValue=10000");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(0, ops.Count);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MaxValue=50");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(1, ops.Count);
+
+            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MaxValue=10");
+            Assert.True(getOperationsResp.IsSuccessStatusCode);
+            ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
+            Assert.Equal(0, ops.Count);
         }
 
         private OperationSaveRequest SampleOperation() => new OperationSaveRequest()
