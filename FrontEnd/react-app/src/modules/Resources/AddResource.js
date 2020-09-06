@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function AddResource({token}) {
 
@@ -37,7 +38,7 @@ function AddResource({token}) {
         const config = { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` } };
         const bodyParameters = { Id: uuidv4(), Name: name, Value: parseFloat(value), Currency: "PLN" };
 
-        axios.post('https://localhost:5001/api/v1/resources/save', bodyParameters, config).then(response => {
+        axios.post(`${appConfig.apiUrl}/api/v1/resources/save`, bodyParameters, config).then(response => {
             if(response.status) {
                 setIsFinished(true);
                 window.location.href = "/resources";

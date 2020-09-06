@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import CyclicGroup from '../CyclicOperations/CyclicGroup';
+import { appConfig } from '../../config/config';
 
 /* sort operations by period */
 function divideOperations(data) {
@@ -28,7 +29,7 @@ function CyclicOperations({token}) {
           const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
           const bodyParameters = { "Name": null };
 
-          const response = await axios.post('https://localhost:5001/api/v1/cyclicoperations/list', bodyParameters, config);
+          const response = await axios.post(`${appConfig.apiUrl}/api/v1/cyclicoperations/list`, bodyParameters, config);
           setCyclicOperations(response.data);
       })();
   }, []);

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function AddOperation({token}) {
   
@@ -27,8 +28,8 @@ function AddOperation({token}) {
       const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
       const bodyParameters = { "Name": null };
 
-      const responseCategories = await axios.post('https://localhost:5001/api/v1/operationcategories/list', bodyParameters, config);
-      const responseResources = await axios.post('https://localhost:5001/api/v1/resources/list', bodyParameters, config);
+      const responseCategories = await axios.post(`${appConfig.apiUrl}/api/v1/operationcategories/list`, bodyParameters, config);
+      const responseResources = await axios.post(`${appConfig.apiUrl}/api/v1/resources/list`, bodyParameters, config);
 
       setCategories(responseCategories.data);
       setResources(responseResources.data);
@@ -64,7 +65,7 @@ function handleSubmit(event) {
   const config = { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` } };
   const bodyParameters = { "Id": uuidv4(), "ResourceId": resourceId, "OperationCategoryId": operationCategoryId, "Name": name, "Description": description, "IsIncome": isIncome == "true" ? true : false, "Value": parseFloat(value), "OccuredAt": date };
 
-  axios.post('https://localhost:5001/api/v1/operations/save', bodyParameters, config).then(response => {
+  axios.post(`${appConfig.apiUrl}/api/v1/operations/save`, bodyParameters, config).then(response => {
       if(response.status) {
           setIsFinished(true);
           window.location.href = "/operations";

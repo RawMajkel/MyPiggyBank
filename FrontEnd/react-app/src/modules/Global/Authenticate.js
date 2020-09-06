@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function Authenticate({email, password}) {
 
@@ -10,7 +11,7 @@ function Authenticate({email, password}) {
             const config = { headers: { "Content-Type": "application/json" } };
             const bodyParameters = { "Email": email, "Password": password };
 
-            await axios.post('https://localhost:5001/api/v1/account/login', bodyParameters, config).then(response => {
+            await axios.post(`${appConfig.apiUrl}/api/v1/account/login`, bodyParameters, config).then(response => {
                 if(response.status) {
 
                     let expires = "";

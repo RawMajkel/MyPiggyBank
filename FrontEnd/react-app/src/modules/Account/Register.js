@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function Register() {
     
@@ -58,7 +59,7 @@ function Register() {
         const config = { headers: { "Content-Type": "application/json" } };
         const bodyParameters = { "Username": userName, "Email": email, "Password": password };
 
-        axios.post('https://localhost:5001/api/v1/account/register', bodyParameters, config).then(response => {
+        axios.post(`${appConfig.apiUrl}/api/v1/account/register`, bodyParameters, config).then(response => {
             if(response.status) {
                 setIsFinished(true);
                 window.location.href = "/login";

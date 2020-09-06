@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import Category from '../Categories/Category';
+import { appConfig } from '../../config/config';
 
 function Categories({token}) {
 
@@ -11,7 +12,7 @@ function Categories({token}) {
             const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
             const bodyParameters = { "Name": null };
 
-            const response = await axios.post('https://localhost:5001/api/v1/operationcategories/list', bodyParameters, config);
+            const response = await axios.post(`${appConfig.apiUrl}/api/v1/operationcategories/list`, bodyParameters, config);
             setCategories(response.data);
         })();
     }, []);

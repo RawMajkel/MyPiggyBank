@@ -1,5 +1,6 @@
 import React, {useEffect } from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function DeleteOperation({token, id}) {
 
@@ -7,7 +8,7 @@ function DeleteOperation({token, id}) {
     (async () => {
         const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
 
-        await axios.delete(`https://localhost:5001/api/v1/operations/${id}`, config).then(response => {
+        await axios.delete(`${appConfig.apiUrl}/api/v1/operations/${id}`, config).then(response => {
             if(response.status) {
                 window.location.href = "/operations";
             }

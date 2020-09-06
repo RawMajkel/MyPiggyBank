@@ -1,5 +1,6 @@
 import React, {useEffect } from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function DeleteCyclicOperation({token, id}) {
 
@@ -7,7 +8,7 @@ function DeleteCyclicOperation({token, id}) {
     (async () => {
         const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
 
-        const response = await axios.delete(`https://localhost:5001/api/v1/cyclicoperations/${id}`, config).then(response => {
+        const response = await axios.delete(`${appConfig.apiUrl}/api/v1/cyclicoperations/${id}`, config).then(response => {
             if(response.status) {
                 window.location.href = "/cyclic";
             }
