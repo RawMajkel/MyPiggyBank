@@ -95,7 +95,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             secondRes.Name = "AnotherResource";
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", secondRes).IsSuccessStatusCode);
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest());
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(2, resources.Count);
@@ -111,7 +111,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             otherRes.Name = "AnotherResource";
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", otherRes).IsSuccessStatusCode);
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Name=TestResource");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { Name = "TestResource" });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(2, resources.Count);
@@ -127,17 +127,17 @@ namespace MyPiggyBank.Integration.Test.Tests
             inputResource.Currency = "PL";
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", inputResource).IsSuccessStatusCode);
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=PL");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { Currency = "PL" });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(1, resources.Count);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=EUR");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { Currency = "EUR" });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(0, resources.Count);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?Currency=USD");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { Currency = "USD" });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(1, resources.Count);
@@ -154,22 +154,22 @@ namespace MyPiggyBank.Integration.Test.Tests
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", otherRes).IsSuccessStatusCode);
 
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MinValue=9000");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { MinValue = 9000 });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(2, resources.Count);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MinValue=10000");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { MinValue = 10000 });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(0, resources.Count);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MaxValue=50");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { MaxValue = 50 });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(1, resources.Count);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List?MaxValue=10");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { MaxValue = 10 });
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(0, resources.Count);
