@@ -165,22 +165,22 @@ namespace MyPiggyBank.Integration.Test.Tests
             otherRes.Value = 42;
             Assert.True(_apiClient.Post("/api/v1/Operations/Save", otherRes).IsSuccessStatusCode);
 
-            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MinValue=9000");
+            var getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { MinValue = 9000 });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(2, ops.Count);
 
-            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MinValue=10000");
+            getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { MinValue = 10000 });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(0, ops.Count);
 
-            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MaxValue=50");
+            getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { MaxValue = 50 });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(1, ops.Count);
 
-            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?MaxValue=10");
+            getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { MaxValue = 10 });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(0, ops.Count);
