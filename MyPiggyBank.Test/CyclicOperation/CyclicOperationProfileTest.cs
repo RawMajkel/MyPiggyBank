@@ -23,6 +23,7 @@ namespace MyPiggyBank.Test.CycliclOperations
         {
             _mapperConfiguration.AssertConfigurationIsValid();
         }
+
         [Fact]
         public void CyclicOperationIdMapping()
         {
