@@ -48,15 +48,15 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest());
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(1, resources.Count);
 
-            var deleteResp = _apiClient.Delete("/api/v1/Resources/Delete/" + resources[0].Id.ToString());
+            var deleteResp = _apiClient.Delete("/api/v1/Resources/" + resources[0].Id.ToString());
             Assert.True(deleteResp.IsSuccessStatusCode);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest());
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
             Assert.Equal(0, resources.Count);
@@ -68,17 +68,17 @@ namespace MyPiggyBank.Integration.Test.Tests
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
-            var getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            var getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest());
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             var resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
 
             Assert.Equal(2, resources.Count);
             var guidToDelete = resources[0].Id;
 
-            var deleteResp = _apiClient.Delete("/api/v1/Resources/Delete/" + guidToDelete.ToString());
+            var deleteResp = _apiClient.Delete("/api/v1/Resources/" + guidToDelete.ToString());
             Assert.True(deleteResp.IsSuccessStatusCode);
 
-            getResourcesResp = _apiClient.Get("/api/v1/Resources/List");
+            getResourcesResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest());
             Assert.True(getResourcesResp.IsSuccessStatusCode);
             resources = getResourcesResp.Deserialize<IList<ResourceResponse>>();
 
