@@ -5,19 +5,21 @@ import Footer from './modules/Global/Footer';
 import Header from './modules/Global/Header';
 import Resources from './modules/Resources/Resources';
 import AddResource from './modules/Resources/AddResource';
+import DeleteResource from './modules/Resources/DeleteResource';
 import CyclicOperations from './modules/CyclicOperations/CyclicOperations';
 import AddCyclicOperation from './modules/CyclicOperations/AddCyclicOperation';
 import DeleteCyclicOperation from './modules/CyclicOperations/DeleteCyclicOperation';
 import OperationList from './modules/Operations/OperationList';
 import AddOperation from './modules/Operations/AddOperation';
-import Account from './modules/Account/Account';
+import DeleteOperation from './modules/Operations/DeleteOperation';
+// import Account from './modules/Account/Account';
 import Login from './modules/Account/Login';
 import Register from './modules/Account/Register';
 import Categories from './modules/Categories/Categories';
 import AddCategory from './modules/Categories/AddCategory';
 import DeleteCategory from './modules/Categories/DeleteCategory';
-import Rate from './modules/Rate/Rate';
-import Settings from './modules/Settings/Settings';
+// import Rate from './modules/Rate/Rate';
+// import Settings from './modules/Settings/Settings';
 import NotFound from './modules/Error/NotFound';
 
 function getCookie(name) {
@@ -51,11 +53,13 @@ function App() {
     '/': () => { titleLabel = 'Pulpit'; return <Home token={token} /> },
     '/resources': () => { titleLabel = 'Rachunki'; return <Resources token={token} /> },
     '/resources/add': () => { titleLabel = 'Rachunki'; return <AddResource token={token} /> },
+    '/resources/delete/:id': ({id}) => { titleLabel = 'Rachunki'; return <DeleteResource id={id} token={token} /> },
     '/cyclic': () => { titleLabel = 'Operacje cykliczne'; return <CyclicOperations token={token} /> },
     '/cyclic/add': () => { titleLabel = 'Operacje cykliczne'; return <AddCyclicOperation token={token} /> },
     '/cyclic/delete/:id': ({id}) => { titleLabel = 'Operacje cykliczne'; return <DeleteCyclicOperation id={id} token={token} /> },
     '/operations': () => { titleLabel = 'Transakcje'; return <OperationList token={token} /> },
     '/operations/add': () => { titleLabel = 'Transakcje'; return <AddOperation token={token} /> },
+    '/operations/delete/:id': ({id}) => { titleLabel = 'Transakcje'; return <DeleteOperation id={id} token={token} /> },
     '/categories': () => { titleLabel = 'Kategorie'; return <Categories token={token} /> },
     '/categories/add': () => { titleLabel = 'Kategorie'; return <AddCategory token={token} /> },
     '/categories/delete/:id': ({id}) => { titleLabel = 'Kategorie'; return <DeleteCategory id={id} token={token} /> },
@@ -84,7 +88,7 @@ function App() {
   if(loggedIn) {
     return (
       <div className="App">
-      <Header data={headerData} label={titleLabel} identifier={identifier} />
+        <Header data={headerData} label={titleLabel} identifier={identifier} />
         { routeResult || <NotFound status={404} /> }
         <Footer />
       </div>
@@ -92,7 +96,7 @@ function App() {
   } else {
     return (
       <div className="App">
-      <Header data={headerData} label={titleLabel} identifier={ "Nie zalogowano" } />
+        <Header data={headerData} label={titleLabel} identifier={ "Nie zalogowano" } />
         { routeResult || redirect('/login') }
       </div>
     );
