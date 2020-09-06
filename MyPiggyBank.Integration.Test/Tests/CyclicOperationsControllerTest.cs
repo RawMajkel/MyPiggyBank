@@ -125,7 +125,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             otherRes.Name = "AnotherCyclicOperation";
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", otherRes).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?Name=TestCyclicOperation");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { Name = "TestCyclicOperation" });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
