@@ -49,7 +49,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/Operations/Save", SampleOperation()).IsSuccessStatusCode);
 
-            var getOperationResp = _apiClient.Get("/api/v1/Operations/List?Name=TestOperation");
+            var getOperationResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { Name = "TestOperation" });
             Assert.True(getOperationResp.IsSuccessStatusCode);
 
             var ops = getOperationResp.Deserialize<IList<OperationResponse>>();
