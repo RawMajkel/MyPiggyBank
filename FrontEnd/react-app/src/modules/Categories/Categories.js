@@ -1,17 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
+import axios from 'axios';
 import Category from '../Categories/Category';
-import { v4 as uuidv4 } from 'uuid';
 
 function Categories({token}) {
 
-    const tempData = [
-        { "Id": uuidv4(), "Name": "Zdrowie" },
-        { "Id": uuidv4(), "Name": "Jedzenie" },
-        { "Id": uuidv4(), "Name": "Samochód" },
-        { "Id": uuidv4(), "Name": "Rozrywka" },
-        { "Id": uuidv4(), "Name": "Edukacja" },
-        { "Id": uuidv4(), "Name": "Inne" }
-    ];
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
+            const bodyParameters = { "Name": null };
+
+            const response = await axios.post('https://localhost:5001/api/v1/operationcategories/list', bodyParameters, config);
+            setCategories(response.data);
+        })();
+    }, []);
 
   return (
     <div className="resources section">
@@ -19,7 +22,7 @@ function Categories({token}) {
             <span className="resources___heading heading d-block font-weight-600">Lista kategorii:</span>
             <div className="resources__list">
                 <div>
-                    { tempData.map(function(el, index) { return <Category id={el.Id} name={el.Name} key={index} /> }) }
+                    { categories.map(function(el, index) { return <Category id={el.id} name={el.name} key={index} /> }) }
                 </div>
             </div>
             <a href="/categories/add" className="button d-inline-flex align-items-center justify-content-start">
