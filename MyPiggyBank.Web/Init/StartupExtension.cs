@@ -103,9 +103,12 @@ namespace MyPiggyBank.Web
         private static IServiceCollection ConfigureJwtToken(this IServiceCollection service, IConfiguration configuration)
         {
             var secretKey = configuration["Authorization:SecretKey"];
-
             if (string.IsNullOrEmpty(secretKey))
                 throw new ArgumentNullException("Jwt secret key is empty.");
+
+            var issuer = configuration["Authorization:Issuer"];
+            if (string.IsNullOrEmpty(issuer))
+                throw new ArgumentNullException("Jwt issuer is (null), which doesn't work dduring authentication.");
 
             service
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -117,7 +120,7 @@ namespace MyPiggyBank.Web
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                         ValidateAudience = false,
                         ValidateLifetime = true,
-                        ValidIssuer = configuration["Authorization:Issuer"]
+                        ValidIssuer = issuer
                     };
                 });
 

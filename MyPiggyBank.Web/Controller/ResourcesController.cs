@@ -42,7 +42,7 @@ namespace MyPiggyBank.Web.Controllers
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("Delete/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.DeleteResource(id));
     }

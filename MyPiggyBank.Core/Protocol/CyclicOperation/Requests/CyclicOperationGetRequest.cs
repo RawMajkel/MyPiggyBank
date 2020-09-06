@@ -9,8 +9,8 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Requests
         public string Description { get; set; }
         public decimal? MinEstimatedValue { get; set; }
         public decimal? MaxEstimatedValue { get; set; }
-        public Guid ResourceId { get; set; }
-        public Guid OperationCategoryId { get; set; }
+        public Guid? ResourceId { get; set; }
+        public Guid? OperationCategoryId { get; set; }
         public bool? IsIncome { get; set; }
         public int? MinPeriod { get; set; }
         public int? MaxPeriod { get; set; }

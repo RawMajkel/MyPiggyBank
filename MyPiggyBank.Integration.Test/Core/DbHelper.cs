@@ -12,7 +12,7 @@ namespace MyPiggyBank.Integration.Test {
         public static MyPiggyBankContext CreateDbInRuntimeMemory() 
         {
             var dbOptions = new DbContextOptionsBuilder<MyPiggyBankContext>()
-                .UseInMemoryDatabase(databaseName: "TestIntegrationDB")
+                .UseInMemoryDatabase(databaseName: "TestIntegrationDB-" + Guid.NewGuid().ToString())
                 .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 

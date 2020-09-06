@@ -1,10 +1,11 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using MyPiggyBank.Core.Protocol.Account.DTO;
+using MyPiggyBank.Core.Protocol.Account.Requests;
 using MyPiggyBank.Data;
 using Newtonsoft.Json;
 
@@ -12,9 +13,7 @@ namespace MyPiggyBank.Integration.Test
 {
     public class RestApiClient
     {
-        private readonly HttpClient _client;
-        private const string _localhost = "http://localhost:5001";
-        private const string JsonHeader = "application/json";
+        public MyPiggyBankContext PiggyBankContext { get; }
 
         public RestApiClient()
         {
@@ -37,19 +36,36 @@ namespace MyPiggyBank.Integration.Test
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonHeader));
         }
 
-        public MyPiggyBankContext PiggyBankContext { get; }
+        public HttpResponseMessage Get(string url)
+            => _client.GetAsync(url).Result;
 
-        public async Task<HttpResponseMessage> PostAsync<T>(string url, T input)
+        public HttpResponseMessage Post<T>(string url, T input)
+            => _client.PostAsync(url, new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader)).Result;
+
+        public HttpResponseMessage Delete(string url)
+            => _client.DeleteAsync(url).Result;
+
+        public bool TestUserAuth()
         {
-            var body = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, JsonHeader);
-            return await _client.PostAsync(url, body);
+            Post("/api/v1/Account/Register", new RegisterRequest() {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1",
+                Username = "TestUser"
+            });
+
+            var loginResp = Post("/api/v1/Account/Login", new LoginRequest() {
+                Email = "email@gmail.com",
+                Password = "Pa$$word1"
+            });
+
+            var authData = loginResp.Deserialize<AuthorizationToken>();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authData.Token);
+
+            return authData.Token.Length != 0;
         }
 
-        public async Task<TResponse> GetAsync<TResponse>(string url)
-        {
-            var response = await _client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            return response.Deserialize<TResponse>();
-        }
+        private readonly HttpClient _client;
+        private const string _localhost = "http://localhost:5001";
+        private const string JsonHeader = "application/json";
     }
 }
