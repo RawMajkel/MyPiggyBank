@@ -142,12 +142,12 @@ namespace MyPiggyBank.Integration.Test.Tests
             inputCyclicOperation.IsIncome = false;
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", inputCyclicOperation).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?IsIncome=true");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { IsIncome = true });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?IsIncome=false");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { IsIncome = false });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(1, ops.Count);
