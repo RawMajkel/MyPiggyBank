@@ -36,7 +36,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
 
-            var getCyclicOperationResp = _apiClient.Get("/api/v1/OperationCategories/List?Name=TestOpCategory");
+            var getCyclicOperationResp = _apiClient.Post("/api/v1/OperationCategories/List", new OperationCategoriesGetRequest { Name = "TestOpCategory" });
             Assert.True(getCyclicOperationResp.IsSuccessStatusCode);
 
             var ops = getCyclicOperationResp.Deserialize<IList<OperationCategoriesResponse>>();
