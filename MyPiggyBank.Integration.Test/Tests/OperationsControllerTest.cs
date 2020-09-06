@@ -144,12 +144,12 @@ namespace MyPiggyBank.Integration.Test.Tests
             inputOperation.IsIncome = false;
             Assert.True(_apiClient.Post("/api/v1/Operations/Save", inputOperation).IsSuccessStatusCode);
 
-            var getOperationsResp = _apiClient.Get("/api/v1/Operations/List?IsIncome=true");
+            var getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { IsIncome = true });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             var ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(2, ops.Count);
 
-            getOperationsResp = _apiClient.Get("/api/v1/Operations/List?IsIncome=false");
+            getOperationsResp = _apiClient.Post("/api/v1/Operations/List", new OperationGetRequest { IsIncome = false });
             Assert.True(getOperationsResp.IsSuccessStatusCode);
             ops = getOperationsResp.Deserialize<IList<OperationResponse>>();
             Assert.Equal(1, ops.Count);
