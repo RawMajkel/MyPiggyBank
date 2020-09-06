@@ -21,9 +21,6 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Validators
                 .WithMessage(CyclicOperationResources.CyclicOperationRequestValidator_Name_Empty_Error)
                 .MinimumLength(4)
                 .WithMessage(CyclicOperationResources.CyclicOperationRequestValidator_Name_Length_Error);
-            RuleFor(r => r.NextOccurence)
-                .NotEmpty()
-                .WithMessage(CyclicOperationResources.CyclicOperationRequestValidator_NextOccurence_Empty_Error);
         }
     }
 }
