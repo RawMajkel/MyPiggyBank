@@ -98,7 +98,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             secondOp.Name = "AnotherCategory";
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", secondOp).IsSuccessStatusCode);
 
-            var getOperationCategoriesResp = _apiClient.Get("/api/v1/OperationCategories/List");
+            var getOperationCategoriesResp = _apiClient.Post("/api/v1/OperationCategories/List", new OperationCategoriesGetRequest());
             Assert.True(getOperationCategoriesResp.IsSuccessStatusCode);
             var ops = getOperationCategoriesResp.Deserialize<IList<OperationCategoriesResponse>>();
             Assert.Equal(2, ops.Count);
