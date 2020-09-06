@@ -15,7 +15,7 @@ function Footer() {
               {
                 footerElements.map(function(element, index) {
                   return <li className="footernav__item" key={index}>
-                    <a href={ element.url } className={ 'footernav__a d-flex flex-column align-items-center' + (element.url == window.location.pathname ? ' footernav__a--active' : '') }>
+                    <a href={ element.url } className={ 'footernav__a d-flex flex-column align-items-center' + (element.url === window.location.pathname ? ' footernav__a--active' : '') }>
                       <i className={ 'footernav__icon fas ' + element.icon }></i>
                       <span className="footernav__label">{ element.name }</span>
                     </a>

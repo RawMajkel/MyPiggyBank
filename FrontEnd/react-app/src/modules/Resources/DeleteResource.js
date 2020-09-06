@@ -8,7 +8,7 @@ function DeleteResource({id, token}) {
     (async () => {
         const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
 
-        const response = await axios.delete(`${appConfig.apiUrl}/api/v1/resources/${id}`, config).then(response => {
+        await axios.delete(`${appConfig.apiUrl}/api/v1/resources/${id}`, config).then(response => {
             if(response.status) {
                 window.location.href = "/resources";
             }
