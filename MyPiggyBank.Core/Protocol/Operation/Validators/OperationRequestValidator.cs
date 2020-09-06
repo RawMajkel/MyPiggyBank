@@ -21,9 +21,6 @@ namespace MyPiggyBank.Core.Protocol.Operation.Validators
                 .WithMessage(OperationResources.OperationRequestValidator_Name_Empty_Error)
                 .MinimumLength(4)
                 .WithMessage(OperationResources.OperationRequestValidator_Name_Length_Error);
-            RuleFor(r => r.IsIncome)
-                .NotEmpty()
-                .WithMessage(OperationResources.OperationRequestValidator_IsIncome_Empty_Error);
             RuleFor(r => r.OccuredAt)
                 .NotEmpty()
                 .WithMessage(OperationResources.OperationRequestValidator_OccuredAt_Empty_Error);
