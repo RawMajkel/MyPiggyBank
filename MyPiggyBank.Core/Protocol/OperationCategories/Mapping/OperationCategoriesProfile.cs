@@ -2,7 +2,6 @@
 using MyPiggyBank.Core.Protocol.OperationCategories.Requests;
 using MyPiggyBank.Core.Protocol.OperationCategories.Responses;
 using System;
-using MyPiggyBank.Core.Protocol.OperationCategories.Responses;
 
 namespace MyPiggyBank.Core.Protocol.OperationCategories.Mapping
 {
