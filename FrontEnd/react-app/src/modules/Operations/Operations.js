@@ -1,17 +1,18 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
+import axios from 'axios';
 import OperationGroup from '../Operations/OperationGroup';
 
 function divideOperations(data) {
-  data.sort((a,b) => (a.OccuredAt > b.OccuredAt) ? 1 : ((b.OccuredAt > a.OccuredAt) ? -1 : 0)); 
+  data.sort((a,b) => (a.occuredAt > b.occuredAt) ? 1 : ((b.occuredAt > a.occuredAt) ? -1 : 0)); 
   data.reverse();
 
   data.forEach(function(el, index) {
-    if(!el.IsIncome) el.Value *= -1;
+    if(!el.isIncome) el.value *= -1;
   });
 
   return data.reduce((res, curr) => {
-    if (res[curr.OccuredAt]) res[curr.OccuredAt].push(curr);
-    else Object.assign(res, {[curr.OccuredAt]: [curr]});
+    if (res[curr.occuredAt]) res[curr.occuredAt].push(curr);
+    else Object.assign(res, {[curr.occuredAt]: [curr]});
 
     return res;
   }, {});
@@ -19,21 +20,19 @@ function divideOperations(data) {
 
 function Operations({token, limit}) {
 
-  const tempData = [
-    { "Name": "Zakupy w Tesco", "Value": 390.99, "OccuredAt": '2020-07-03', "IsIncome": false },
-    { "Name": "Zakupy", "Value": 90.31, "OccuredAt": '2020-07-03', "IsIncome": false },
-    { "Name": "SPRZEDAŻ HANTLI NA SIŁOWNIĘ", "Value": 250.00, "OccuredAt": '2020-02-01', "IsIncome": true },
-    { "Name": "Biedronka - zakupy", "Value": 90.31, "OccuredAt": '2020-02-01', "IsIncome": false },
-    { "Name": "Tankowanie samochodu", "Value": 190.1, "OccuredAt": '2020-02-01', "IsIncome": false },
-    { "Name": "Naprawa kosiarki", "Value": 90.31, "OccuredAt": '2020-06-01', "IsIncome": false },
-    { "Name": "Gra komputerowa", "Value": 90.31, "OccuredAt": '2020-06-01', "IsIncome": false },
-    { "Name": "Zakupy", "Value": 90.31, "OccuredAt": '2020-05-01', "IsIncome": false },
-    { "Name": "Skrzynka z narzędziami", "Value": 90.31, "OccuredAt": '2020-01-08', "IsIncome": false },
-    { "Name": "Spotify", "Value": 19.99, "OccuredAt": '2020-01-08', "IsIncome": false },
-    { "Name": "Mechanik samochodowy", "Value": 200.00, "OccuredAt": '2020-01-08', "IsIncome": false }
-  ];
+  const [operations, setOperations] = useState([]);
 
-  const groups = divideOperations(tempData);
+  useEffect(() => {
+      (async () => {
+          const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
+          const bodyParameters = limit ? { "Name": null, "Limit": limit } : { "Name": null };
+
+          const response = await axios.post('https://localhost:5001/api/v1/operations/list', bodyParameters, config);
+          setOperations(response.data);
+      })();
+  }, []);
+
+  const groups = divideOperations(operations);
 
   let groupsArray = [];
 
@@ -48,11 +47,11 @@ function Operations({token, limit}) {
     }
   }
 
-    return (
-        <div>
-            { groupsArray.map(function(el, index) { return <OperationGroup date={el[0].OccuredAt} operations={el} key={index} /> }) }
-        </div>
-    );
+  return (
+    <div>
+        { groupsArray.map(function(el, index) { return <OperationGroup date={el[0].occuredAt} operations={el} key={index} /> }) }
+    </div>
+  );
 }
 
 export default Operations;
