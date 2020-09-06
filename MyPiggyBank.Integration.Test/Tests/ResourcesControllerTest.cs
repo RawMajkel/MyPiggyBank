@@ -34,7 +34,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/Resources/Save", SampleResource()).IsSuccessStatusCode);
 
-            var getResourceResp = _apiClient.Get("/api/v1/Resources/List?Name=TestResource");
+            var getResourceResp = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest { Name = "TestResource" });
             Assert.True(getResourceResp.IsSuccessStatusCode);
 
             var resources = getResourceResp.Deserialize<IList<ResourceResponse>>();
