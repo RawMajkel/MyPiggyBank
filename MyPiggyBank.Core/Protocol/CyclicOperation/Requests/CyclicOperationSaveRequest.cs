@@ -11,6 +11,6 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Requests
         public bool IsIncome { get; set; }
         public decimal? EstimatedValue { get; set; }
         public int Period { get; set; }
-        public DateTime NextOccurence { get; set; }
+        public DateTime? NextOccurence { get; set; }
     }
 }
