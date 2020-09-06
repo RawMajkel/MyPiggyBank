@@ -22,8 +22,8 @@ namespace MyPiggyBank.Integration.Test.Tests
 
             _apiClient.Post("/api/v1/Resources/Save", SampleResource());
             _apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory());
-            ResourceId = _apiClient.Get("/api/v1/Resources/List").Deserialize<IList<ResourceResponse>>()[0].Id;
-            OpCategoryId = _apiClient.Get("/api/v1/OperationCategories/List").Deserialize<IList<OperationCategoriesResponse>>()[0].Id;
+            ResourceId = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest()).Deserialize<IList<ResourceResponse>>()[0].Id;
+            OpCategoryId = _apiClient.Post("/api/v1/OperationCategories/List", new OperationCategoriesGetRequest()).Deserialize<IList<OperationCategoriesResponse>>()[0].Id;
         }
 
         [Fact]
