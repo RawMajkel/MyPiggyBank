@@ -18,10 +18,10 @@ function Login() {
     let id = event.target.getAttribute('id');
     let value = event.target.value;
 
-    if(id == 'email') {
+    if(id === 'email') {
       setEmail(value);
     }
-    else if (id == 'password') {
+    else if (id === 'password') {
       setPassword(value);
     }
   }
@@ -37,9 +37,7 @@ function Login() {
 
     setErrors(errors);
 
-    if(errors.length > 0) {
-        return;
-    }
+    if(errors.length > 0) { return; }
 
     setIsSubmitted(true);
   }
@@ -66,7 +64,7 @@ function Login() {
                             })
                         }
                     </ul>
-                    { isSubmitted == true && <Authenticate email={email} password={password} /> }
+                    { isSubmitted === true && <Authenticate email={email} password={password} /> }
                 </form>
             </div>
         </div>

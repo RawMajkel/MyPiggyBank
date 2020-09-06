@@ -13,13 +13,13 @@ function AddCategory({token}) {
     function handleChange(event) {
         let id = event.target.getAttribute('id');
         let value = event.target.value;
-    
+
         if(id == 'name') {
-          setName(value);
+            setName(value);
         }
-      }
+    }
     
-      function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
     
         let errors = [];

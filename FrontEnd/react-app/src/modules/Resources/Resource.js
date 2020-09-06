@@ -12,7 +12,7 @@ function Resource({id, name, value, currency}) {
             </div>
             <div className="resource__close">
                 <a href={ `/resources/delete/${id}` } className="resources__label d-flex align-items-center justify-content-start color-second">
-                    Zamknij 
+                    Usuń 
                     <i className="fas fa-times-circle resources__icon"></i>
                 </a>
             </div>
