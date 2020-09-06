@@ -16,13 +16,13 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void CreateCyclicOperation_ShouldSuccessfullyPost()
+        public void CreateOperationCategory_ShouldSuccessfullyPost()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
         }
 
         [Fact]
-        public void CreateCyclicOperation_ShouldSuccessfullyPostMultipleTimes()
+        public void CreateOperationCategory_ShouldSuccessfullyPostMultipleTimes()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
 
@@ -32,7 +32,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void CreateCyclicOperation_ShouldPostCorrectData()
+        public void CreateOperationCategory_ShouldPostCorrectData()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
 
@@ -46,7 +46,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void DeleteCyclicOperation_ShouldDeleteFromDB()
+        public void DeleteOperationCategory_ShouldDeleteFromDB()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
 
@@ -65,7 +65,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void DeleteCyclicOperation_ShouldDeleteOnlyOne()
+        public void DeleteOperationCategory_ShouldDeleteOnlyOne()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
@@ -89,7 +89,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void GetCyclicOperation_ShouldRetrieveMultiplePresentOperationCategoriesOnUnconditionalGet()
+        public void GetOperationCategory_ShouldRetrieveMultiplePresentOperationCategoriesOnUnconditionalGet()
         {
             var op = _apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory());
             Assert.True(op.IsSuccessStatusCode);
@@ -105,7 +105,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         }
 
         [Fact]
-        public void GetCyclicOperation_ShouldFilterByName()
+        public void GetOperationCategory_ShouldFilterByName()
         {
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
             Assert.True(_apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory()).IsSuccessStatusCode);
