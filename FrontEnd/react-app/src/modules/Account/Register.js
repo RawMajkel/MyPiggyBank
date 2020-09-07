@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function Register() {
     
@@ -35,7 +36,7 @@ function Register() {
         event.preventDefault();
         let errors = [];
 
-        if(password.length <= 7 || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || (/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g.test(password))) {
+        if((password.length <= 7) || !(/[A-Z]/.test(password)) || !(/[0-9]/.test(password)) || !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) || !validateEmail(email)) {
             errors.push("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę, jedną liczbę oraz jeden znak specjalny");
         }
 
@@ -58,7 +59,7 @@ function Register() {
         const config = { headers: { "Content-Type": "application/json" } };
         const bodyParameters = { "Username": userName, "Email": email, "Password": password };
 
-        axios.post('https://localhost:5001/api/v1/account/register', bodyParameters, config).then(response => {
+        axios.post(`${appConfig.apiUrl}/api/v1/account/register`, bodyParameters, config).then(response => {
             if(response.status) {
                 setIsFinished(true);
                 window.location.href = "/login";

@@ -5,9 +5,9 @@ function CyclicGroup({operations, period}) {
 
     let periodName;
 
-    if(period == 7) periodName = "cotygodniowe"; 
-    if(period == 31) periodName = "comiesięczne"; 
-    if(period == 365) periodName = "coroczne"; 
+    if(period === 7) periodName = "cotygodniowe"; 
+    if(period === 31) periodName = "comiesięczne"; 
+    if(period === 365) periodName = "coroczne"; 
 
     return (
         <div className="latest-group">
@@ -17,7 +17,7 @@ function CyclicGroup({operations, period}) {
             <div className="latest-group__list">
                 {
                     operations.map(function(el, index) {
-                        return <CyclicOperation id={el.Id} resourceId={el.resourceId} categoryId={el.categoryId} name={el.Name} value={el.EstimatedValue} key={index} />
+                        return <CyclicOperation id={el.id} resourceId={el.resourceId} categoryId={el.categoryId} name={el.name} isIncome={el.isIncome} value={el.estimatedValue} key={index} />
                     })
                 }
             </div>

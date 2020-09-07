@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace MyPiggyBank.Data.Repository {
     public interface IBaseRepository<DBO> where DBO : BaseEntity {
         public Task Add(DBO dbo);
         public Task Delete(DBO dbo);
+        public Task DeleteBulk(IEnumerable<DBO> dbo);
 
         public IQueryable<DBO> GetAll();
         public Task<DBO> Get(Guid id);

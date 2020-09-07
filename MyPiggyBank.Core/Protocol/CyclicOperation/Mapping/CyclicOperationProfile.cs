@@ -11,6 +11,7 @@ namespace MyPiggyBank.Core.Protocol.CyclicOperation.Mapping
             CreateMap<CyclicOperationSaveRequest, Data.Model.CyclicOperation>()
                    .ForMember(d => d.OperationCategory, opt => opt.Ignore())
                    .ForMember(d => d.Resource, opt => opt.Ignore())
+                   .ForMember(d => d.Description, opt => opt.Ignore())
                    .ReverseMap();
 
             CreateMap<Data.Model.CyclicOperation, CyclicOperationResponse>();

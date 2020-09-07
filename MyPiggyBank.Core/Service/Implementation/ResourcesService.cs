@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MyPiggyBank.Core.Protocol.Resource;
 using MyPiggyBank.Data.Model;
 using MyPiggyBank.Data.Repository;
 using MyPiggyBank.Data.Util;
@@ -13,11 +12,15 @@ namespace MyPiggyBank.Core.Service {
     public class ResourcesService : IResourcesService
     {
         private readonly IResourcesRepository _repository;
+        private readonly ICyclicOperationRepository _cyclicOperationRepository;
+        private readonly IOperationsRepository _operationRepository;
         private readonly IMapper _mapper;
 
-        public ResourcesService(IResourcesRepository repository, IMapper mapper)
+        public ResourcesService(IResourcesRepository repository, ICyclicOperationRepository cyclicOperationRepository, IOperationsRepository operationRepository, IMapper mapper)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _cyclicOperationRepository = cyclicOperationRepository ?? throw new ArgumentNullException(nameof(cyclicOperationRepository));
+            _operationRepository = operationRepository ?? throw new ArgumentNullException(nameof(operationRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -43,7 +46,17 @@ namespace MyPiggyBank.Core.Service {
         }
 
         public async Task DeleteResource(Guid resourceId)
-            => await _repository.Delete(await _repository.Get(resourceId) ?? throw new ArgumentException("Resource not found"));
+        {
+            var cyclicOperations = _cyclicOperationRepository.GetAll().Where(r => r.ResourceId == resourceId);
+            var operations = _operationRepository.GetAll().Where(r => r.ResourceId == resourceId);
+
+            if (cyclicOperations.Any())
+                await _cyclicOperationRepository.DeleteBulk(cyclicOperations);
+            if (operations.Any())
+                await _operationRepository.DeleteBulk(operations);
+
+            await _repository.Delete(await _repository.Get(resourceId) ?? throw new ArgumentException("Resource not found"));
+        } 
     }
 }
 

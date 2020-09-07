@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
+import axios from 'axios';
 import CyclicGroup from '../CyclicOperations/CyclicGroup';
-import { v4 as uuidv4 } from 'uuid';
+import { appConfig } from '../../config/config';
 
+/* sort operations by period */
 function divideOperations(data) {
-  data.sort((a,b) => (a.Period > b.Period) ? 1 : ((b.Period > a.Period) ? -1 : 0)); 
+  data.sort((a,b) => (a.period > b.period) ? 1 : ((b.period > a.period) ? -1 : 0)); 
   data.reverse();
 
   data.forEach(function(el, index) {
-    if(!el.IsIncome) el.EstimatedValue *= -1;
+    if(!el.isIncome) el.estimatedValue *= -1;
   });
 
   return data.reduce((res, curr) => {
-    if (res[curr.Period]) res[curr.Period].push(curr);
-    else Object.assign(res, {[curr.Period]: [curr]});
+    if (res[curr.period]) res[curr.period].push(curr);
+    else Object.assign(res, {[curr.period]: [curr]});
 
     return res;
   }, {});
@@ -20,18 +22,21 @@ function divideOperations(data) {
 
 function CyclicOperations({token}) {
 
-  const tempData = [
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Spotify", "IsIncome": false, "EstimatedValue": 19.99, "Period": 31 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Siłownia", "IsIncome": false, "EstimatedValue": 79.99, "Period": 31 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Samochód OC", "IsIncome": false, "EstimatedValue": 1300.00, "Period": 365 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Zakupy", "IsIncome": false, "EstimatedValue": 70.00, "Period": 7 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Ubezpieczenie", "IsIncome": false, "EstimatedValue": 821.21, "Period": 365 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Hostingi", "IsIncome": false, "EstimatedValue": 142.12, "Period": 365 },
-    { "Id": uuidv4(), "ResourceId": uuidv4(), "OperationCategoryId": uuidv4(), "Name": "Wypłata", "IsIncome": true, "EstimatedValue": 12999.99, "Period": 31 },
-  ];
+  const [cyclicOperations, setCyclicOperations] = useState([]);
 
-  const groups = divideOperations(tempData);
+  useEffect(() => {
+      (async () => {
+          const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
+          const bodyParameters = { "Name": null };
 
+          const response = await axios.post(`${appConfig.apiUrl}/api/v1/cyclicoperations/list`, bodyParameters, config);
+          setCyclicOperations(response.data);
+      })();
+  }, []);
+
+  const groups = divideOperations(cyclicOperations);
+
+  /* create period groups */
   let groupsArray = [];
 
   for (var key in groups) {
@@ -50,7 +55,7 @@ function CyclicOperations({token}) {
         <div className="container">
             <span className="latest__heading heading d-block font-weight-600">Operacje cykliczne:</span>
             {
-              groupsArray.map(function(el, index) { return <CyclicGroup operations={el} period={el[0].Period} key={index} /> })
+              groupsArray.map(function(el, index) { return <CyclicGroup operations={el} period={el[0].period} key={index} /> })
             }
             <a href="/cyclic/add" className="button d-inline-flex align-items-center justify-content-start">
                 <i className="fas fa-plus button__icon color-white"></i>

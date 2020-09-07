@@ -37,15 +37,15 @@ namespace MyPiggyBank.Web
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            app.UseRouting()
-               .UseAuthentication()
-               .UseAuthorization()
-                .UseCors(builder => builder
+            app.UseHttpsRedirection()
+               .UseRouting()
+               .UseCors(builder => builder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                 )
-               .UseHttpsRedirection()
+               .UseAuthentication()
+               .UseAuthorization()
                .UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
@@ -58,10 +58,10 @@ namespace MyPiggyBank.Web
             .ConfigureJwtToken(configuration)
             .RegisterProfiles()
             .RegisterServices()
-            .AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
-            {
-                builder.WithOrigins("http://localhost:5001").AllowAnyMethod().AllowAnyHeader();
-            }))
+            //.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            //{
+            //    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+            //}))
             .AddControllers()
             .RegisterValidators();
 
