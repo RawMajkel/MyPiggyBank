@@ -20,8 +20,8 @@ namespace MyPiggyBank.Web.Controllers
             _operationsService = operationsService;
         }
 
-        [HttpGet("List")]
-        public IActionResult Get([FromQuery] OperationGetRequest query)
+        [HttpPost("List")]
+        public IActionResult Get([FromBody] OperationGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
                 var resources = _operationsService.GetOperations(query, UserId);
@@ -37,11 +37,11 @@ namespace MyPiggyBank.Web.Controllers
         public async Task<IActionResult> Get(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.Get(id));
 
-        [HttpPut("Update")]
+        [HttpPut()]
         public async Task<IActionResult> Put([FromBody] OperationSaveRequest op)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.SaveOperation(op));
 
-        [HttpDelete("Delete/{id:guid}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _operationsService.DeleteOperation(id));
     }

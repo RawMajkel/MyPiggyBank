@@ -1,21 +1,21 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
+import axios from 'axios';
 import Resource from '../Resources/Resource';
-import { v4 as uuidv4 } from 'uuid';
+import { appConfig } from '../../config/config';
 
 function Resources({token}) {
 
-  const tempData = [
-    { "Id": uuidv4(), "Name": "Karta mBank", "Value": 3250.99, "Currency": "PLN" },
-    { "Id": uuidv4(), "Name": "Karta Revolut", "Value": 1090.31, "Currency": "PLN" },
-    { "Id": uuidv4(), "Name": "Gotówka", "Value": 300.03, "Currency": "PLN" }
-  ];
+  const [resources, setResources] = useState([]);
 
-  // return data
-  // public Guid Id { get; set; }
-  // public Guid UserId { get; set; }
-  // public string Name { get; set; }
-  // public decimal Value { get; set; }
-  // public string Currency { get; set; }
+  useEffect(() => {
+      (async () => {
+          const config = { headers: { "Content-Type": "application/json; charset=utf-8", "Authorization": `Bearer ${token}` } };
+          const bodyParameters = { "Name": null };
+
+          const response = await axios.post(`${appConfig.apiUrl}/api/v1/resources/list`, bodyParameters, config);
+          setResources(response.data);
+      })();
+  }, []);
 
   return (
     <div className="resources section">
@@ -23,7 +23,7 @@ function Resources({token}) {
           <span className="resources___heading heading d-block font-weight-600">Lista rachunków:</span>
           <div className="resources__list">
             <div>
-                { tempData.map(function(el, index) { return <Resource id={el.Id} name={el.Name} value={el.Value} currency={el.Currency} key={index} /> }) }
+                { resources.map(function(el, index) { return <Resource id={el.id} name={el.name} value={el.value} currency={el.currency} key={index} /> }) }
             </div>
           </div>
           <a href="/resources/add" className="button d-inline-flex align-items-center justify-content-start">

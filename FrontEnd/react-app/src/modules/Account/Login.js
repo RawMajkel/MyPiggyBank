@@ -18,10 +18,10 @@ function Login() {
     let id = event.target.getAttribute('id');
     let value = event.target.value;
 
-    if(id == 'email') {
+    if(id === 'email') {
       setEmail(value);
     }
-    else if (id == 'password') {
+    else if (id === 'password') {
       setPassword(value);
     }
   }
@@ -31,19 +31,13 @@ function Login() {
 
     let errors = [];
 
-    if(password.length <= 7 || !(/[A-Z]/.test(password)) || !(/[1-9]/.test(password)) || (/^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]+$/g.test(password))) {
-        errors.push("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę, jedną liczbę oraz jeden znak specjalny");
-    }
-
-    if(!validateEmail(email)) {
-        errors.push("Podaj poprawny adres e-mail");
+    if((password.length <= 7) || !(/[A-Z]/.test(password)) || !(/[0-9]/.test(password)) || !(/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) || !validateEmail(email)) {
+      errors.push("Hasło musi zawierać co najmniej 8 znaków, jedną wielką literę, jedną liczbę oraz jeden znak specjalny");
     }
 
     setErrors(errors);
 
-    if(errors.length > 0) {
-        return;
-    }
+    if(errors.length > 0) { return; }
 
     setIsSubmitted(true);
   }
@@ -70,7 +64,7 @@ function Login() {
                             })
                         }
                     </ul>
-                    { isSubmitted == true && <Authenticate email={email} password={password} /> }
+                    { isSubmitted === true && <Authenticate email={email} password={password} /> }
                 </form>
             </div>
         </div>

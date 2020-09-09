@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function AddResource({token}) {
 
     const [name, setName] = useState([]);
     const [value, setValue] = useState([]);
-    const [currency, setCurrency] = useState([]);
   
     const [errors, setErrors] = useState([]);
     const [isSubmitted, setIsSubmitted] = useState([]);
@@ -29,22 +29,16 @@ function AddResource({token}) {
     
         let errors = [];
     
-        if(name.length < 2) {
-            errors.push("Podaj poprawną nazwę zasobu");
-        }
-    
+        if(name.length < 2) { errors.push("Podaj poprawną nazwę zasobu"); }
         setErrors(errors);
     
-        if(errors.length > 0) {
-            return;
-        }
-    
+        if(errors.length > 0) return;
         setIsSubmitted(true);
 
         const config = { headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` } };
-        const bodyParameters = { "Id": uuidv4(), "Name": name, "Value": value, "Currency": "PLN" };
+        const bodyParameters = { Id: uuidv4(), Name: name, Value: parseFloat(value), Currency: "PLN" };
 
-        axios.post('https://localhost:5001/api/v1/resources/save', bodyParameters, config).then(response => {
+        axios.post(`${appConfig.apiUrl}/api/v1/resources/save`, bodyParameters, config).then(response => {
             if(response.status) {
                 setIsFinished(true);
                 window.location.href = "/resources";
@@ -66,12 +60,12 @@ function AddResource({token}) {
                         </div>
                         <label>Wartość</label>
                         <div className="input-group">
-                            <input id="value" className="form-control" placeholder="1999,99" type="text" value={value} onChange={handleChange} />
+                            <input id="value" className="form-control" placeholder="1999.99" type="text" value={value} onChange={handleChange} />
                         </div>
                         <label>Waluta</label>
                         <div className="input-group">
-                            <select class="custom-select" onChange={handleChange}>
-                                <option selected>PLN</option>
+                            <select className="custom-select" onChange={handleChange}>
+                                <option>PLN</option>
                             </select>
                         </div>
                         <input className="button d-inline-flex align-items-center justify-content-start color-white" type="submit" value="Dodaj rachunek" />

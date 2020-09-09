@@ -20,8 +20,8 @@ namespace MyPiggyBank.Web.Controllers
             _resourcesService = resourcesService;
         }
 
-        [HttpGet("List")]
-        public IActionResult Get([FromQuery] ResourceGetRequest query)
+        [HttpPost("List")]
+        public IActionResult FilteredList([FromBody] ResourceGetRequest query)
             => ReturnBadRequestIfThrowError(() =>
             {
                 var resources = _resourcesService.GetResources(query, UserId);
@@ -37,12 +37,12 @@ namespace MyPiggyBank.Web.Controllers
         public async Task<IActionResult> Get(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.Get(id));
 
-        [HttpPut("Update")]
+        [HttpPut()]
         public async Task<IActionResult> Put([FromBody] ResourceSaveRequest res)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.SaveResource(res, UserId));
 
 
-        [HttpDelete("Delete/{id:guid}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
             => await ReturnBadRequestIfThrowError(async () => await _resourcesService.DeleteResource(id));
     }

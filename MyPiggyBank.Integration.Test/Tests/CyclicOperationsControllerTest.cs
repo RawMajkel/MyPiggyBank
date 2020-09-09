@@ -22,8 +22,8 @@ namespace MyPiggyBank.Integration.Test.Tests
 
             _apiClient.Post("/api/v1/Resources/Save", SampleResource());
             _apiClient.Post("/api/v1/OperationCategories/Save", SampleOperationCategory());
-            ResourceId = _apiClient.Get("/api/v1/Resources/List").Deserialize<IList<ResourceResponse>>()[0].Id;
-            OpCategoryId = _apiClient.Get("/api/v1/OperationCategories/List").Deserialize<IList<OperationCategoriesResponse>>()[0].Id;
+            ResourceId = _apiClient.Post("/api/v1/Resources/List", new ResourceGetRequest()).Deserialize<IList<ResourceResponse>>()[0].Id;
+            OpCategoryId = _apiClient.Post("/api/v1/OperationCategories/List", new OperationCategoriesGetRequest()).Deserialize<IList<OperationCategoriesResponse>>()[0].Id;
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
-            var getCyclicOperationResp = _apiClient.Get("/api/v1/CyclicOperations/List?Name=TestCyclicOperation");
+            var getCyclicOperationResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { Name = "TestCyclicOperation" });
             Assert.True(getCyclicOperationResp.IsSuccessStatusCode);
 
             var ops = getCyclicOperationResp.Deserialize<IList<CyclicOperationResponse>>();
@@ -61,15 +61,15 @@ namespace MyPiggyBank.Integration.Test.Tests
         {
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest());
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(1, ops.Count);
 
-            var deleteResp = _apiClient.Delete("/api/v1/CyclicOperations/Delete/" + ops[0].Id.ToString());
+            var deleteResp = _apiClient.Delete("/api/v1/CyclicOperations/" + ops[0].Id.ToString());
             Assert.True(deleteResp.IsSuccessStatusCode);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest());
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops =  getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(0, ops.Count);
@@ -81,17 +81,17 @@ namespace MyPiggyBank.Integration.Test.Tests
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", SampleCyclicOperation()).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest());
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
 
             Assert.Equal(2, ops.Count);
             var guidToDelete = ops[0].Id;
 
-            var deleteResp = _apiClient.Delete("/api/v1/CyclicOperations/Delete/" + guidToDelete.ToString());
+            var deleteResp = _apiClient.Delete("/api/v1/CyclicOperations/" + guidToDelete.ToString());
             Assert.True(deleteResp.IsSuccessStatusCode);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest());
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops =  getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
 
@@ -109,7 +109,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             secondRes.Name = "AnotherCyclicOperation";
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", secondRes).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest());
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
@@ -125,7 +125,7 @@ namespace MyPiggyBank.Integration.Test.Tests
             otherRes.Name = "AnotherCyclicOperation";
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", otherRes).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?Name=TestCyclicOperation");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { Name = "TestCyclicOperation" });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
@@ -142,12 +142,12 @@ namespace MyPiggyBank.Integration.Test.Tests
             inputCyclicOperation.IsIncome = false;
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", inputCyclicOperation).IsSuccessStatusCode);
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?IsIncome=true");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { IsIncome = true });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?IsIncome=false");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { IsIncome = false });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(1, ops.Count);
@@ -164,22 +164,22 @@ namespace MyPiggyBank.Integration.Test.Tests
             Assert.True(_apiClient.Post("/api/v1/CyclicOperations/Save", otherRes).IsSuccessStatusCode);
 
 
-            var getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MinEstimatedValue=9000");
+            var getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest {MinEstimatedValue = 9000 });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             var ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(2, ops.Count);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MinEstimatedValue=10000");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { MinEstimatedValue = 10000 });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(0, ops.Count);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MaxEstimatedValue=50");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { MaxEstimatedValue = 50 });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(1, ops.Count);
 
-            getCyclicOperationsResp = _apiClient.Get("/api/v1/CyclicOperations/List?MaxEstimatedValue=10");
+            getCyclicOperationsResp = _apiClient.Post("/api/v1/CyclicOperations/List", new CyclicOperationGetRequest { MaxEstimatedValue = 10 });
             Assert.True(getCyclicOperationsResp.IsSuccessStatusCode);
             ops = getCyclicOperationsResp.Deserialize<IList<CyclicOperationResponse>>();
             Assert.Equal(0, ops.Count);

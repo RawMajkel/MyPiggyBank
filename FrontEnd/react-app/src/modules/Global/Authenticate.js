@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { appConfig } from '../../config/config';
 
 function Authenticate({email, password}) {
 
@@ -10,7 +11,7 @@ function Authenticate({email, password}) {
             const config = { headers: { "Content-Type": "application/json" } };
             const bodyParameters = { "Email": email, "Password": password };
 
-            await axios.post('https://localhost:5001/api/v1/account/login', bodyParameters, config).then(response => {
+            await axios.post(`${appConfig.apiUrl}/api/v1/account/login`, bodyParameters, config).then(response => {
                 if(response.status) {
 
                     let expires = "";
@@ -34,7 +35,7 @@ function Authenticate({email, password}) {
     }, []);
 
     if(hasErrors == true) {
-        return <div style={{marginTop : '10px', color : 'red'}}>Bład logowania</div>;
+        return <div style={{marginTop : '10px', color : 'red'}}>Błąd logowania</div>;
     }
     return <div style={{marginTop : '10px'}}>Autoryzacja - proszę czekać</div>;
 }

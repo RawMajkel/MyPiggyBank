@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyPiggyBank.Data.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -40,6 +41,21 @@ namespace MyPiggyBank.Data.Repository {
             var changedRows = await _context.SaveChangesAsync();
 
             if (changedRows == 0) {
+                await transaction.RollbackAsync();
+                await transaction.DisposeAsync();
+                throw new DbUpdateException("Something went wrong when deleting entity.");
+            }
+            await transaction.CommitAsync();
+        }
+
+        public async Task DeleteBulk(IEnumerable<DBO> dbo)
+        {
+            await using var transaction = _context.Database.BeginTransaction();
+            _context.RemoveRange(dbo);
+            var changedRows = await _context.SaveChangesAsync();
+
+            if (changedRows == 0)
+            {
                 await transaction.RollbackAsync();
                 await transaction.DisposeAsync();
                 throw new DbUpdateException("Something went wrong when deleting entity.");
